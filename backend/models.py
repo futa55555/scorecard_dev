@@ -318,7 +318,6 @@ class AtBat(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     inning_id = Column(Integer, ForeignKey("innings.id"), nullable=False)
-    batting_order = Column(Integer, nullable=False)
     batter_id = Column(Integer, ForeignKey("game_members.id"), nullable=True)
     result = Column(Enum(AtBatResultEnum), nullable=True)
 

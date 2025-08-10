@@ -787,16 +787,14 @@ def create_inning(
 def create_atbat(
     db: Session,
     inning_id: int,
-    batter_id: int,
-    batting_order: int
+    batter_id: int
 ) -> models.AtBat:
     """
     新しい打席を作成する
     """
     new_atbat = models.AtBat(
         inning_id = inning_id,
-        batter_id = batter_id,
-        batting_order = batting_order
+        batter_id = batter_id
     )
     
     db.add(new_atbat)

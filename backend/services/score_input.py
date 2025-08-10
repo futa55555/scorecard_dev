@@ -592,9 +592,10 @@ def get_entering_members(
     }
 
 
-def get_next_batter(
+def get_following_batter(
     db: Session,
-    game_id: int
+    game_id: int,
+    skip: int = 1
 ) -> models.GameMember:
     """
     次の打者のgame_memberを取得
@@ -612,7 +613,7 @@ def get_next_batter(
     else:
         entering_members = get_entering_members(db, game_id)[game.bottom_team_id]
     
-    return entering_members[last_batting_order + 1].game_member
+    return entering_members[last_batting_order + skip].game_member
 
 
 def calc_bs_count(
@@ -777,7 +778,7 @@ def game_start(
     試合開始時に1回だけ実行される
     """
     inning = crud.create_inning(db, game_id, 1, "top")
-    batter = get_next_batter(db, game_id)
+    batter = get_following_batter(db, game_id)
     atbat = crud.create_atbat(db, inning.id, batter.id)
     
     return atbat
