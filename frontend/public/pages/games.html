@@ -1,0 +1,45 @@
+<!-- frontend/public/pages/games.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>試合一覧</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>試合一覧</h1>
+
+    <table id="games-table" border="1">
+        <thead>
+            <tr>
+                <th>日付</th>
+                <th>チーム1</th>
+                <th>チーム2</th>
+                <th>ステータス</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- JavaScriptで試合データをここに挿入 -->
+        </tbody>
+    </table>
+
+    <h2>試合追加</h2>
+    <form id="add-game-form">
+        <label for="date">日付:</label>
+        <input type="date" name="date" required>
+
+        <label for="team1_id">チーム1:</label>
+        <select name="team1_id" id="team1-select" required></select>
+
+        <label for="team2_id">チーム2:</label>
+        <select name="team2_id" id="team2-select" required></select>
+
+        <button type="submit">追加</button>
+    </form>
+
+    <a href="/pages/index.html">トップに戻る</a>
+
+    <script src="/static/scripts/games.js"></script>
+</body>
+</html>

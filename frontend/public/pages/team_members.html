@@ -1,0 +1,34 @@
+<!-- frontend/public/pages/team_members.html -->
+ 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+  	<title>チームの選手一覧</title>
+  	<link rel="stylesheet" href="/static/style.css">
+  	<link rel="icon" href="/static/favicon.ico">
+</head>
+<body>
+  	<h1 id="team-name">選手一覧</h1>
+
+	<!-- 戻るボタン -->
+    <p>
+        <a href="/pages/teams.html">
+            <button type="button">チーム一覧に戻る</button>
+        </a>
+    </p>
+
+  	<ul id="member-list">
+    	<!-- 選手リストをここに描画 -->
+  	</ul>
+
+  	<!-- <h2>選手追加</h2>
+  	<form id="add-member-form">
+    	<input type="text" name="name" placeholder="名前" required>
+    	<input type="number" name="uniform_number" placeholder="背番号" required>
+    	<button type="submit">追加</button>
+  	</form> -->
+
+  	<script src="/scripts/team_members.js"></script>
+</body>
+</html>

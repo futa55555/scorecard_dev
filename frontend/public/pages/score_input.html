@@ -1,0 +1,64 @@
+<!-- frontend/public/pages/score_input.html -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>打席一覧</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="/static/favicon.ico">
+</head>
+<body>
+    <h1 id="all_atbats">打席一覧</h1>
+
+    <!-- 戻るボタン -->
+    <p>
+        <a href="/pages/index.html">
+            <button type="button">ホームに戻る</button>
+        </a>
+    </p>
+
+    <!-- 試合状況の表示エリア -->
+    <h2>試合状況</h2>
+    <div id="game-state">
+        <!-- JSがここにアウト・カウント・ランナーを表示する -->
+    </div>
+
+    <!-- 投球結果入力フォーム -->
+    <form id="scoreInput">
+        <div>
+            <label for="description">投球結果：</label>
+			<select id="description" name="description" required>
+				<option value="ball" selected>ball</option>
+				<option value="swing_miss">swing_miss</option>
+				<option value="foul">foul</option>
+			</select>
+        </div>
+        <button type="submit">登録する</button>
+    </form>
+
+    <!-- 打席リスト -->
+    <h2>打席履歴</h2>
+    <ul id="atbat-list">
+        <!-- 打席リストをここに描画 -->
+    </ul>
+
+	<!-- 進塁選択モーダル -->
+	<div id="advanceModal" style="
+		display:none; /* JSでflexに変更 */
+		position:fixed; top:0; left:0; width:100%; height:100%;
+		background:rgba(0,0,0,0.6); z-index:1000;
+		justify-content:center; align-items:center;
+	">
+		<div style="background:#fff; padding:20px; border-radius:8px; width:300px;">
+			<h3>進塁先を選択</h3>
+			<form id="advanceForm">
+				<div id="advanceChoices"></div>
+				<button type="submit">確定</button>
+			</form>
+		</div>
+	</div>
+
+    <script src="/scripts/score_input.js"></script>
+</body>
+</html>

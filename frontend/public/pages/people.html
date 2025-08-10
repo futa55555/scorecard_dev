@@ -1,0 +1,29 @@
+<!-- frontend/public/pages/people.html -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>人間一覧</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="/static/favicon.ico">
+</head>
+<body>
+    <h1>人間一覧</h1>
+
+    <!-- 戻るボタン -->
+    <p>
+        <a href="/pages/index.html">
+            <button type="button">ホームに戻る</button>
+        </a>
+    </p>
+
+    <!-- 人間一覧表示エリア（JavaScriptで動的に描画される） -->
+    <ul id="person-list">
+        <!-- JavaScriptで<li>要素がここに追加される -->
+    </ul>
+
+    <!-- JavaScriptファイルを読み込む -->
+    <script src="/scripts/people.js"></script>
+</body>
+</html>

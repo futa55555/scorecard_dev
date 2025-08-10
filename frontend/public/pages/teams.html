@@ -1,0 +1,37 @@
+<!-- frontend/public/teams.html -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>チーム一覧</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="/static/favicon.ico">
+</head>
+<body>
+    <h1>チーム一覧</h1>
+
+    <!-- 戻るボタン -->
+    <p>
+        <a href="/pages/index.html">
+            <button type="button">ホームに戻る</button>
+        </a>
+    </p>
+
+    <!-- チーム一覧表示エリア（JavaScriptで動的に描画される） -->
+    <ul id="team-list">
+        <!-- JavaScriptで<li>要素がここに追加される -->
+    </ul>
+
+
+    <!-- チーム追加フォームへ -->
+    <h2>チーム追加</h2>
+    <a href="/pages/team_add.html">
+        <button type="button">チーム追加フォームへ</button>
+    </a>
+
+
+    <!-- JavaScriptファイルを読み込む -->
+    <script src="/scripts/teams.js"></script>
+</body>
+</html>
