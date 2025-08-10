@@ -54,22 +54,17 @@ def start_game(game_id: int, db: Session = Depends(get_db)):
 #     response = service.confirm_score_input(db, game_id, input_data)
 #     return response
 
-@router.get("/api/games/{game_id}/all_atbats", response_model=schema.StateWithAtBats)
+@router.get("/api/games/{game_id}/all_innings", response_model=schema.StateWithInning)
 def get_all_atbats(game_id: int, db: Session = Depends(get_db)):
     """
     指定試合の全AtBat + PitchEvent + AdvanceEventを返す（デバッグ用）
     """
-    atbats = (
-        db.query(models.AtBat)
-        .filter(models.AtBat.game_id == game_id)
-        .options(
-            joinedload(models.AtBat.pitch_events)
-            .joinedload(models.PitchEvent.advance_events)
-        )
-        .all()
-    )
+    all_innings_with_events = service.get_all_innings_with_events_to_schema(db, game_id)
     state = service.get_latest_state(db, game_id)
-    return {"state": state, "atbats": atbats}
+    return {
+        "state": state,
+        "all_innings_with_events": all_innings_with_events
+    }
 
 
 @router.get("/api/games/{game_id}/state", response_model=schema.GameStateResponse)

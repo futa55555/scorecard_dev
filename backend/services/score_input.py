@@ -728,7 +728,7 @@ def get_latest_state(
     offense_team = crud.get_team(db, offense_team_id)
     defense_team = crud.get_team(db, defense_team_id)
     # バッター
-    batter = latest_atbat.batter.member_profile
+    batter = latest_atbat.batter
     # ボール、ストライク
     balls, strikes = calc_bs_count(db, game_id)
     # アウト、得点、ランナー(id)
@@ -746,7 +746,7 @@ def get_latest_state(
     top_team_score, bottom_team_score = calc_past_inning_score(db, game_id)
     
     return schema.GameStateResponse(
-        game = game,
+        game = schema.Game.model_validate(game, from_attributes=True),
         top_team_entry_state = schema.TeamEntryState.model_validate(top_team_entry_state, from_attributes=True),
         bottom_team_entry_state = schema.TeamEntryState.model_validate(bottom_team_entry_state, from_attributes=True),
         offense_team = schema.Team.model_validate(offense_team, from_attributes=True),
@@ -760,6 +760,17 @@ def get_latest_state(
         top_team_score = top_team_score,
         bottom_team_score = bottom_team_score
     )
+    
+
+def get_all_innings_with_events_to_schema(
+    db: Session,
+    game_id: int
+) -> List[schema.InningSchema]:
+    """
+    crud.get_all_innings_with_eventsで取得したデータをschema.Inningに合わせる
+    """
+    all_innings_with_events = crud.get_all_innings_with_events(db, game_id)
+    return [schema.InningSchema.model_validate(inning_with_events, from_attributes=True) for inning_with_events in all_innings_with_events]
     
 
 # ------------------------
@@ -777,6 +788,10 @@ def game_start(
     試合情報に基づき、最初のイニング、打席を作成。
     試合開始時に1回だけ実行される
     """
+    atbat = crud.get_latest_atbat(db, game_id)
+    if atbat:
+        raise HTTPException(status_code=404, detail="game had already started")
+    
     inning = crud.create_inning(db, game_id, 1, "top")
     batter = get_following_batter(db, game_id)
     atbat = crud.create_atbat(db, inning.id, batter.id)
@@ -784,10 +799,15 @@ def game_start(
     return atbat
 
 
-def suggest_main_advance_events():
+def suggest_main_advance_events(
+    db: Session,
+    game_id: int,
+    input_data: schema.ScoreInput
+):
     """
     想定されるエラーまで含めた進塁イベントをサジェスト
     """
+    
     
     
 def suggest_additional_advance_events():
@@ -936,6 +956,6 @@ def _do_change_inning(db: Session, game_id: int) -> None:
     game = crud.get_game(db, game_id)
     offense_team_id, _ = get_offense_and_defense_team_id(game, new_inning)
     # ここは暫定：打順管理の正式実装があるなら差し替え
-    next_batter_id = get_next_batter(db, game_id).id
+    next_batter_id = get_following_batter(db, game_id).id
 
     crud.create_atbat(db, inning_id=new_inning.id, batter_id=next_batter_id)

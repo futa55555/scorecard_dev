@@ -334,7 +334,7 @@ class PitchEvent(Base):
     pitch_type = Column(Enum(PitchTypeEnum), nullable=False)
     pitch_type_detail = Column(String(50), nullable=True)
     batting_form = Column(Enum(BattingFormEnum), nullable=True)
-    batter_side = Column(Enum(BattingSideEnum), nullable=True)
+    batting_side = Column(Enum(BattingSideEnum), nullable=True)
     is_runner_first_steal = Column(Boolean, default=False)
     is_runner_second_steal = Column(Boolean, default=False)
     is_runner_third_steal = Column(Boolean, default=False)

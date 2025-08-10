@@ -567,7 +567,7 @@ def get_all_innings_with_events(
     """
     現在までのイニング->打席->投球->進塁を取得（一覧表示用）
     """
-    innings_with_events = (
+    all_innings_with_events = (
         db.query(models.Inning)
         .filter(models.Inning.game_id == game_id)
         .options(
@@ -578,9 +578,9 @@ def get_all_innings_with_events(
         .order_by(models.Inning.id)
         .all()
     )
-    if not innings_with_events:
+    if not all_innings_with_events:
         raise HTTPException(status_code=404, detail="innings_with_events not found")
-    return innings_with_events
+    return all_innings_with_events
     
 
 def get_inning_with_events_by_pitch(

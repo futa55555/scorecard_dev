@@ -47,7 +47,8 @@ class Game(BaseModel):
     date: Optional[date]
     start_time: Optional[time] = None
     end_time: Optional[time] = None
-    location: str
+    location: Optional[str]
+    model_config = ConfigDict(from_attributes=True)
 
 class Team(BaseModel):
     id: int
@@ -81,12 +82,10 @@ class GameStateResponse(BaseModel):
     strikes: int
     outs: int
     score: int
-    runners_by_uniform_number: List[GameMember]
+    runners: List[Optional[GameMember]]
     top_team_score: List[int]
     bottom_team_score: List[int]
-
-    class Config:
-        from_attributes = True
+    
 
 class EnteringMember(BaseModel):
     position: models.PositionEnum
@@ -97,45 +96,47 @@ class TeamEnteringMembers(BaseModel):
     
 class AdvanceEventSchema(BaseModel):
     id: int
+    pitch_event_id: int
+    runner_id: int
     from_base: Optional[int]
     to_base: Optional[int]
-    runner_id: Optional[int]
-    reason: Optional[str]
-    is_out: Optional[bool]
-
+    is_out: bool
+    reason: bool
+    model_config = ConfigDict(from_attributes=True)
 
 class PitchEventSchema(BaseModel):
     id: int
-    description: Optional[str]    # 例: 見逃し/空振り/ゴロなど
-    pitch_type_detail: Optional[str] = None # 表示用
-    advance_events: List[AdvanceEventSchema] = []
+    atbat_id: int
+    pitch_type: Optional[models.PitchTypeEnum]
+    pitch_type_detail: Optional[models.PitchTypeDetailType]
+    batting_form: Optional[models.BattingFormEnum]
+    batting_side: Optional[models.BattingSideEnum]
+    is_runner_first_steal: bool
+    is_runner_second_steal: bool
+    is_runner_third_steal: bool
+    advance_events: List[AdvanceEventSchema]
+    model_config = ConfigDict(from_attributes=True)
 
-
-class AtBatWithEvents(BaseModel):
+class AtBatSchema(BaseModel):
     id: int
-    game_id: int
+    inning_id: int
     batter_id: Optional[int]
     result: Optional[str]  # 打席確定時のみ
-    inning: Optional[int]
-    top_bottom: Optional[models.TopBottomEnum]
-    pitch_events: List[PitchEventSchema] = []
+    pitch_events: List[PitchEventSchema]
+    model_config = ConfigDict(from_attributes=True)
 
-    class Config:
-        from_attributes = True
-        
-class GameState(BaseModel):
-    outs: int
-    runners: List[Optional[int]]
-    runners_str: str
-    balls: int
-    strikes: int
+class InningSchema(BaseModel):
+    id: int
+    game_id: int
+    inning_number: int
+    top_bottom: models.TopBottomEnum
+    score: int
+    atbats: List[AtBatSchema]
+    model_config = ConfigDict(from_attributes=True)
 
-class StateWithAtBats(BaseModel):
-    state: GameState
-    atbats: List[AtBatWithEvents]
-    
-    class Config:
-        from_attributes = True
+class StateWithInning(BaseModel):
+    state: GameStateResponse
+    all_innings_with_events: List[InningSchema]
 
 
 
