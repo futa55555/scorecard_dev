@@ -790,7 +790,7 @@ def game_start(
     """
     atbat = crud.get_latest_atbat(db, game_id)
     if atbat:
-        raise HTTPException(status_code=404, detail="game had already started")
+        raise HTTPException(status_code=400, detail="game had already started")
     
     inning = crud.create_inning(db, game_id, 1, "top")
     batter = get_following_batter(db, game_id)
