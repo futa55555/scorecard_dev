@@ -94,12 +94,12 @@ class AdvanceElement(BaseModel):
     is_out: bool
     reason: str
     
-class AdvanceCandidates(BaseModel):
-    candidates: List[List[Optional[AdvanceElement]]]
-    
 class MainAdvenceCandidates(BaseModel):
     num_of_candidates: int
-    candidates: AdvanceCandidates
+    candidates: List[List[Optional[AdvanceElement]]]
+    
+class SelectedAdvanceCandidate(BaseModel):
+    selected_candidate: List[Optional[AdvanceElement]]
     
 class AdvanceEventSchema(BaseModel):
     id: int

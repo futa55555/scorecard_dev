@@ -15,7 +15,7 @@ def make_pitch_only(
     ball_count: schema.BallCount,
     runners: List[Optional[models.GameMember]],
     is_runners_steal: schema.RunnersSteal
-) -> schema.AdvanceCandidates:
+) -> List[List[Optional[schema.AdvanceElement]]]:
     res = []
     
     if ball_count.balls == 4:
@@ -165,4 +165,4 @@ def make_pitch_only(
                 )
             )
     
-    return {"candidates": res}
+    return res

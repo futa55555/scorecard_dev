@@ -14,7 +14,7 @@ def make_others(
     pitch_type_detail: models.PitchTypeDetailType,
     runners: List[Optional[models.GameMember]],
     leaving_base: int = None
-) -> schema.AdvanceCandidates:
+) -> List[List[Optional[schema.AdvanceElement]]]:
     res = []
     
     # hit_by_pitch, interfere

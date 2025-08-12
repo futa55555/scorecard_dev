@@ -76,7 +76,7 @@ def get_game_state(
     db: Session = Depends(get_db)
  ) -> schema.GameStateResponse:
     """
-    現在の試合状況（フロントはこれを表示→次の投球入力へ）
+    現在の試合状況（フロントはこれを表示 -> 次の投球入力へ）
     """
     return service.get_latest_state(db, game_id)
 
@@ -93,13 +93,13 @@ def get_all_atbats(
 
 
 @router.post("/api/games/{game_id}/pitch")
-def post_pitch(
+def register_pitch(
     game_id: int,
     input_data: schema.ScoreInput,
     db: Session = Depends(get_db)
 ) -> schema.MainAdvenceCandidates:
     """
-    1球登録 → 四球/三振なら自動確定 → 3アウトならチェンジ → 最新状態を返す
+    投球を登録 -> 進塁候補を返す
     """
     atbat = crud.get_latest_atbat(db, game_id)
     pitch = crud.create_pitch_event(db, atbat.id, input_data)
@@ -108,6 +108,17 @@ def post_pitch(
         "num_of_candidates": len(main_advance_events),
         "candidates": main_advance_events
     }
+    
+@router.post("/api/games/{game_id}/confirm")
+def confirm_advance_event(
+    game_id: int,
+    input_data: schema.SelectedAdvanceCandidate,
+    db: Session = Depends(get_db)
+) -> schema.SelectedAdvanceCandidate:
+    pitch_event = crud.get_latest_pitch_event(db, game_id)
+    selected_candidate = crud.create_advance_event(db, pitch_event.id, input_data.selected_candidate)
+    return {"selected_candidate": selected_candidate}
+
 
 
 # --- 後でサジェスト機能を戻す時に復活 ---

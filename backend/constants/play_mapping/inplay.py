@@ -16,7 +16,7 @@ def make_inplay(
     outs: int,
     runners: List[Optional[models.GameMember]],
     is_runners_steal: List[bool]
-) -> schema.AdvanceCandidates:
+) -> List[List[Optional[schema.AdvanceElement]]]:
     res = []
     
     return [[]]

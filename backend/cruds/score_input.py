@@ -390,21 +390,21 @@ def get_all_substitution_events(
     )
 
 
-def get_latest_pitch_event_id(
+def get_latest_pitch_event(
     db: Session,
     game_id: int
-) -> Optional[int]:
+) -> Optional[models.PitchEvent]:
     """
-    現在のpitch_event_idを取得
+    現在のpitch_eventを取得
     投球がなければ（試合開始直後なら）Noneを返す
     """
     return (
-        db.query(models.PitchEvent)
+        db.query(models.PitchEvent.id)
         .join(models.AtBat)
         .join(models.Inning)
         .filter(models.Inning.game_id == game_id)
         .order_by(models.PitchEvent.id.desc())
-        .scalar()
+        .first()
     )
 
 
