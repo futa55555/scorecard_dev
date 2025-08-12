@@ -100,6 +100,10 @@ class MainAdvenceCandidates(BaseModel):
     
 class SelectedAdvanceCandidate(BaseModel):
     selected_candidate: List[Optional[AdvanceElement]]
+
+class AdvanceCandidateConfirm(BaseModel):
+    change: bool
+    selected_candidate: List[Optional[AdvanceElement]]
     
 class AdvanceEventSchema(BaseModel):
     id: int
@@ -144,52 +148,3 @@ class InningSchema(BaseModel):
 class StateWithInnings(BaseModel):
     state: GameStateResponse
     all_innings_with_events: List[InningSchema]
-
-
-
-# class AdvanceCandidate(BaseModel):
-#     candidate_id: int  # 選択用のID
-#     advances: List[AdvanceElement]
-
-# class ScoreInputResponse(BaseModel):
-#     atbat_id: int
-#     pitch_event_id: int
-#     requires_confirmation: bool = False
-#     advance_candidates: List[AdvanceCandidate] = []
-    
-#     class Config:
-#         from_attributes = True
-
-# class ConfirmAdvance(BaseModel):
-#     runner_id: int
-#     from_base: Optional[int]
-#     to_base: Optional[int]
-#     is_out: bool
-
-# class ConfirmScoreInput(BaseModel):
-#     pitch_event_id: int
-#     candidate_id: int
-
-# class AdvanceEventResponse(BaseModel):
-#     id: int
-#     pitch_event_id: int
-#     runner_id: int
-#     from_base: Optional[int]
-#     to_base: Optional[int]
-#     is_out: bool
-#     via_error: bool
-#     reason: Optional[str]
-
-#     class Config:
-#         from_attributes = True
-
-# class ConfirmScoreInputResponse(BaseModel):
-#     pitch_event_id: int
-#     confirmed_advances: List[AdvanceEventResponse]
-#     outs: int
-#     runners: List[Optional[int]]  # [一塁, 二塁, 三塁] の runner_id
-#     runners_str: str              # "101" 形式
-#     change_sides: bool
-
-#     class Config:
-#         from_attributes = True
