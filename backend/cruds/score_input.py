@@ -325,18 +325,15 @@ def get_team(
 def get_game_member(
     db: Session,
     game_member_id: int
-) -> models.GameMember:
+) -> Optional[models.GameMember]:
     """
     game_member_idからgame_memberを取得
     """
-    game_member = (
+    return (
         db.query(models.GameMember)
         .filter(models.GameMember.id == game_member_id)
         .first()
     )
-    if not game_member:
-        raise HTTPException(status_code=404, detail="game_member not found")
-    return game_member
 
 
 def get_game_members_with_member_profile(
@@ -818,9 +815,9 @@ def create_pitch_event(
         pitch_type_detail = input_data.pitch_type_detail,
         batting_form = input_data.batting_form,
         batting_side = input_data.batting_side,
-        is_runner_first_steal = input_data.is_runner_first_steal,
-        is_runner_second_steal = input_data.is_runner_second_steal,
-        is_runner_third_steal = input_data.is_runner_third_steal,
+        is_runner_first_steal = input_data.is_runners_steal.first,
+        is_runner_second_steal = input_data.is_runners_steal.second,
+        is_runner_third_steal = input_data.is_runners_steal.third,
     )
     
     db.add(new_pitch_event)
@@ -833,7 +830,7 @@ def create_pitch_event(
 def create_advance_event(
     db: Session,
     pitch_event_id: int,
-    advs: List[schema.AdvanceDetail]
+    advs: List[schema.AdvanceElement]
 ) -> List[models.AdvanceEvent]:
     """
     advance_eventを作成する

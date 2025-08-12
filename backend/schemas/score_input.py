@@ -5,16 +5,21 @@ from typing import List, Optional, Tuple, Dict
 from backend import models
 from datetime import date, time
 
+class RunnersSteal(BaseModel):
+    first: bool = False
+    second: bool = False
+    third: bool = False
 
 class ScoreInput(BaseModel):
     pitch_type: models.PitchTypeEnum  # swing_miss, looking, ball, foul, inplay, others
+    position: Optional[models.PositionEnum] = None
+    ball_direction: Optional[models.BattedBallDirectionEnum] = None
+    ball_type: Optional[models.BattedBallTypeEnum] = None
     pitch_type_detail: Optional[models.PitchTypeDetailType] = None  # others用
+    leaving_base: Optional[int]
     batting_form: models.BattingFormEnum  # hitting | bunt | slap
     batting_side: models.BattingSideEnum  # R | L | S
-
-    is_runner_first_steal: bool = False
-    is_runner_second_steal: bool = False
-    is_runner_third_steal: bool = False
+    is_runners_steal: RunnersSteal
     
 class GameMemberEntryState(BaseModel):
     batting_order: models.BattingOrderEnum
@@ -25,21 +30,7 @@ class TeamEntryState(BaseModel):
     team_id: int
     game_members_entry_state: Dict[int, GameMemberEntryState]
     model_config = ConfigDict(from_attributes=True)
-    
-class AdvanceDetail(BaseModel):
-    """
-    進塁候補の1つ
-    """
-    runner_id: int
-    from_base: Optional[int]
-    to_base: Optional[int]
-    is_out: bool
-    reason: Optional[str] = None
-    
-class ConfirmScoreInput(BaseModel):
-    pitch_event_id: int
-    candidate_id: int
-    
+
 class Game(BaseModel):
     id: int
     top_team_id: int
@@ -71,6 +62,11 @@ class GameMember(BaseModel):
     entry_number: Optional[int]
     model_config = ConfigDict(from_attributes=True)
     
+class BallCount(BaseModel):
+    balls: int
+    strikes: int
+    outs: int
+    
 class GameStateResponse(BaseModel):
     game: Game
     top_team_entry_state: TeamEntryState
@@ -78,14 +74,11 @@ class GameStateResponse(BaseModel):
     offense_team: Team
     defense_team: Team
     batter: GameMember
-    balls: int
-    strikes: int
-    outs: int
+    ball_count: BallCount
     score: int
     runners: List[Optional[GameMember]]
     top_team_score: List[int]
     bottom_team_score: List[int]
-    
 
 class EnteringMember(BaseModel):
     position: models.PositionEnum
@@ -94,6 +87,20 @@ class EnteringMember(BaseModel):
 class TeamEnteringMembers(BaseModel):
     entering_members: Dict[int, EnteringMember]
     
+class AdvanceElement(BaseModel):
+    runner_id: int
+    from_base: int
+    to_base: int
+    is_out: bool
+    reason: str
+    
+class AdvanceCandidates(BaseModel):
+    candidates: List[List[Optional[AdvanceElement]]]
+    
+class MainAdvenceCandidates(BaseModel):
+    num_of_candidates: int
+    candidates: AdvanceCandidates
+    
 class AdvanceEventSchema(BaseModel):
     id: int
     pitch_event_id: int
@@ -101,7 +108,7 @@ class AdvanceEventSchema(BaseModel):
     from_base: Optional[int]
     to_base: Optional[int]
     is_out: bool
-    reason: bool
+    reason: str
     model_config = ConfigDict(from_attributes=True)
 
 class PitchEventSchema(BaseModel):
@@ -134,7 +141,7 @@ class InningSchema(BaseModel):
     atbats: List[AtBatSchema]
     model_config = ConfigDict(from_attributes=True)
 
-class StateWithInning(BaseModel):
+class StateWithInnings(BaseModel):
     state: GameStateResponse
     all_innings_with_events: List[InningSchema]
 
@@ -142,7 +149,7 @@ class StateWithInning(BaseModel):
 
 # class AdvanceCandidate(BaseModel):
 #     candidate_id: int  # 選択用のID
-#     advances: List[AdvanceDetail]
+#     advances: List[AdvanceElement]
 
 # class ScoreInputResponse(BaseModel):
 #     atbat_id: int

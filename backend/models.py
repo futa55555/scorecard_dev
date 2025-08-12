@@ -74,8 +74,8 @@ class DominantHandEnum(str, enum.Enum):
     right = "R"
     left = "L"
     switch = "S"
-    
-    
+
+
 class RoleEnum(str, enum.Enum):
     player = "player"
     coach = "coach"
@@ -103,7 +103,7 @@ class PositionEnum(int, enum.Enum):
     RF = 9
     DP = 10
     NOT = 0
-    
+
 
 class BattingOrderEnum(int, enum.Enum):
     No1 = 1
@@ -117,7 +117,7 @@ class BattingOrderEnum(int, enum.Enum):
     No9 = 9
     FP = 10
     NOT = 0
-    
+
 
 class TopBottomEnum(str, enum.Enum):
     top = "top"
@@ -128,8 +128,8 @@ class BattingFormEnum(str, enum.Enum):
     hitting = "hitting"  # 通常打撃
     bunt = "bunt"        # バント
     slap = "slap"        # スラップ
-    
-    
+
+
 class BattingSideEnum(str, enum.Enum):
     R = "R"  # 右打席
     L = "L"  # 左打席
@@ -147,20 +147,34 @@ class PitchTypeEnum(str, enum.Enum):
     hit = "hit"
     out = "out"
     sacrified = "sacrified"
-    
+
 
 class PitchTypeDetailType(str, enum.Enum):
     hit_by_pitch = "hit_by_pitch"
     illegal = "illegal"
     interfere = "interfere"
     leaving_base = "leaving_base"
-    
-    
+
+
 class AtBatResultEnum(str, enum.Enum):
     strikeout = "strikeout"
     walk = "walk"
     ground = "ground"
     fly = "fly"
+
+
+class BattedBallDirectionEnum(str, enum.Enum):
+    center = "center"
+    front = "front"
+    back = "back"
+    left = "left"
+    right = "right"
+    
+    
+class BattedBallTypeEnum(str, enum.Enum):
+    ground = "ground"
+    fly = "fly"
+    liner = "liner"
 
 
 # --------------------
@@ -353,7 +367,6 @@ class AdvanceEvent(Base):
     from_base = Column(Integer, nullable=True)
     to_base = Column(Integer, nullable=True)
     is_out = Column(Boolean, default=False)
-    via_error = Column(Boolean, default=False)
     reason = Column(String(50), nullable=True)
 
     pitch_event = relationship("PitchEvent", foreign_keys=[pitch_event_id], back_populates="advance_events")

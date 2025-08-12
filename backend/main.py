@@ -16,12 +16,15 @@ init_data()
 
 app = FastAPI()
 
-# ルーター自動登録（backend/routers/*.py すべて読み込み）
-import backend.routers  # パッケージとして認識させる
-for _, module_name, _ in pkgutil.iter_modules(backend.routers.__path__):
-    module = importlib.import_module(f"backend.routers.{module_name}")
-    if hasattr(module, "router"):
-        app.include_router(module.router)
+from backend.routers import score_input
+app.include_router(score_input.router)
+
+# # ルーター自動登録（backend/routers/*.py すべて読み込み）
+# import backend.routers  # パッケージとして認識させる
+# for _, module_name, _ in pkgutil.iter_modules(backend.routers.__path__):
+#     module = importlib.import_module(f"backend.routers.{module_name}")
+#     if hasattr(module, "router"):
+#         app.include_router(module.router)
 
 # 静的ファイル
 app.mount("/static", StaticFiles(directory="frontend/public"), name="static")

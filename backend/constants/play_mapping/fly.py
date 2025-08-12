@@ -22,7 +22,3 @@ for pos in positions_outfield:
             ]
         }
     ]
-
-# print(f"Total plays: {len(play_mapping_fly)}")
-# for k, v in list(play_mapping_fly.items())[:5]:
-#     print(k, v)

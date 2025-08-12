@@ -8,7 +8,7 @@ from backend import models
 from backend.schemas import score_input as schema
 from backend.cruds import score_input as crud
 from backend.services import score_input as service
-from typing import List
+from typing import Tuple, List
 from pydantic import BaseModel
 
 router = APIRouter()
@@ -54,10 +54,13 @@ def start_game(game_id: int, db: Session = Depends(get_db)):
 #     response = service.confirm_score_input(db, game_id, input_data)
 #     return response
 
-@router.get("/api/games/{game_id}/all_innings", response_model=schema.StateWithInning)
-def get_all_atbats(game_id: int, db: Session = Depends(get_db)):
+@router.get("/api/games/{game_id}/state_all_innings", response_model=schema.StateWithInnings)
+def get_state_and_all_atbats(
+    game_id: int,
+    db: Session = Depends(get_db)
+):
     """
-    指定試合の全AtBat + PitchEvent + AdvanceEventを返す（デバッグ用）
+    指定試合の現在の状態と全AtBat + PitchEvent + AdvanceEventを返す
     """
     all_innings_with_events = service.get_all_innings_with_events_to_schema(db, game_id)
     state = service.get_latest_state(db, game_id)
@@ -68,21 +71,43 @@ def get_all_atbats(game_id: int, db: Session = Depends(get_db)):
 
 
 @router.get("/api/games/{game_id}/state", response_model=schema.GameStateResponse)
-def get_game_state(game_id: int, db: Session = Depends(get_db)):
+def get_game_state(
+    game_id:int,
+    db: Session = Depends(get_db)
+ ) -> schema.GameStateResponse:
     """
     現在の試合状況（フロントはこれを表示→次の投球入力へ）
     """
     return service.get_latest_state(db, game_id)
 
 
-@router.post("/api/games/{game_id}/pitch", response_model=schema.GameStateResponse)
-def post_pitch(game_id: int, input_data: schema.ScoreInput, db: Session = Depends(get_db)):
+@router.get("/api/games/{game_id}/all_innings", response_model=List[schema.InningSchema])
+def get_all_atbats(
+    game_id: int,
+    db: Session = Depends(get_db)
+):
+    """
+    指定試合の全AtBat + PitchEvent + AdvanceEventを返す
+    """
+    return service.get_all_innings_with_events_to_schema(db, game_id)
+
+
+@router.post("/api/games/{game_id}/pitch")
+def post_pitch(
+    game_id: int,
+    input_data: schema.ScoreInput,
+    db: Session = Depends(get_db)
+) -> schema.MainAdvenceCandidates:
     """
     1球登録 → 四球/三振なら自動確定 → 3アウトならチェンジ → 最新状態を返す
     """
-    # ここで service 側は「四球・三振・チェンジのみ完全対応」する実装に
-    # 例: service.register_pitch_event_and_auto_finish(db, game_id, input_data)
-    return service.register_pitch_event_and_auto_finish(db, game_id, input_data)
+    atbat = crud.get_latest_atbat(db, game_id)
+    pitch = crud.create_pitch_event(db, atbat.id, input_data)
+    main_advance_events = service.suggest_main_advance_events(db, game_id, input_data)
+    return {
+        "num_of_candidates": len(main_advance_events),
+        "candidates": main_advance_events
+    }
 
 
 # --- 後でサジェスト機能を戻す時に復活 ---

@@ -6,8 +6,9 @@ from backend import models
 from backend.schemas import score_input as schema
 from backend.cruds import score_input as crud
 from typing import Optional, List, Dict, Tuple
-from backend.constants.play_mapping.utils import find_candidates
+from backend.constants import play_mapping
 from copy import deepcopy
+from backend.constants import pitch_group
 
 # # ------------------------
 # # 状態計算
@@ -728,12 +729,17 @@ def get_latest_state(
     offense_team = crud.get_team(db, offense_team_id)
     defense_team = crud.get_team(db, defense_team_id)
     # バッター
-    batter = latest_atbat.batter
+    batter = schema.GameMember.model_validate(latest_atbat.batter, from_attributes=True)
     # ボール、ストライク
     balls, strikes = calc_bs_count(db, game_id)
     # アウト、得点、ランナー(id)
     outs, score, runners_id = aggregate_advance_events(db, game_id)
-    runners = []
+    ball_count = schema.BallCount(
+        balls = balls,
+        strikes = strikes,
+        outs = outs
+    )
+    runners = [batter]
     for runner_id in runners_id:
         if runner_id > 0:
             runner = crud.get_game_member(db, runner_id)
@@ -751,10 +757,8 @@ def get_latest_state(
         bottom_team_entry_state = schema.TeamEntryState.model_validate(bottom_team_entry_state, from_attributes=True),
         offense_team = schema.Team.model_validate(offense_team, from_attributes=True),
         defense_team = schema.Team.model_validate(defense_team, from_attributes=True),
-        batter = schema.GameMember.model_validate(batter, from_attributes=True),
-        balls = balls,
-        strikes = strikes,
-        outs = outs,
+        batter = batter,
+        ball_count = ball_count,
         score = score,
         runners = runners,
         top_team_score = top_team_score,
@@ -803,10 +807,44 @@ def suggest_main_advance_events(
     db: Session,
     game_id: int,
     input_data: schema.ScoreInput
-):
+) -> List[List[Optional[schema.AdvanceEventSchema]]]:
     """
     想定されるエラーまで含めた進塁イベントをサジェスト
     """
+    game_state = get_latest_state(db, game_id)
+
+    if input_data.pitch_type == models.PitchTypeEnum.foul:
+        # nothing
+        return [[]]
+
+    elif pitch_group.in_group(input_data.pitch_type, "count"):
+        # pitch_type, balls, strikes, outs, runners, is_runner_steal
+        return play_mapping.make_pitch_only(
+            pitch_type = input_data.pitch_type,
+            ball_count = game_state.ball_count,
+            runners = game_state.runners,
+            is_runners_steal = input_data.is_runners_steal
+        )
+
+    elif input_data.pitch_type == models.PitchTypeEnum.inplay:
+        # position, direction, type, ball_count, runners, is_runner_steal
+        return play_mapping.make_inplay(
+            position = input_data.position,
+            ball_direction = input_data.ball_direction,
+            ball_type = input_data.ball_type,
+            outs = game_state.ball_count.outs,
+            runners = game_state.runners,
+            is_runners_steal = input_data.is_runners_steal
+        )
+    
+    elif input_data.pitch_type == models.PitchTypeEnum.others:
+        # pitch_type_detail, (leaving_runner), runners, 
+        return play_mapping.make_others(
+            pitch_type_detail = input_data.pitch_type_detail,
+            runners = game_state.runners,
+            leaving_base = input_data.leaving_base
+        )
+            
     
     
     
@@ -836,8 +874,6 @@ def register_pitch_event(
     """
     投球内容を受けて、チェンジの判定・反映まで一連を行う
     """
-    pitch_event = crud.create_pitch_event
-    
     balls, strikes = calc_bs_count(db, game_id)
     outs, score, runners_id = aggregate_advance_events(db, game_id)
     
@@ -858,15 +894,15 @@ def _is_strikeout_after_this_pitch(pitch_events: list[models.PitchEvent]) -> boo
 def _build_forced_walk_advances(
     db: Session,
     game_id: int,
-) -> list[schema.AdvanceDetail]:
+) -> list[schema.AdvanceElement]:
     """
-    現在の走者配置を見て、四球による強制進塁の AdvanceDetail を列挙する。
+    現在の走者配置を見て、四球による強制進塁の AdvanceElement を列挙する。
     - batter: 0 -> 1
     - occupied(1B): 1 -> 2
     - occupied(2B): 2 -> 3
     - occupied(3B): 3 -> 4 (得点)
     """
-    advances: list[schema.AdvanceDetail] = []
+    advances: list[schema.AdvanceElement] = []
 
     latest_atbat = crud.get_latest_atbat(db, game_id)
     batter_id = latest_atbat.batter_id
@@ -877,20 +913,20 @@ def _build_forced_walk_advances(
 
     # 3塁→本塁、2塁→3塁、1塁→2塁 の順に押し出し
     if runners[3]:
-        advances.append(schema.AdvanceDetail(runner_id=runners[3], from_base=3, to_base=4, is_out=False))
+        advances.append(schema.AdvanceElement(runner_id=runners[3], from_base=3, to_base=4, is_out=False))
     if runners[2]:
-        advances.append(schema.AdvanceDetail(runner_id=runners[2], from_base=2, to_base=3, is_out=False))
+        advances.append(schema.AdvanceElement(runner_id=runners[2], from_base=2, to_base=3, is_out=False))
     if runners[1]:
-        advances.append(schema.AdvanceDetail(runner_id=runners[1], from_base=1, to_base=2, is_out=False))
+        advances.append(schema.AdvanceElement(runner_id=runners[1], from_base=1, to_base=2, is_out=False))
 
     # 打者 → 一塁
-    advances.append(schema.AdvanceDetail(runner_id=batter_id, from_base=0, to_base=1, is_out=False))
+    advances.append(schema.AdvanceElement(runner_id=batter_id, from_base=0, to_base=1, is_out=False))
     return advances
 
-def _build_strikeout_advance(db: Session, game_id: int) -> list[schema.AdvanceDetail]:
+def _build_strikeout_advance(db: Session, game_id: int) -> list[schema.AdvanceElement]:
     batter_id = crud.get_latest_atbat(db, game_id).batter_id
     # is_out=True のときは to_base=0 でOK（あなたの検証ロジックと整合）
-    return [schema.AdvanceDetail(runner_id=batter_id, from_base=0, to_base=0, is_out=True)]
+    return [schema.AdvanceElement(runner_id=batter_id, from_base=0, to_base=0, is_out=True)]
 
 def register_pitch_event_and_auto_finish(
     db: Session,

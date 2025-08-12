@@ -21,7 +21,3 @@ for pos in positions_outfield:
             ]
         }
     ]
-
-# print(f"Total plays: {len(play_mapping_outfield_ground)}")
-# for k, v in list(play_mapping_outfield_ground.items())[:5]:
-#     print(k, v)
