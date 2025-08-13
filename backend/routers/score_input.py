@@ -89,7 +89,7 @@ def confirm_advance_event(
         if advance_element.from_base == 0:
             crud.update_atbat_result(db, atbat.id, advance_element.reason)
     game_state = service.get_latest_state(db, game_id)
-    if game_state.outs == 3:
+    if game_state.ball_count.outs == 3:
         change = True
     return {
         "selected_candidate": selected_candidate,
@@ -100,13 +100,20 @@ def confirm_advance_event(
 @router.post("/api/games/{game_id}/change")
 def change_inning(
     game_id: int,
+    input_data: schema.ChangeInput,
     db: Session = Depends(get_db)
-) -> schema.AtBatSchema:    
-    last_inning = crud.get_latest_inning(db, game_id)
-    outs, score, runners_id = service.aggregate_advance_events(db, game_id)
-    crud.update_inning_score(db, last_inning.id, score)
+) -> schema.AtBatSchema:
+    if input_data.change:
+        last_inning = crud.get_latest_inning(db, game_id)
+        outs, score, runners_id = service.aggregate_advance_events(db, game_id)
+        crud.update_inning_score(db, last_inning.id, score)
+        
+        next_inning = service.create_next_inning(db, game_id, last_inning)
+        next_batter = service.get_following_batter(db, game_id)
+        next_atbat = crud.create_atbat(db, next_inning.id, next_batter.id)
+    else:
+        latest_inning = crud.get_latest_inning(db, game_id)
+        next_batter = service.get_following_batter(db, game_id)
+        next_atbat = crud.create_atbat(db, latest_inning.id, next_batter.id)
     
-    next_inning = service.create_next_inning(db, game_id, last_inning)
-    next_batter = service.get_following_batter(db, game_id)
-    next_atbat = crud.create_atbat(db, next_inning.id, next_batter.id)
     return schema.AtBatSchema.model_validate(next_atbat, from_attributes=True)

@@ -159,7 +159,17 @@ def make_pitch_only(
                     runners = runners,
                     length = 1,
                     is_out = False,
-                    reason = "WP",
+                    reason = "PB",
+                    is_break = False,
+                    exclusion = [0]
+                )
+            )
+            res.append(
+                utils.apply_common_advancement(
+                    runners = runners,
+                    length = 1,
+                    is_out = False,
+                    reason = "steal",
                     is_break = False,
                     exclusion = [0]
                 )

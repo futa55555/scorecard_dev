@@ -105,6 +105,9 @@ class AdvanceCandidateConfirm(BaseModel):
     change: bool
     selected_candidate: List[Optional[AdvanceElement]]
     
+class ChangeInput(BaseModel):
+    change: bool    
+
 class AdvanceEventSchema(BaseModel):
     id: int
     pitch_event_id: int

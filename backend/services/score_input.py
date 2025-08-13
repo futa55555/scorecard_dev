@@ -257,13 +257,14 @@ def get_latest_state(
         strikes = strikes,
         outs = outs
     )
-    runners = [batter]
+    runners = []
     for runner_id in runners_id:
         if runner_id > 0:
             runner = crud.get_game_member(db, runner_id)
             runners.append(schema.GameMember.model_validate(runner, from_attributes=True))
         else:
             runners.append(None)
+    runners[0] = batter
     # 選手の出場状態
     top_team_entry_state, bottom_team_entry_state = get_entry_state(db, game_id)
     # 過去イニングの得点状況
@@ -416,13 +417,13 @@ def suggest_additional_advance_events():
     想定されないエラーによる進塁を追加でサジェスト
     """
     
-    
+
 def apply_advance_events():
     """
     フロントで選択した進塁を登録
     """
     
-    
+
 def change_inning():
     """
     3アウトでチェンジして次のイニング、打席を作成
@@ -439,5 +440,4 @@ def register_pitch_event(
     """
     balls, strikes = calc_bs_count(db, game_id)
     outs, score, runners_id = aggregate_advance_events(db, game_id)
-    
     
