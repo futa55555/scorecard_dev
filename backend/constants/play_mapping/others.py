@@ -11,12 +11,14 @@ from . import utils
 # ------------------------
 
 def make_others(
-    runners: List[Optional[models.GameMember]],
-    ball_count: schema.BallCount,
-    pitch_type: models.PitchTypeEnum,
-    pitch_type_detail: models.PitchTypeDetailEnum,
-    leaving_base: int = None
-) -> List[Optional[schema.AdvanceCandidate]]:    
+    advance_ingredient: schema.AdvanceIngredient
+) -> List[Optional[schema.AdvanceCandidate]]:
+    runners = advance_ingredient.runners
+    ball_count = advance_ingredient.ball_count
+    pitch_type = advance_ingredient.pitch_type
+    pitch_type_detail = advance_ingredient.pitch_type_detail
+    leaving_base = advance_ingredient.leaving_base
+    
     if pitch_type == models.PitchTypeEnum.foul:
         # ファウル
         if ball_count.strikes == 3:
@@ -102,5 +104,3 @@ def make_others(
                 ]
             )
         ]
-
-    return res

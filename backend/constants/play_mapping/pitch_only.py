@@ -13,10 +13,12 @@ from . import utils
 # ------------------------
 
 def make_pitch_only(
-    runners: List[Optional[models.GameMember]],
-    ball_count: schema.BallCount,
-    is_runners_steal: schema.RunnersSteal
+    advance_ingredient: schema.AdvanceIngredient
 ) -> List[Optional[schema.AdvanceCandidate]]:
+    runners = advance_ingredient.runners
+    ball_count = advance_ingredient.ball_count
+    is_runners_steal = advance_ingredient.is_runners_steal
+    
     if ball_count.strikes == 3:
         # 三振
         # 振り逃げなし

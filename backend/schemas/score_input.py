@@ -11,14 +11,13 @@ class RunnersSteal(BaseModel):
     third: bool = False
 
 class ScoreInput(BaseModel):
-    pitch_type: models.PitchTypeEnum  # swing_miss, looking, ball, foul, inplay, others
+    pitch_type: models.PitchTypeEnum
     position: Optional[models.PositionEnum] = None
-    ball_direction: Optional[models.BattedBallDirectionEnum] = None
-    ball_type: Optional[models.BattedBallTypeEnum] = None
-    pitch_type_detail: Optional[models.PitchTypeDetailEnum] = None  # others用
-    leaving_base: Optional[int]
-    batting_form: models.BattingFormEnum  # hitting | bunt | slap
-    batting_side: models.BattingSideEnum  # R | L | S
+    batted_ball_type: Optional[models.BattedBallTypeEnum] = None
+    pitch_type_detail: Optional[models.PitchTypeDetailEnum] = None
+    leaving_base: Optional[int] = None
+    batting_form: Optional[models.BattingFormEnum] = None
+    batting_side: models.BattingSideEnum
     is_runners_steal: RunnersSteal
     
 class GameMemberEntryState(BaseModel):
@@ -78,6 +77,17 @@ class GameStateResponse(BaseModel):
     bottom_team_score: List[int]
     top_team_entry_state: TeamEntryState
     bottom_team_entry_state: TeamEntryState
+    
+class AdvanceIngredient(BaseModel):
+    runners: List[Optional[GameMember]]
+    is_runners_steal: RunnersSteal
+    ball_count: BallCount
+    pitch_type: models.PitchTypeEnum
+    pitch_type_detail: Optional[models.PitchTypeDetailEnum] = None
+    position: Optional[models.PositionEnum] = None
+    batted_ball_type: Optional[models.BattedBallTypeEnum] = None
+    batting_form: Optional[models.BattingFormEnum] = None
+    leaving_base: Optional[int] = None
 
 class EnteringMember(BaseModel):
     position: models.PositionEnum

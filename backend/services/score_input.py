@@ -150,7 +150,7 @@ def calc_bs_count(
             balls += 1
         elif pitch_event.pitch_type == models.PitchTypeEnum.others and pitch_event.pitch_type_detail == models.PitchTypeDetailEnum.illegal:
             balls += 1
-        elif pitch_event.pitch_type in (models.PitchTypeEnum.swing_miss, models.PitchTypeEnum.looking):
+        elif pitch_group.in_group(pitch_event.pitch_type, "strike"):
             strikes += 1
         elif pitch_event.pitch_type == models.PitchTypeEnum.foul:
             if strikes < 2 or pitch_event.batting_form == models.BattingFormEnum.bunt:
@@ -335,68 +335,32 @@ def suggest_main_advance_events(
 ) -> List[Optional[schema.AdvanceCandidate]]:
     """
     想定されるエラーまで含めた進塁イベントをサジェスト
-    """    
+    """
     game_state = get_latest_state(db, game_id)
     
+    advance_ingredient = schema.AdvanceIngredient(
+        runners = game_state.runners,
+        is_runners_steal = input_data.is_runners_steal,
+        ball_count = game_state.ball_count,
+        pitch_type = input_data.pitch_type,
+        pitch_type_detail = input_data.pitch_type_detail,
+        position = input_data.position,
+        batted_ball_type = input_data.batted_ball_type,
+        batting_form = input_data.batting_form,
+        leaving_base = input_data.leaving_base
+    )
+
     if pitch_group.in_group(input_data.pitch_type, "ball_dead"):
         ### 確定的進塁
-        return play_mapping.make_others(
-            runners = game_state.runners,
-            ball_count = game_state.ball_count,
-            pitch_type = input_data.pitch_type,
-            pitch_type_detail = input_data.pitch_type_detail,
-            leaving_base = input_data.leaving_base
-        )
+        return play_mapping.make_others(advance_ingredient)
 
     elif pitch_group.in_group(input_data.pitch_type, "count"):
         ### ボール、ストライク
-        return play_mapping.make_pitch_only(
-            runners = game_state.runners,
-            ball_count = game_state.ball_count,
-            is_runners_steal = input_data.is_runners_steal
-        )
+        return play_mapping.make_pitch_only(advance_ingredient)
 
     elif pitch_group.in_group(input_data.pitch_type, "inplays"):
         ### 打球あり
-        # atbat,
-        # runners,
-        # is_runners_steal,
-        # position,
-        # batted_ball_type,
-        # outs
-        pass
-
-    # if input_data.pitch_type == models.PitchTypeEnum.foul:
-    #     # nothing
-    #     return [[]]
-
-    # elif pitch_group.in_group(input_data.pitch_type, "count"):
-    #     # pitch_type, balls, strikes, outs, runners, is_runner_steal
-    #     return play_mapping.make_pitch_only(
-    #         pitch_type = input_data.pitch_type,
-    #         ball_count = game_state.ball_count,
-    #         runners = game_state.runners,
-    #         is_runners_steal = input_data.is_runners_steal
-    #     )
-
-    # elif input_data.pitch_type == models.PitchTypeEnum.inplay:
-    #     # position, direction, type, ball_count, runners, is_runner_steal
-    #     return play_mapping.make_inplay(
-    #         position = input_data.position,
-    #         ball_direction = input_data.ball_direction,
-    #         ball_type = input_data.ball_type,
-    #         outs = game_state.ball_count.outs,
-    #         runners = game_state.runners,
-    #         is_runners_steal = input_data.is_runners_steal
-    #     )
-    
-    # elif input_data.pitch_type == models.PitchTypeEnum.others:
-    #     # pitch_type_detail, (leaving_runner), runners, 
-    #     return play_mapping.make_others(
-    #         pitch_type_detail = input_data.pitch_type_detail,
-    #         runners = game_state.runners,
-    #         leaving_base = input_data.leaving_base
-    #     )
+        return play_mapping.make_inplay(advance_ingredient)
 
 
 def get_following_batter(
