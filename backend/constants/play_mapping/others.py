@@ -11,16 +11,16 @@ from . import utils
 # ------------------------
 
 def make_others(
-    pitch_type_detail: models.PitchTypeDetailType,
+    pitch_type_detail: models.PitchTypeDetailEnum,
     runners: List[Optional[models.GameMember]],
     leaving_base: int = None
 ) -> List[List[Optional[schema.AdvanceElement]]]:
     res = []
     
     # hit_by_pitch, interfere
-    if pitch_type_detail in (models.PitchTypeDetailType.hit_by_pitch, models.PitchTypeDetailType.interfere):
+    if pitch_type_detail in (models.PitchTypeDetailEnum.hit_by_pitch, models.PitchTypeDetailEnum.interfere):
         res.append(
-            utils.apply_common_advancement(
+            utils.apply_common_advance(
                 runners = runners,
                 length = 1,
                 is_out = False,
@@ -31,9 +31,9 @@ def make_others(
         )
             
     # illegal
-    elif pitch_type_detail == models.PitchTypeDetailType.illegal:
+    elif pitch_type_detail == models.PitchTypeDetailEnum.illegal:
         res.append(
-            utils.apply_common_advancement(
+            utils.apply_common_advance(
                 runners = runners,
                 length = 1,
                 is_out = False,
@@ -44,7 +44,7 @@ def make_others(
         )
     
     # leaivng_base
-    elif pitch_type_detail == models.PitchTypeDetailType.leaving_base:
+    elif pitch_type_detail == models.PitchTypeDetailEnum.leaving_base:
         runner = runners[leaving_base]
         if not runner:
             raise HTTPException(status_code=400, detail="leaving_base is invalid")

@@ -564,7 +564,10 @@ def create_advance_event(
             from_base = adv.from_base,
             to_base = adv.to_base,
             is_out = adv.is_out,
-            reason = adv.reason
+            is_by_atbat = adv.is_by_atbat,
+            out_type = adv.out_type,
+            ball_flow = adv.ball_flow,
+            advance_by_pitch = adv.advance_by_pitch
         ) for adv in advs
     ]
     

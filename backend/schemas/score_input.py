@@ -15,7 +15,7 @@ class ScoreInput(BaseModel):
     position: Optional[models.PositionEnum] = None
     ball_direction: Optional[models.BattedBallDirectionEnum] = None
     ball_type: Optional[models.BattedBallTypeEnum] = None
-    pitch_type_detail: Optional[models.PitchTypeDetailType] = None  # others用
+    pitch_type_detail: Optional[models.PitchTypeDetailEnum] = None  # others用
     leaving_base: Optional[int]
     batting_form: models.BattingFormEnum  # hitting | bunt | slap
     batting_side: models.BattingSideEnum  # R | L | S
@@ -68,17 +68,16 @@ class BallCount(BaseModel):
     outs: int
     
 class GameStateResponse(BaseModel):
-    game: Game
-    top_team_entry_state: TeamEntryState
-    bottom_team_entry_state: TeamEntryState
-    offense_team: Team
-    defense_team: Team
-    batter: GameMember
+    game_id: int
+    offense_team_id: int
+    defense_team_id: int
     ball_count: BallCount
     score: int
     runners: List[Optional[GameMember]]
     top_team_score: List[int]
     bottom_team_score: List[int]
+    top_team_entry_state: TeamEntryState
+    bottom_team_entry_state: TeamEntryState
 
 class EnteringMember(BaseModel):
     position: models.PositionEnum
@@ -92,37 +91,44 @@ class AdvanceElement(BaseModel):
     from_base: int
     to_base: int
     is_out: bool
-    reason: str
+    is_by_atbat: bool
+    out_type: Optional[models.OutTypeEnum] = None
+    ball_flow: Optional[List[models.PositionEnum]] = []
+    advance_by_pitch: Optional[models.AdvanceByPitchEnum] = None
     
+class AdvanceCandidate(BaseModel):
+    atbat_result: Optional[models.AtBatResultEnum]
+    advance_elements: List[Optional[AdvanceElement]]
+
 class MainAdvenceCandidates(BaseModel):
     num_of_candidates: int
-    candidates: List[List[Optional[AdvanceElement]]]
-    
-class SelectedAdvanceCandidate(BaseModel):
-    selected_candidate: List[Optional[AdvanceElement]]
+    candidates: List[Optional[AdvanceCandidate]]
 
 class AdvanceCandidateConfirm(BaseModel):
     change: bool
     selected_candidate: List[Optional[AdvanceElement]]
     
 class ChangeInput(BaseModel):
-    change: bool    
+    change: bool
 
 class AdvanceEventSchema(BaseModel):
     id: int
     pitch_event_id: int
     runner_id: int
-    from_base: Optional[int]
-    to_base: Optional[int]
+    from_base: int
+    to_base: int
     is_out: bool
-    reason: str
+    is_by_atbat: bool
+    out_type: Optional[models.OutTypeEnum]
+    ball_flow: Optional[List[models.PositionEnum]]
+    advance_by_pitch: Optional[models.AdvanceByPitchEnum]
     model_config = ConfigDict(from_attributes=True)
 
 class PitchEventSchema(BaseModel):
     id: int
     atbat_id: int
     pitch_type: Optional[models.PitchTypeEnum]
-    pitch_type_detail: Optional[models.PitchTypeDetailType]
+    pitch_type_detail: Optional[models.PitchTypeDetailEnum]
     batting_form: Optional[models.BattingFormEnum]
     batting_side: Optional[models.BattingSideEnum]
     is_runner_first_steal: bool

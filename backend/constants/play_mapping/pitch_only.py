@@ -1,8 +1,10 @@
 # backend/constants/play_mapping/pitch_only.py
 
+from sqlalchemy.orm import Session
 from backend import models
 from typing import Optional, List, Dict
 from backend.schemas import score_input as schema
+from backend.cruds import score_input as crud
 from fastapi import HTTPException
 from . import utils
 
@@ -11,168 +13,57 @@ from . import utils
 # ------------------------
 
 def make_pitch_only(
+    runners: List[Optional[models.GameMember]],
     pitch_type: models.PitchTypeEnum,
     ball_count: schema.BallCount,
-    runners: List[Optional[models.GameMember]],
     is_runners_steal: schema.RunnersSteal
-) -> List[List[Optional[schema.AdvanceElement]]]:
-    res = []
-    
-    if ball_count.balls == 4:
-        res.append(
-            utils.apply_common_advancement(
-                runners = runners,
-                length = 1,
-                is_out = False,
-                reason = "walk",
-                is_break = True,
-                exclusion = []
-            )
-        )
-
-    elif ball_count.strikes == 3:
-        tmp = [
+) -> List[Optional[schema.AdvanceCandidate]]:
+    if ball_count.strikes == 3:
+        # 三振
+        # 振り逃げなし
+        base_atbat_result = "strikeout"
+        base_advance_elements = [
             schema.AdvanceElement(
                 runner_id = runners[0].id,
                 from_base = 0,
                 to_base = 0,
                 is_out = True,
-                reason = "strikeout"
+                is_by_atbat = True
             )
         ]
-        res.append(tmp)
-        
-        if any(runners[1:]):
-            res.append(
-                tmp + utils.apply_common_advancement(
-                    runners = runners,
-                    length = 1,
-                    is_out = False,
-                    reason = "WP",
-                    is_break = False,
-                    exclusion = [0]
-                )
+        return [
+            schema.AdvanceCandidate(
+                atbat_result = base_atbat_result,
+                advance_elements = base_advance_elements
             )
-            res.append(
-                tmp + utils.apply_common_advancement(
-                    runners = runners,
-                    length = 1,
-                    is_out = False,
-                    reason = "PB",
-                    is_break = False,
-                    exclusion = [0]
-                )
+        ]
+            
+    elif ball_count.balls == 4:
+        # 打者の四球 + 強制進塁
+        base_atbat_result = "walk"
+        base_advance_elements = utils.apply_common_advance(
+            runners = runners,
+            step = 1,
+            is_break = True,
+            is_only_runners = False,
+            is_by_atbat = True
+        )
+        return [
+            schema.AdvanceCandidate(
+                atbat_result = base_atbat_result,
+                advance_elements = base_advance_elements
             )
-        
-        if not runners[1]:
-            res.append(
-                [
-                    schema.AdvanceElement(
-                        runner_id = runners[0].id,
-                        from_base = 0,
-                        to_base = 1,
-                        is_out = True,
-                        reason = "strikeout"
-                    )
-                ],
-            )
-            res.append(
-                utils.apply_common_advancement(
-                    runners = runners,
-                    length = 1,
-                    is_out = False,
-                    reason = "WP",
-                    is_break = False,
-                    exclusion = []
-                )
-            )
-            res.append(
-                utils.apply_common_advancement(
-                    runners = runners,
-                    length = 1,
-                    is_out = False,
-                    reason = "PB",
-                    is_break = False,
-                    exclusion = []
-                )
-            )
-        
-        elif ball_count.outs == 2:
-            res.append(
-                [
-                    schema.AdvanceElement(
-                        runner_id = runners[0].id,
-                        from_base = 0,
-                        to_base = 1,
-                        is_out = True,
-                        reason = "strikeout"
-                    )
-                ]
-            )
-            res.append(
-                [
-                    schema.AdvanceElement(
-                        runner_id = runners[3].id,
-                        from_base = 3,
-                        to_base = 4,
-                        is_out = True,
-                        reason = "strikeout"
-                    )
-                ]
-            )
-            res.append(
-                utils.apply_common_advancement(
-                    runners = runners,
-                    length = 1,
-                    is_out = False,
-                    reason = "WP",
-                    is_break = False,
-                    exclusion = []
-                )
-            )
-            res.append(
-                utils.apply_common_advancement(
-                    runners = runners,
-                    length = 1,
-                    is_out = False,
-                    reason = "PB",
-                    is_break = False,
-                    exclusion = []
-                )
-            )
-        
+        ]
+
     else:
-        res.append([])
-        if any(runners[1:]):
-            res.append(
-                utils.apply_common_advancement(
-                    runners = runners,
-                    length = 1,
-                    is_out = False,
-                    reason = "WP",
-                    is_break = False,
-                    exclusion = [0]
-                )
-            )
-            res.append(
-                utils.apply_common_advancement(
-                    runners = runners,
-                    length = 1,
-                    is_out = False,
-                    reason = "PB",
-                    is_break = False,
-                    exclusion = [0]
-                )
-            )
-            res.append(
-                utils.apply_common_advancement(
-                    runners = runners,
-                    length = 1,
-                    is_out = False,
-                    reason = "steal",
-                    is_break = False,
-                    exclusion = [0]
-                )
-            )
-    
-    return res
+        return []
+
+### 今できてること
+# 振り逃げなし三振
+# 四球 + 強制進塁
+
+### 足すべきこと
+# 振り逃げなし三振 + 進塁
+# 振り逃げあり三振
+# 振り逃げあり三振 + 進塁
+# 四球 + 進塁

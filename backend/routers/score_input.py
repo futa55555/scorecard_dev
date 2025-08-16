@@ -77,22 +77,21 @@ def register_pitch(
 @router.post("/api/games/{game_id}/confirm")
 def confirm_advance_event(
     game_id: int,
-    input_data: schema.SelectedAdvanceCandidate,
+    input_data: schema.AdvanceCandidate,
     db: Session = Depends(get_db)
 ) -> schema.AdvanceCandidateConfirm:
     change = False
     
     pitch_event = crud.get_latest_pitch_event(db, game_id)
-    atbat = crud.get_latest_atbat(db, game_id)
-    selected_candidate = crud.create_advance_event(db, pitch_event.id, input_data.selected_candidate)
-    for advance_element in selected_candidate:
-        if advance_element.from_base == 0:
-            crud.update_atbat_result(db, atbat.id, advance_element.reason)
+    if input_data.atbat_result:
+        atbat = crud.get_latest_atbat(db, game_id)
+        crud.update_atbat_result(db, atbat.id, input_data.atbat_result)
+    advance_elements = crud.create_advance_event(db, pitch_event.id, input_data.advance_elements)
     game_state = service.get_latest_state(db, game_id)
     if game_state.ball_count.outs == 3:
         change = True
     return {
-        "selected_candidate": selected_candidate,
+        "selected_candidate": advance_elements,
         "change": change
     }
     

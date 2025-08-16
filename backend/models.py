@@ -60,7 +60,6 @@ class PrefectureEnum(str, enum.Enum):
     Kagoshima = "鹿児島"
     Okinawa = "沖縄"
     
-
 class GradeEnum(str, enum.Enum):
     B1 = "B1"
     B2 = "B2"
@@ -69,12 +68,10 @@ class GradeEnum(str, enum.Enum):
     M1 = "M1"
     M2 = "M2"
     
-
 class DominantHandEnum(str, enum.Enum):
     right = "R"
     left = "L"
     switch = "S"
-
 
 class RoleEnum(str, enum.Enum):
     player = "player"
@@ -83,13 +80,11 @@ class RoleEnum(str, enum.Enum):
     trainer = "trainer"
     analyst = "analyst"
 
-
 class PositionTypeEnum(str, enum.Enum):
     P = "P"
     C = "C"
     IF = "IF"
     OF = "OF"
-
 
 class PositionEnum(int, enum.Enum):
     P = 1
@@ -104,7 +99,6 @@ class PositionEnum(int, enum.Enum):
     DP = 10
     NOT = 0
 
-
 class BattingOrderEnum(int, enum.Enum):
     No1 = 1
     No2 = 2
@@ -118,23 +112,19 @@ class BattingOrderEnum(int, enum.Enum):
     FP = 10
     NOT = 0
 
-
 class TopBottomEnum(str, enum.Enum):
     top = "top"
     bottom = "bottom"
-
 
 class BattingFormEnum(str, enum.Enum):
     hitting = "hitting"  # 通常打撃
     bunt = "bunt"        # バント
     slap = "slap"        # スラップ
 
-
 class BattingSideEnum(str, enum.Enum):
     R = "R"  # 右打席
     L = "L"  # 左打席
     S = "S"  # スイッチ
-
 
 class PitchTypeEnum(str, enum.Enum):
     swing_miss = "swing_miss"
@@ -145,23 +135,20 @@ class PitchTypeEnum(str, enum.Enum):
     others = "others"
     
     hit = "hit"
-    out = "out"
+    poor = "poor"
     sacrified = "sacrified"
 
-
-class PitchTypeDetailType(str, enum.Enum):
+class PitchTypeDetailEnum(str, enum.Enum):
     hit_by_pitch = "hit_by_pitch"
     illegal = "illegal"
     interfere = "interfere"
     leaving_base = "leaving_base"
-
 
 class AtBatResultEnum(str, enum.Enum):
     strikeout = "strikeout"
     walk = "walk"
     ground = "ground"
     fly = "fly"
-
 
 class BattedBallDirectionEnum(str, enum.Enum):
     center = "center"
@@ -170,12 +157,20 @@ class BattedBallDirectionEnum(str, enum.Enum):
     left = "left"
     right = "right"
     
-    
 class BattedBallTypeEnum(str, enum.Enum):
+    none = "none"
     ground = "ground"
     fly = "fly"
     liner = "liner"
 
+class OutTypeEnum(str, enum.Enum):
+    force = "force"
+    touch = "touch"
+
+class AdvanceByPitchEnum(str, enum.Enum):
+    steal = "steal"
+    wild_pitch = "wild_pitch"
+    passed_ball = "passed_ball"
 
 # --------------------
 # テーブル定義
@@ -365,10 +360,13 @@ class AdvanceEvent(Base):
     id = Column(Integer, primary_key=True, index=True)
     pitch_event_id = Column(Integer, ForeignKey("pitch_events.id"), nullable=False)
     runner_id = Column(Integer, ForeignKey("game_members.id"), nullable=False)
-    from_base = Column(Integer, nullable=True)
-    to_base = Column(Integer, nullable=True)
-    is_out = Column(Boolean, default=False)
-    reason = Column(String(50), nullable=True)
+    from_base = Column(Integer, nullable=False)
+    to_base = Column(Integer, nullable=False)
+    is_out = Column(Boolean, nullable=False)
+    is_by_atbat = Column(Boolean, nullable=False)
+    out_type = Column(Enum(OutTypeEnum), nullable=True)
+    ball_flow = Column(JSON, nullable=True)
+    advance_by_pitch = Column(Enum(AdvanceByPitchEnum), nullable=True)
 
     pitch_event = relationship("PitchEvent", foreign_keys=[pitch_event_id], back_populates="advance_events")
     runner = relationship("GameMember", foreign_keys=[runner_id], back_populates="runners")
