@@ -14,7 +14,6 @@ from . import utils
 
 def make_pitch_only(
     runners: List[Optional[models.GameMember]],
-    pitch_type: models.PitchTypeEnum,
     ball_count: schema.BallCount,
     is_runners_steal: schema.RunnersSteal
 ) -> List[Optional[schema.AdvanceCandidate]]:
@@ -56,7 +55,9 @@ def make_pitch_only(
         ]
 
     else:
-        return []
+        return [
+            schema.AdvanceCandidate()
+        ]
 
 ### 今できてること
 # 振り逃げなし三振

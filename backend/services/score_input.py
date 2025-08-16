@@ -148,6 +148,8 @@ def calc_bs_count(
     for pitch_event in pitch_events_of_latest_atbat:
         if pitch_event.pitch_type == models.PitchTypeEnum.ball:
             balls += 1
+        elif pitch_event.pitch_type == models.PitchTypeEnum.others and pitch_event.pitch_type_detail == models.PitchTypeDetailEnum.illegal:
+            balls += 1
         elif pitch_event.pitch_type in (models.PitchTypeEnum.swing_miss, models.PitchTypeEnum.looking):
             strikes += 1
         elif pitch_event.pitch_type == models.PitchTypeEnum.foul:
@@ -338,21 +340,18 @@ def suggest_main_advance_events(
     
     if pitch_group.in_group(input_data.pitch_type, "ball_dead"):
         ### 確定的進塁
-        # atbat,
-        # runners,
-        # pitch_type_detail,
-        # leaving_base
-        pass
+        return play_mapping.make_others(
+            runners = game_state.runners,
+            ball_count = game_state.ball_count,
+            pitch_type = input_data.pitch_type,
+            pitch_type_detail = input_data.pitch_type_detail,
+            leaving_base = input_data.leaving_base
+        )
 
     elif pitch_group.in_group(input_data.pitch_type, "count"):
         ### ボール、ストライク
-        # runners,
-        # pitch_type,
-        # ball_count,
-        # is_runners_steal
         return play_mapping.make_pitch_only(
             runners = game_state.runners,
-            pitch_type = input_data.pitch_type,
             ball_count = game_state.ball_count,
             is_runners_steal = input_data.is_runners_steal
         )

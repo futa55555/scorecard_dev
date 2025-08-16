@@ -97,8 +97,8 @@ class AdvanceElement(BaseModel):
     advance_by_pitch: Optional[models.AdvanceByPitchEnum] = None
     
 class AdvanceCandidate(BaseModel):
-    atbat_result: Optional[models.AtBatResultEnum]
-    advance_elements: List[Optional[AdvanceElement]]
+    atbat_result: Optional[models.AtBatResultEnum] = None
+    advance_elements: Optional[List[AdvanceElement]] = []
 
 class MainAdvenceCandidates(BaseModel):
     num_of_candidates: int

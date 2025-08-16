@@ -11,53 +11,96 @@ from . import utils
 # ------------------------
 
 def make_others(
-    pitch_type_detail: models.PitchTypeDetailEnum,
     runners: List[Optional[models.GameMember]],
+    ball_count: schema.BallCount,
+    pitch_type: models.PitchTypeEnum,
+    pitch_type_detail: models.PitchTypeDetailEnum,
     leaving_base: int = None
-) -> List[List[Optional[schema.AdvanceElement]]]:
-    res = []
+) -> List[Optional[schema.AdvanceCandidate]]:    
+    if pitch_type == models.PitchTypeEnum.foul:
+        # ファウル
+        if ball_count.strikes == 3:
+            # スリーバント失敗
+            return [
+                schema.AdvanceCandidate(
+                    atbat_result = "strikeout",
+                    advance_elements = [
+                        schema.AdvanceElement(
+                            runner_id = runners[0].id,
+                            from_base = 0,
+                            to_base = 0,
+                            is_out = True,
+                            is_by_atbat = True
+                        )
+                    ]
+                )
+            ]
+        else:
+            # ただのファウル
+            return [
+                schema.AdvanceCandidate()
+            ]
     
-    # hit_by_pitch, interfere
     if pitch_type_detail in (models.PitchTypeDetailEnum.hit_by_pitch, models.PitchTypeDetailEnum.interfere):
-        res.append(
-            utils.apply_common_advance(
-                runners = runners,
-                length = 1,
-                is_out = False,
-                reason = pitch_type_detail,
-                is_break = True,
-                exclusion = []
+        # 死球
+        return [
+            schema.AdvanceCandidate(
+                atbat_result = pitch_type_detail,
+                advance_elements = utils.apply_common_advance(
+                    runners = runners,
+                    step = 1,
+                    is_break = True,
+                    is_only_runners = False,
+                    is_by_atbat = True,
+                )
             )
-        )
-            
-    # illegal
+        ]
+
     elif pitch_type_detail == models.PitchTypeDetailEnum.illegal:
-        res.append(
-            utils.apply_common_advance(
-                runners = runners,
-                length = 1,
-                is_out = False,
-                reason = pitch_type_detail,
-                is_break = True,
-                exclusion = [0]
-            )
-        )
+        # イリーガルピッチ
+        if ball_count == 4:
+            return [
+                schema.AdvanceCandidate(
+                    atbat_result = "walk",
+                    advance_elements = utils.apply_common_advance(
+                        runners = runners,
+                        step = 1,
+                        is_break = True,
+                        is_only_runners = False,
+                        is_by_atbat = True,
+                    )
+                )
+            ]
+        else:
+            return [
+                schema.AdvanceCandidate(
+                    advance_elements = utils.apply_common_advance(
+                        runners = runners,
+                        step = 1,
+                        is_break = True,
+                        is_only_runners = True,
+                        is_by_atbat = False,
+                    )
+                )
+            ]
     
-    # leaivng_base
     elif pitch_type_detail == models.PitchTypeDetailEnum.leaving_base:
+        # 離塁アウト
         runner = runners[leaving_base]
         if not runner:
             raise HTTPException(status_code=400, detail="leaving_base is invalid")
-        res.append(
-            [
-                schema.AdvanceElement(
-                    runner_id = runner.id,
-                    from_base = leaving_base,
-                    to_base = leaving_base,
-                    is_out = True,
-                    reason = pitch_type_detail
-                )
-            ]
-        )
+        return [
+            schema.AdvanceCandidate(
+                advance_elements = [
+                    schema.AdvanceElement(
+                        runner_id = runner.id,
+                        from_base = leaving_base,
+                        to_base = leaving_base,
+                        is_out = True,
+                        is_by_atbat = False
+                    )
+                ]
+            )
+        ]
 
     return res
