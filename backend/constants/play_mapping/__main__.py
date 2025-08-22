@@ -108,7 +108,7 @@ def search_candidates(
     runner_state: Optional[Union[str, Sequence[int]]] = None,
     outs: Optional[int] = None,
 ) -> List[Dict[str, Any]]:
-    print("\n== Search example 2: {0}, {1}, runner_state={2}, outs={3} ==".format(
+    print("\n{0}, {1}, runner_state={2}, outs={3} ==".format(
         position, batted_ball_type, runner_state, outs
     ))
 
@@ -159,4 +159,4 @@ if __name__ == "__main__":
         outs=1,
     )
     for c in res:
-        print("-", c.get("label"))
+        print("-", c.get("events"))
