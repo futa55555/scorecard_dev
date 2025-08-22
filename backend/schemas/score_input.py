@@ -108,7 +108,7 @@ class AdvanceElement(BaseModel):
     
 class AdvanceCandidate(BaseModel):
     atbat_result: Optional[models.AtBatResultEnum] = None
-    advance_elements: Optional[List[AdvanceElement]] = []
+    advance_elements: List[Optional[AdvanceElement]] = []
 
 class MainAdvenceCandidates(BaseModel):
     num_of_candidates: int

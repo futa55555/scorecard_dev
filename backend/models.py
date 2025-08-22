@@ -133,10 +133,6 @@ class PitchTypeEnum(str, enum.Enum):
     foul = "foul"
     inplay = "inplay"
     others = "others"
-    
-    hit = "hit"
-    poor = "poor"
-    sacrified = "sacrified"
 
 class PitchTypeDetailEnum(str, enum.Enum):
     hit_by_pitch = "hit_by_pitch"
@@ -147,8 +143,12 @@ class PitchTypeDetailEnum(str, enum.Enum):
 class AtBatResultEnum(str, enum.Enum):
     strikeout = "strikeout"
     walk = "walk"
-    ground = "ground"
-    fly = "fly"
+    hit = "hit"
+    poor = "poor"
+    sacrified = "sacrified"
+    hit_by_pitch = "hit_by_pitch"
+    illegal = "illegal"
+    interfere = "interfere"
 
 class BattedBallDirectionEnum(str, enum.Enum):
     center = "center"

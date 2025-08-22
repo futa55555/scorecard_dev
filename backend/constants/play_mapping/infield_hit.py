@@ -22,8 +22,20 @@ def make_infield_hit(
     batted_ball_type = advance_ingredient.batted_ball_type
     is_runners_steal = advance_ingredient.is_runners_steal
 
-    res = []
+    base = []
+    
+    base.append(
+        utils.apply_common_advance(
+            runners = runners,
+            step = 1,
+            is_break = False,
+            is_only_runners = False,
+            is_by_atbat = True,
+            result = models.AtBatResultEnum.hit,
+            ball_flow = [position],
+            advance_by_pitch = True
+        )
+    )
     
     
-    
-    return res
+    return base

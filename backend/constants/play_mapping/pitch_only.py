@@ -38,22 +38,19 @@ def make_pitch_only(
                 advance_elements = base_advance_elements
             )
         ]
-            
+        
     elif ball_count.balls == 4:
         # 打者の四球 + 強制進塁
-        base_atbat_result = "walk"
-        base_advance_elements = utils.apply_common_advance(
+        base_advance_candidate = utils.apply_common_advance(
             runners = runners,
             step = 1,
             is_break = True,
             is_only_runners = False,
-            is_by_atbat = True
+            is_by_atbat = True,
+            result = models.AtBatResultEnum.walk
         )
         return [
-            schema.AdvanceCandidate(
-                atbat_result = base_atbat_result,
-                advance_elements = base_advance_elements
-            )
+            base_advance_candidate
         ]
 
     else:

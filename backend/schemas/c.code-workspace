@@ -1,0 +1,45 @@
+{
+	"folders": [
+		{
+			"name": "c",
+			"path": "../../../c"
+		},
+		{
+			"name": "latex",
+			"path": "../../../latex"
+		},
+		{
+			"name": "HEC",
+			"path": "../../../../../cygwin64/home/kemun/HEC"
+		},
+		{
+			"name": "python",
+			"path": "../../../python"
+		},
+		{
+			"name": "scorecard_new",
+			"path": "../../../scorecard_new"
+		},
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"sqltools.connections": [
+			{
+				"mysqlOptions": {
+					"authProtocol": "default",
+					"enableSsl": "Disabled"
+				},
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 3306,
+				"driver": "MySQL",
+				"name": "MyLocalDB",
+				"database": "testdb",
+				"username": "root",
+				"password": ""
+			}
+		]
+	}
+}

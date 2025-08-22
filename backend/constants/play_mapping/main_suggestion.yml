@@ -1,0 +1,405 @@
+# by_batは打撃起因の進塁
+# by_batにおける fielding_sequence = none は(打者)で処理したいとき。
+# out_type = none は理由なくstepの進塁を実装すればいい
+
+# ゴロ
+- key:
+    position: [P, C, FB, SB, TB, SS, LF, CF, RF]
+    batted_ball_type: [ground]
+  candidates:
+    - label: "1塁送球（打者アウト）"
+      events:
+        by_bat:
+          - fielding_sequence: [none, FB]
+            advances:
+              -
+                runners: 0
+                out_type: touch
+    - label: "3塁送球（2塁ランナーアウト）"
+      runner_condition: "x1x"
+      events:
+        by_bat:
+          - fielding_sequence: [none, TB]
+            advances:
+              -
+                runners: 2
+                out_type: touch
+    - label: "本塁送球（3塁ランナーアウト）"
+      runner_condition: "xx1"
+      events:
+        by_bat:
+          - fielding_sequence: [none, C]
+            advances:
+              -
+                runners: 3
+                out_type: touch
+- key:
+    position: [P, C, FB, SB, RF]
+    batted_ball_type: [ground]
+  candidates:
+    - label: "2塁送球（1塁ランナーアウト）"
+      runner_condition: "1xx"
+      events:
+        by_bat:
+          - fielding_sequence: [none, SS]
+            advances:
+              -
+                runners: 1
+                out_type: force
+- key:
+    position: [TB, SS, LF, CF]
+    batted_ball_type: [ground]
+  candidates:
+    - label: "2塁送球（1塁ランナーアウト）"
+      runner_condition: "1xx"
+      events:
+        by_bat:
+          - fielding_sequence: [none, SB]
+            advances:
+              -
+                runners: 1
+                out_type: force
+- key:
+    position: [P, C, FB, SB]
+    batted_ball_type: [ground]
+  candidates:
+    - label: "2塁送球（1塁ランナーアウト） -> 1塁転送（打者アウト）"
+      runner_condition: "1xx"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none, SS]
+            advances:
+              -
+                runners: 1
+                out_type: force
+          - fielding_sequence: [none, FB]
+            advances:
+              -
+                runners: 0
+                out_type: force
+- key:
+    position: [TB, SS]
+    batted_ball_type: [ground]
+  candidates:
+    - label: "2塁送球（1塁ランナーアウト） -> 1塁転送（打者アウト）"
+      runner_condition: "1xx"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none, SB]
+            advances:
+              -
+                runners: 1
+                out_type: force
+          - fielding_sequence: [none, FB]
+            advances:
+              -
+                runners: 0
+                out_type: force
+- key:
+    position: [P, C, FB, SB, TB, SS]
+    batted_ball_type: [ground]
+  candidates:
+    - label: "本塁送球（3塁ランナーアウト） -> 1塁転送（打者アウト）"
+      runner_condition: "111"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none, C]
+            advances:
+              -
+                runners: 3
+                out_type: force
+          - fielding_sequence: [none, FB]
+            advances:
+              -
+                runners: 0
+                out_type: force
+- key:
+    position: [P, TB, SS]
+    batted_ball_type: [ground]
+  candidates:
+    - label: "2塁送球（2塁ランナーアウト）"
+      runner_condition: "01x"
+      events:
+        by_bat:
+          - fielding_sequence: [none, SB]
+            advances:
+              -
+                runners: 2
+                out_type: touch
+- key:
+    position: [TB]
+    batted_ball_type: [ground]
+  candidates:
+    - label: "3塁送球（2塁ランナーアウト） -> 1塁転送（打者アウト）"
+      runner_condition: "11x"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none, TB]
+            advances:
+              -
+                runners: 2
+                out_type: force
+          - fielding_sequence: [none, FB]
+            advances:
+              -
+                runners: 0
+                out_type: force
+    - label: "3塁送球（2塁ランナーアウト） -> 2塁転送（1塁ランナーアウト）"
+      runner_condition: "11x"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none, TB]
+            advances:
+              -
+                runners: 2
+                out_type: force
+          - fielding_sequence: [none, SB]
+            advances:
+              -
+                runners: 1
+                out_type: force
+    - lable: "3塁送球（2塁ランナーアウト） -> 2塁転送（1塁ランナーアウト） -> 1塁転送（打者アウト）"
+      runner_condition: "11x"
+      out_condition: [0]
+      events:
+        by_bat:
+          - fielding_sequence: [none, TB]
+            advances:
+              -
+                runners: 2
+                out_type: force
+          - fielding_sequence: [none, SB]
+            advances:
+              -
+                runners: 1
+                out_type: force
+          - fielding_sequence: [none, FB]
+            advances:
+              -
+                runners: 0
+                out_type: force
+
+# フライ、ライナー、ファウルフライ、ファウルライナー
+- key:
+    position: [P, C, FB, SB, TB, SS, LF, CF, RF]
+    batted_ball_type: [fly, liner, foul_fly, foul_liner]
+  candidates:
+    - label: "捕球（打者アウト）"
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runners: 0
+                out_type: force
+    - label: "捕球（打者アウト） -> 1塁送球（1塁ランナーアウト）"
+      runner_condition: "1xx"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runners: 0
+                out_type: force
+        by_fielding:
+          - fielding_sequence: [none, FB]
+            advances:
+              -
+                runners: 1
+                out_type: force
+    - label: "捕球（打者アウト） -> 2塁送球（2塁ランナーアウト）"
+      runner_condition: "x1x"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runners: 0
+                out_type: force
+        by_fielding:
+          - fielding_sequence: [none, SB]
+            advances:
+              -
+                runners: 2
+                out_type: force
+    - label: "捕球（打者アウト） -> 3塁送球（3塁ランナーアウト）"
+      runner_condition: "xx1"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runners: 0
+                out_type: force
+        by_fielding:
+          - fielding_sequence: [none, TB]
+            advances:
+              -
+                runners: 3
+                out_type: force
+    - label: "捕球（打者アウト） -> タッチアップ成功（3塁ランナー生還）"
+      runner_condition: "xx1"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runners: 0
+                out_type: force
+        by_fielding:
+          - fielding_sequence: [none, C]
+            advances:
+              -
+                runners: 3
+                out_type: safe
+    - label: "捕球（打者アウト） -> タッチアップ失敗（3塁ランナーアウト）"
+      runner_condition: "xx1"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runners: 0
+                out_type: force
+        by_fielding:
+          - fielding_sequence: [none, C]
+            advances:
+              -
+                runners: 3
+                out_type: touch
+    - label: "捕球（打者アウト） -> タッチアップ成功（3塁ランナー生還）& 2塁ランナー進塁（送球間）"
+      runner_condition: "x11"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runners: 0
+                out_type: force
+        by_fielding:
+          - fielding_sequence: [none, C]
+            advances:
+              -
+                runners: 3
+                out_type: safe
+    - label: "捕球（打者アウト） -> タッチアップ成功（2塁ランナーセーフ）"
+      runner_condition: "x1x"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runners: [0]
+                out_type: force
+        by_fielding:
+          - fielding_sequence: [none, TB]
+            advances:
+              -
+                runners: 2
+                out_type: safe
+    - label: "捕球（打者アウト） -> タッチアップ失敗（2塁ランナーアウト）"
+      runner_condition: "x1x"
+      out_condition: 1
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runners: 0
+                out_type: force
+        by_fielding:
+          - fielding_sequence: [none, C]
+            advances:
+              -
+                runners: 2
+                out_type: touch
+
+# 安打
+- key:
+    position: [P, C, FB, SB, TB, SS, LF, CF, RF]
+    batted_ball_type: [one_base_hit]
+  candidates:
+    - label: "単打"
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runner: 0
+                step: 1
+                out_type: none
+
+# 2塁打
+- key:
+    position: [P, C, FB, SB, TB, SS, LF, CF, RF]
+    batted_ball_type: [two_base_hit]
+  candidates:
+    - label: "2塁打"
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runner: 0
+                step: 2
+                out_type: none
+    - lable: "エンタイトルツーベース"
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runner: 0
+                step: 2
+                out_type: none
+
+# 3塁打
+- key:
+    position: [P, C, FB, SB, TB, SS, LF, CF, RF]
+    batted_ball_type: [three_base_hit]
+  candidates:
+    - label: "3塁打"
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runner: 0
+                step: 3
+                out_type: none
+
+# 本塁打
+- key:
+    position: [P, C, FB, SB, TB, SS, LF, CF, RF]
+    batted_ball_type: [homerun]
+  candidates:
+    - label: "本塁打"
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runner: 0
+                step: 4
+                out_type: none
+    - label: "ランニングホームラン"
+      events:
+        by_bat:
+          - fielding_sequence: [none]
+            advances:
+              -
+                runner: 0
+                step: 4
+                out_type: none

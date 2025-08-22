@@ -22,8 +22,21 @@ def make_outfield_hit(
     batted_ball_type = advance_ingredient.batted_ball_type
     is_runners_steal = advance_ingredient.is_runners_steal
 
-    res = []
+    base = []
     
+    # 単打
+    for i in [1, 2, 3, 4]:
+        base.append(
+            utils.apply_common_advance(
+                runners = runners,
+                step = i,
+                is_break = False,
+                is_only_runners = False,
+                is_by_atbat = True,
+                result = models.AtBatResultEnum.hit,
+                ball_flow = [position],
+                advance_by_pitch = True
+            )
+        )
     
-    
-    return res
+    return base

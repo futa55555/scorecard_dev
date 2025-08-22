@@ -24,6 +24,9 @@ def make_infield_poor(
 
     res = []
     
-    
+    # フライ
+    # ゴロ（打者）
+    # ゴロ（走者）
+    # ゴロ（併殺）
     
     return res

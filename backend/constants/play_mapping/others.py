@@ -43,18 +43,29 @@ def make_others(
                 schema.AdvanceCandidate()
             ]
     
-    if pitch_type_detail in (models.PitchTypeDetailEnum.hit_by_pitch, models.PitchTypeDetailEnum.interfere):
+    if pitch_type_detail == models.PitchTypeDetailEnum.hit_by_pitch:
         # 死球
         return [
-            schema.AdvanceCandidate(
-                atbat_result = pitch_type_detail,
-                advance_elements = utils.apply_common_advance(
-                    runners = runners,
-                    step = 1,
-                    is_break = True,
-                    is_only_runners = False,
-                    is_by_atbat = True,
-                )
+            utils.apply_common_advance(
+                runners = runners,
+                step = 1,
+                is_break = True,
+                is_only_runners = False,
+                is_by_atbat = True,
+                result = models.AtBatResultEnum.hit_by_pitch
+            )
+        ]
+    
+    if pitch_type_detail == models.PitchTypeDetailEnum.interfere:
+        # 打撃妨害
+        return [
+            utils.apply_common_advance(
+                runners = runners,
+                step = 1,
+                is_break = True,
+                is_only_runners = False,
+                is_by_atbat = True,
+                result = models.AtBatResultEnum.interfere
             )
         ]
 
@@ -62,15 +73,13 @@ def make_others(
         # イリーガルピッチ
         if ball_count == 4:
             return [
-                schema.AdvanceCandidate(
-                    atbat_result = "walk",
-                    advance_elements = utils.apply_common_advance(
-                        runners = runners,
-                        step = 1,
-                        is_break = True,
-                        is_only_runners = False,
-                        is_by_atbat = True,
-                    )
+                utils.apply_common_advance(
+                    runners = runners,
+                    step = 1,
+                    is_break = True,
+                    is_only_runners = False,
+                    is_by_atbat = True,
+                    result = models.AtBatResultEnum.illegal
                 )
             ]
         else:

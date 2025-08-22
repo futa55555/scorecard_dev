@@ -5,8 +5,8 @@ from backend import models
 
 # --- グループ定義（重複可） ---
 strike: FrozenSet[models.PitchTypeEnum] = frozenset({models.PitchTypeEnum.swing_miss, models.PitchTypeEnum.looking})
-count: FrozenSet[models.PitchTypeEnum] = frozenset({*strike, models.PitchTypeEnum.ball})  # strike ∪ {ball}
-inplays: FrozenSet[models.PitchTypeEnum] = frozenset({models.PitchTypeEnum.inplay, models.PitchTypeEnum.hit, models.PitchTypeEnum.poor, models.PitchTypeEnum.sacrified})
+count: FrozenSet[models.PitchTypeEnum] = frozenset({*strike, models.PitchTypeEnum.ball})
+inplays: FrozenSet[models.PitchTypeEnum] = frozenset({models.PitchTypeEnum.inplay})
 ball_dead: FrozenSet[models.PitchTypeEnum] = frozenset({models.PitchTypeEnum.foul, models.PitchTypeEnum.others})
 
 GROUPS: Dict[str, FrozenSet[models.PitchTypeEnum]] = {

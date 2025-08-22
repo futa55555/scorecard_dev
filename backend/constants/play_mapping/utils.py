@@ -14,11 +14,20 @@ def apply_common_advance(
     is_break: bool,
     is_only_runners: bool,
     is_by_atbat: bool,
+    result: Optional[models.AtBatResultEnum] = None,
     out_type: models.OutTypeEnum = None,
     ball_flow: Optional[List[models.PositionEnum]] = [],
     advance_by_pitch: Optional[models.AdvanceByPitchEnum] = None,
-) -> List[Optional[schema.AdvanceElement]]:
-    res = []
+) -> schema.AdvanceCandidate:
+    atbat_result = str()
+    if result:
+        atbat_result = str(result)
+        if result not in (models.AtBatResultEnum.strikeout, models.AtBatResultEnum.walk):
+            atbat_result = str(ball_flow[0]) + atbat_result
+            if result == models.AtBatResultEnum.hit:
+                atbat_result = atbat_result + str(step)
+    
+    advance_elements = []
     
     for base, runner in enumerate(runners):
         if is_only_runners and base == 0:
@@ -30,7 +39,7 @@ def apply_common_advance(
             else:
                 continue
         
-        res.append(
+        advance_elements.append(
             schema.AdvanceElement(
                 runner_id = runner.id,
                 from_base = base,
@@ -43,4 +52,7 @@ def apply_common_advance(
             )
         )
     
-    return res
+    return schema.AdvanceCandidate(
+        atbat_result = atbat_result,
+        advance_elements = advance_elements
+    )

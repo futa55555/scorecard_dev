@@ -24,6 +24,38 @@ def make_outfield_poor(
 
     res = []
     
-    
+    # フライ
+    res.append(
+        schema.AdvanceCandidate(
+            atbat_result = models.AtBatResultEnum.poor,
+            advance_elements = [
+                schema.AdvanceElement(
+                    runner_id = runners[0].id,
+                    from_base = 0,
+                    to_base = 1,
+                    is_out = True,
+                    is_by_atbat = True,
+                    ball_flow = [position]
+                )
+            ]
+        )
+    )
+    # ゴロ（打者）
+    res.append(
+        schema.AdvanceCandidate(
+            atbat_result = models.AtBatResultEnum.poor,
+            advance_elements = [
+                schema.AdvanceElement(
+                    runner_id = runners[0].id,
+                    from_base = 0,
+                    to_base = 1,
+                    is_out = True,
+                    is_by_atbat = True,
+                    ball_flow = [position, models.PositionEnum]
+                )
+            ]
+        )
+    )
+    # ゴロ（走者）
     
     return res
