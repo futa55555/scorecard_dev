@@ -85,15 +85,12 @@ def runner_pattern_match(pattern: Optional[str], current: Optional[Union[str, Se
 # =========
 # 3) outsフィルタ (YAMLの out_condition をサポート)
 # =========
-def outs_match(out_condition: Optional[Union[int, List[int]]], current_outs: Optional[int]) -> bool:
-    if out_condition is None:
-        return True
-    if current_outs is None:
-        return False
+def outs_match(out_condition: Optional[int], current_outs: Optional[int]) -> bool:
     if isinstance(out_condition, int):
-        return current_outs == out_condition
-    if isinstance(out_condition, list) and all(isinstance(v, int) for v in out_condition):
-        return current_outs in out_condition
+        if out_condition >= current_outs:
+            return True
+    else:
+        return True
     return False
 
 
@@ -140,23 +137,48 @@ def search_candidates(
     return matched
 
 
+def print_adv(adv: Dict[str, Any], runner_state: Optional[Union[str, Sequence[int]]] = None):
+    fielding_sequence = adv['fielding_sequence']
+    print("fielding_sequence: {0}".format(fielding_sequence))
+    
+    print("advances:")
+    advances = adv['advances']
+    for a in advances:
+        runner = a.get('runners')
+        out_type = a.get('out_type')
+        step = a.get('step')
+        
+        for r in runner:
+            if r == 0 or runner_state[r - 1] == 1:
+                if out_type:
+                    print("  - runner: {0}, out_type: {1}".format(r, out_type))
+                if step:
+                    print("  - runner: {0}, step: {1}".format(r, step))
+                
+
+
 # =========
 # 5) お試し実行
 # =========
 if __name__ == "__main__":
-    # 1) YAML読み込み
     rules = load_rules("backend/constants/play_mapping/main_suggestion.yml")
+    
+    print("########################################################################")
+    print("########################################################################")
+    print("########################################################################")
 
-    # # 2) ざっくり確認
-    # confirm_rules(rules, show_first=20)
-
-    # 3) 検索
-    res = search_candidates(
-        rules,
-        position="TB",
-        batted_ball_type="ground",
-        runner_state=(1, 0, 0),
-        outs=1,
-    )
-    for c in res:
-        print("-", c.get("events"))
+    for outs in [0, 1, 2]:
+        for runner_state in [(0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1), (1, 1, 0), (1, 0, 1), (0, 1, 1), (1, 1, 1)]:
+            res = search_candidates(
+                rules,
+                position="TB",
+                batted_ball_type="ground",
+                runner_state=runner_state,
+                outs=outs,
+            )
+            for c in res:
+                events = c.get("events")
+                print(c['label'])
+                for event in events:
+                    print_adv(event, runner_state)
+                print()
