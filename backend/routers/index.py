@@ -1,4 +1,4 @@
-# backend/routes/index.py
+# backend/routers/index.py
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session

@@ -1,2 +1,0 @@
-# backend/services/teams.py
-

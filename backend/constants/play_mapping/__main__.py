@@ -156,7 +156,6 @@ def print_adv(adv: Dict[str, Any], runner_state: Optional[Union[str, Sequence[in
                     print("  - runner: {0}, step: {1}".format(r, step))
                 
 
-
 # =========
 # 5) お試し実行
 # =========

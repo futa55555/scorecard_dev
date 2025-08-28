@@ -1,5 +1,3 @@
-# by_batは打撃起因の進塁
-# by_batにおける fielding_sequence = null は(打者)で処理したいとき。
 # out_type = null は理由なくstepの進塁を実装すればいい
 # stepは他のランナーに強要する進塁
 

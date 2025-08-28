@@ -164,6 +164,8 @@ class BattedBallTypeEnum(str, enum.Enum):
     liner = "liner"
 
 class OutTypeEnum(str, enum.Enum):
+    none = "none"
+    safe = "safe"
     force = "force"
     touch = "touch"
 
@@ -171,6 +173,12 @@ class AdvanceByPitchEnum(str, enum.Enum):
     steal = "steal"
     wild_pitch = "wild_pitch"
     passed_ball = "passed_ball"
+
+class GameStatusEnum(str, enum.Enum):
+    draft = "draft"
+    ongoing = "ongoing"
+    finished = "finished"
+    confirmed = "confirmed"
 
 # --------------------
 # テーブル定義
@@ -183,6 +191,7 @@ class Team(Base):
     name = Column(String(100), nullable=False)
     short_name = Column(String(100), nullable=True) # 略称
     is_myteam = Column(Boolean, default=False)
+    is_favorite = Column(Boolean, default=False)
     prefecture = Column(Enum(PrefectureEnum), nullable=True)
     league = Column(String(100), nullable=True) # 所属リーグ
     photo_url = Column(URLType, nullable=True) # 画像
@@ -210,8 +219,8 @@ class Person(Base):
     member_profiles = relationship("MemberProfile", back_populates="person")
     member_grades = relationship("MemberGrade", back_populates="person")
     player_position_types = relationship("PlayerPositionType", back_populates="person")
-
     
+
 class MemberProfile(Base):
     __tablename__ = "member_profiles"
     
@@ -266,8 +275,9 @@ class GameMember(Base):
     member_profile = relationship("MemberProfile", foreign_keys=[member_profile_id], back_populates="game_members")
     game = relationship("Game", foreign_keys=[game_id], back_populates="game_members")
     team = relationship("Team", foreign_keys=[team_id], back_populates="game_members")
-    atbats = relationship("AtBat", back_populates="batter")
-    runners = relationship("AdvanceEvent", foreign_keys="AdvanceEvent.runner_id", back_populates="runner")
+    atbats_as_pitcher = relationship("AtBat", foreign_keys="AtBat.responsible_pitcher_id", back_populates="responsible_pitcher")
+    atbats_as_batter = relationship("AtBat", foreign_keys="AtBat.responsible_batter_id", back_populates="responsible_batter")
+    advance_events = relationship("AdvanceEvent", foreign_keys="AdvanceEvent.runner_id", back_populates="runner")
     sub_out_events = relationship("SubstitutionEvent", foreign_keys="SubstitutionEvent.out_member_id", back_populates="out_member")
     sub_in_events = relationship("SubstitutionEvent", foreign_keys="SubstitutionEvent.in_member_id", back_populates="in_member")
     
@@ -300,7 +310,9 @@ class Game(Base):
     date = Column(Date, nullable=True)
     start_time = Column(Time, nullable=True)
     end_time = Column(Time, nullable=True)
+    tournament = Column(String(50), nullable=True)
     location = Column(String(100), nullable=True)
+    status = Column(Enum(GameStatusEnum), nullable=False)
     
     top_team = relationship("Team", foreign_keys=[top_team_id], back_populates="games_as_top_team")
     bottom_team = relationship("Team", foreign_keys=[bottom_team_id], back_populates="games_as_bottom_team")
@@ -327,12 +339,13 @@ class AtBat(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     inning_id = Column(Integer, ForeignKey("innings.id"), nullable=False)
-    batter_id = Column(Integer, ForeignKey("game_members.id"), nullable=True)
-    # result = Column(Enum(AtBatResultEnum), nullable=True)
-    result = Column(String(50), nullable=True)
+    responsible_pitcher_id = Column(Integer, ForeignKey("game_members.id"), nullable=True)
+    responsible_batter_id = Column(Integer, ForeignKey("game_members.id"), nullable=True)
+    result = Column(AtBatResultEnum(50), nullable=True)
 
     inning = relationship("Inning", foreign_keys=[inning_id], back_populates="atbats")
-    batter = relationship("GameMember", back_populates="atbats")
+    responsible_pitcher = relationship("GameMember", foreign_keys=[responsible_pitcher_id], back_populates="atbats_as_pitcher")
+    responsible_batter = relationship("GameMember", foreign_keys=[responsible_batter_id], back_populates="atbats_as_batter")
     pitch_events = relationship("PitchEvent", back_populates="atbat")
 
 
@@ -362,11 +375,8 @@ class AdvanceEvent(Base):
     runner_id = Column(Integer, ForeignKey("game_members.id"), nullable=False)
     from_base = Column(Integer, nullable=False)
     to_base = Column(Integer, nullable=False)
-    is_out = Column(Boolean, nullable=False)
-    is_by_atbat = Column(Boolean, nullable=False)
     out_type = Column(Enum(OutTypeEnum), nullable=True)
-    ball_flow = Column(JSON, nullable=True)
-    advance_by_pitch = Column(Enum(AdvanceByPitchEnum), nullable=True)
+    fielding_sequence = Column(JSON, nullable=True)
 
     pitch_event = relationship("PitchEvent", foreign_keys=[pitch_event_id], back_populates="advance_events")
-    runner = relationship("GameMember", foreign_keys=[runner_id], back_populates="runners")
+    runner = relationship("GameMember", foreign_keys=[runner_id], back_populates="advance_events")
