@@ -1,24 +1,24 @@
-# backend/routers/game_info.py
+# # backend/routers/game_info.py
 
-from fastapi import APIRouter, Depends
+# from fastapi import APIRouter, Depends
 
-router = APIRouter()
+# router = APIRouter()
 
-### all
-# イニングの得点
+# ### all
+# # イニングの得点
 
-### top
-# スタメン
-# 控え
+# ### top
+# # スタメン
+# # 控え
 
-@router.get("/api/game_info/{game_id}/top")
-
-
-@router.get("/api/game_info/{game_id}/live")
+# @router.get("/api/game_info/{game_id}/top")
 
 
-@router.get("/api/game_info/{game_id}/progress")
+# @router.get("/api/game_info/{game_id}/live")
 
 
-@router.get("/api/game_info/{game_id}/stats")
+# @router.get("/api/game_info/{game_id}/progress")
+
+
+# @router.get("/api/game_info/{game_id}/stats")
 

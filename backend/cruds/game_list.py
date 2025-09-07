@@ -18,8 +18,8 @@ def get_game_list(
     return (
         db.query(models.Game)
         .options(
-            joinedload(models.Game.top_team)
-            .joinedload(models.Game.bottom_team)
+            joinedload(models.Game.top_team),
+            joinedload(models.Game.bottom_team)
         )
         .all()
     )

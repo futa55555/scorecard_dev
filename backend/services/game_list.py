@@ -1,12 +1,13 @@
 # backend/services/game_list.py
 
 from sqlalchemy.orm import Session
+from typing import List
 from backend.schemas import game_list as schema
 from backend.cruds import game_list as crud
 
 def get_game_with_team_name_list(
     db: Session
-) -> schema.GameWithTeamNameList:
+) -> List[schema.GameWithTeamName]:
     """
     チーム名付きで試合のリストを取得
     """

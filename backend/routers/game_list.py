@@ -8,14 +8,14 @@ from backend.services import game_list as service
 
 router = APIRouter()
 
-@router.get("/api/game_list", response_model=schema.GameWithTeamName)
+@router.get("/api/game_list", response_model=schema.GameWithTeamNameList)
 def get_game_list(
     db: Session = Depends(get_db)
-) -> schema.GameWithTeamName:
+) -> schema.GameWithTeamNameList:
     """
     試合の一覧を返す
     """
-    return {
-        "game_list": service.get_game_with_team_name_list(db)
-    }
+    return schema.GameWithTeamNameList(
+        game_list = service.get_game_with_team_name_list(db)
+    )
     

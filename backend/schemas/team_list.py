@@ -7,8 +7,8 @@ from backend import models
 
 class TeamBase(BaseModel):
     id: int
-    name: int
-    short_name: int
+    name: str
+    short_name: str
     is_myteam: bool
     is_favorite: bool
     prefecture: models.PrefectureEnum

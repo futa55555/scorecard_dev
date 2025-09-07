@@ -987,9 +987,11 @@ def init_data():
 
     # 試合の初期データ
     game = models.Game(
-            id=1,
-            top_team_id=1,
-            bottom_team_id=2
+        id=1,
+        top_team_id=1,
+        bottom_team_id=2,
+        date=date.today(),
+        status=models.GameStatusEnum.ongoing
     )
     db.add(game)
     db.commit()
@@ -1000,34 +1002,34 @@ def init_data():
         models.GameMember(
             game_id=1,
             team_id=1,
-            member_profile_id=i,
-            starting_batting_order=i-3,
-            starting_position=i-3
-        ) for i in range(4, 13)
+            person_id=i,
+            starting_batting_order=i,
+            starting_position=i
+        ) for i in range(1, 10)
     ] + [
         models.GameMember(
             game_id=1,
             team_id=1,
-            member_profile_id=i,
+            person_id=i,
             starting_batting_order=0,
             starting_position=0
-        ) for i in range(13, 31)
+        ) for i in range(10, 20)
     ] + [
         models.GameMember(
             game_id=1,
             team_id=2,
-            member_profile_id=i,
-            starting_batting_order=i-33,
-            starting_position=i-33
-        ) for i in range(34, 43)
+            person_id=i,
+            starting_batting_order=i-19,
+            starting_position=i-19
+        ) for i in range(20, 29)
     ] + [
         models.GameMember(
             game_id=1,
             team_id=2,
-            member_profile_id=i,
+            person_id=i,
             starting_batting_order=0,
             starting_position=0
-        ) for i in range(43, 61)
+        ) for i in range(29, 39)
     ]
     db.add_all(game_members_1)
     db.commit()

@@ -10,7 +10,7 @@ router = APIRouter()
 @router.get("/api/myteam")
 def get_myteam(db: Session = Depends(get_db)):
     """
-    マイチーム（is_myteam=True の Team）を取得
+    マイチームを取得
     """
     team = db.query(Team).filter(Team.is_myteam == True).first()
     if team:

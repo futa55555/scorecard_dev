@@ -300,9 +300,9 @@ class SubstitutionEvent(Base):
     id = Column(Integer, primary_key=True)
     pitch_event_id = Column(Integer, ForeignKey("pitch_events.id"), nullable=False)
     sub_member_id = Column(Integer, ForeignKey("game_members.id"), nullable=False)
-    after_batting_order = Column(BattingOrderEnum, nullable=False)
-    after_position = Column(PositionEnum, nullable=False)
-    substitution_type = Column(SubstitutionTypeEnum, nullable=False)
+    after_batting_order = Column(Enum(BattingOrderEnum), nullable=False)
+    after_position = Column(Enum(PositionEnum), nullable=False)
+    substitution_type = Column(Enum(SubstitutionTypeEnum), nullable=False)
 
     pitch_event = relationship("PitchEvent", back_populates="substitution_events")
     sub_member = relationship("GameMember", foreign_keys=[sub_member_id], back_populates="substitution_events")
@@ -347,7 +347,7 @@ class AtBat(Base):
     inning_id = Column(Integer, ForeignKey("innings.id"), nullable=False)
     responsible_pitcher_id = Column(Integer, ForeignKey("game_members.id"), nullable=True)
     responsible_batter_id = Column(Integer, ForeignKey("game_members.id"), nullable=True)
-    result = Column(AtBatResultEnum(50), nullable=True)
+    result = Column(Enum(AtBatResultEnum), nullable=True)
 
     inning = relationship("Inning", foreign_keys=[inning_id], back_populates="atbats")
     responsible_pitcher = relationship("GameMember", foreign_keys=[responsible_pitcher_id], back_populates="atbats_as_pitcher")
