@@ -16,15 +16,15 @@ def get_game_with_team_name_list(
     for game in game_list:
         res.append(
             schema.GameWithTeamName(
-                id=game.id,
-                top_team_name=game.top_team.name,
-                bottom_team_name=game.bottom_team.name,
-                date=game.date,
-                start_time=game.start_time,
-                end_time=game.end_time,
-                tournament=game.tournament,
-                location=game.location,
-                status=game.status
+                id = game.id,
+                top_team_short_name = game.top_team.short_name,
+                bottom_team_short_name = game.bottom_team.short_name,
+                date = game.date,
+                start_time = game.start_time,
+                end_time = game.end_time,
+                tournament = game.tournament,
+                location = game.location,
+                status = game.status
             )
         )
         

@@ -158,6 +158,28 @@ def calc_bs_count(
     return balls, strikes
 
 
+def get_uniform_number_by_game_member_id(
+    db: Session,
+    game_member_id: int
+) -> Optional[int]:
+    """
+    出場選手のidから背番号を取得
+    """
+    game_member = (
+        db.query(models.GameMember)
+        .options(joinedload(models.GameMember.member_profile))
+        .filter(models.GameMember.id == game_member_id)
+        .one_or_none()
+    )
+
+    if game_member is None:
+        raise HTTPException(status_code=404, detail=f"game_member ID {game_member_id} not found")
+    if game_member.member_profile is None:
+        return None
+
+    return game_member.member_profile.uniform_number
+
+
 def aggregate_advance_events(
     db: Session,
     game_id: int

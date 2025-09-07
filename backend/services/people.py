@@ -1,2 +1,0 @@
-# backend/services/people.py
-

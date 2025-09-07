@@ -7,8 +7,8 @@ from backend import models
 
 class GameWithTeamName(BaseModel):
     id: int
-    top_team_name: int
-    bottom_team_name: int
+    top_team_short_name: str
+    bottom_team_short_name: str
     date: date
     start_time: Optional[time]
     end_time: Optional[time]

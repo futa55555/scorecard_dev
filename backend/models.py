@@ -99,6 +99,14 @@ class PositionEnum(int, enum.Enum):
     DP = 10
     NOT = 0
 
+class SubstitutionTypeEnum(str, enum.Enum):
+    PH = "PH"
+    PR = "PR"
+    TR = "TR"
+    PC = "PC"
+    conti = "conti"
+    bench = "bench"
+
 class BattingOrderEnum(int, enum.Enum):
     No1 = 1
     No2 = 2
@@ -149,6 +157,12 @@ class AtBatResultEnum(str, enum.Enum):
     hit_by_pitch = "hit_by_pitch"
     illegal = "illegal"
     interfere = "interfere"
+    
+class ResponsibilityTypeEnum(str, enum.Enum):
+    win = "win"
+    lose = "lose"
+    hold = "hold"
+    save = "save"
 
 class BattedBallDirectionEnum(str, enum.Enum):
     center = "center"
@@ -201,7 +215,6 @@ class Team(Base):
     games_as_top_team = relationship("Game", foreign_keys="Game.top_team_id", back_populates="top_team")
     games_as_bottom_team = relationship("Game", foreign_keys="Game.bottom_team_id", back_populates="bottom_team")
     game_members = relationship("GameMember", back_populates="team")
-    substitutions = relationship("SubstitutionEvent", back_populates="team")
     
 
 class Person(Base):
@@ -218,6 +231,7 @@ class Person(Base):
 
     member_profiles = relationship("MemberProfile", back_populates="person")
     member_grades = relationship("MemberGrade", back_populates="person")
+    game_members = relationship("GameMember", back_populates="person")
     player_position_types = relationship("PlayerPositionType", back_populates="person")
     
 
@@ -234,7 +248,6 @@ class MemberProfile(Base):
     
     team = relationship("Team", foreign_keys=[team_id], back_populates="member_profiles")
     person = relationship("Person", foreign_keys=[person_id], back_populates="member_profiles")
-    game_members = relationship("GameMember", back_populates="member_profile")
     
 
 class MemberGrade(Base):
@@ -267,38 +280,32 @@ class GameMember(Base):
     id = Column(Integer, primary_key=True, index=True)
     game_id = Column(Integer, ForeignKey("games.id"), nullable=False)
     team_id = Column(Integer, ForeignKey("teams.id"), nullable=False)
-    member_profile_id = Column(Integer, ForeignKey("member_profiles.id"), nullable=False)
+    person_id = Column(Integer, ForeignKey("people.id"), nullable=False)
     starting_batting_order = Column(Enum(BattingOrderEnum), nullable=True)
     starting_position = Column(Enum(PositionEnum), nullable=True)
     entry_number = Column(Integer, default=0)
     
-    member_profile = relationship("MemberProfile", foreign_keys=[member_profile_id], back_populates="game_members")
+    person = relationship("Person", foreign_keys=[person_id], back_populates="game_members")
     game = relationship("Game", foreign_keys=[game_id], back_populates="game_members")
     team = relationship("Team", foreign_keys=[team_id], back_populates="game_members")
     atbats_as_pitcher = relationship("AtBat", foreign_keys="AtBat.responsible_pitcher_id", back_populates="responsible_pitcher")
     atbats_as_batter = relationship("AtBat", foreign_keys="AtBat.responsible_batter_id", back_populates="responsible_batter")
     advance_events = relationship("AdvanceEvent", foreign_keys="AdvanceEvent.runner_id", back_populates="runner")
-    sub_out_events = relationship("SubstitutionEvent", foreign_keys="SubstitutionEvent.out_member_id", back_populates="out_member")
-    sub_in_events = relationship("SubstitutionEvent", foreign_keys="SubstitutionEvent.in_member_id", back_populates="in_member")
+    substitution_events = relationship("SubstitutionEvent", foreign_keys="SubstitutionEvent.sub_member_id", back_populates="sub_member")
     
 
 class SubstitutionEvent(Base):
     __tablename__ = "substitution_events"
 
     id = Column(Integer, primary_key=True)
-    game_id = Column(Integer, ForeignKey("games.id"), nullable=False)
-    team_id = Column(Integer, ForeignKey("teams.id"), nullable=False)
-    pitch_event_id = Column(Integer, ForeignKey("pitch_events.id"), nullable=True) # 交代のタイミング
-    out_member_id = Column(Integer, ForeignKey("game_members.id"), nullable=True)  # 交代で出る選手
-    in_member_id = Column(Integer, ForeignKey("game_members.id"), nullable=False)  # 入る選手
-    is_position_change = Column(Boolean, nullable=False)
-    is_tmp = Column(Boolean, default=False)
+    pitch_event_id = Column(Integer, ForeignKey("pitch_events.id"), nullable=False)
+    sub_member_id = Column(Integer, ForeignKey("game_members.id"), nullable=False)
+    after_batting_order = Column(BattingOrderEnum, nullable=False)
+    after_position = Column(PositionEnum, nullable=False)
+    substitution_type = Column(SubstitutionTypeEnum, nullable=False)
 
-    game = relationship("Game", back_populates="substitutions")
-    team = relationship("Team", back_populates="substitutions")
-    pitch_event = relationship("PitchEvent", back_populates="substitutions")
-    out_member = relationship("GameMember", foreign_keys=[out_member_id], back_populates="sub_out_events")
-    in_member = relationship("GameMember", foreign_keys=[in_member_id], back_populates="sub_in_events")
+    pitch_event = relationship("PitchEvent", back_populates="substitution_events")
+    sub_member = relationship("GameMember", foreign_keys=[sub_member_id], back_populates="substitution_events")
     
 
 class Game(Base):
@@ -317,7 +324,6 @@ class Game(Base):
     top_team = relationship("Team", foreign_keys=[top_team_id], back_populates="games_as_top_team")
     bottom_team = relationship("Team", foreign_keys=[bottom_team_id], back_populates="games_as_bottom_team")
     game_members = relationship("GameMember", back_populates="game")
-    substitutions = relationship("SubstitutionEvent", back_populates="game")
     innings = relationship("Inning", back_populates="game")
 
 
@@ -364,7 +370,7 @@ class PitchEvent(Base):
     
     atbat = relationship("AtBat", foreign_keys=[atbat_id], back_populates="pitch_events")
     advance_events = relationship("AdvanceEvent", back_populates="pitch_event")
-    substitutions = relationship("SubstitutionEvent", back_populates="pitch_event")
+    substitution_events = relationship("SubstitutionEvent", back_populates="pitch_event")
     
 
 class AdvanceEvent(Base):

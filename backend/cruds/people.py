@@ -1,1 +1,0 @@
-# backend/cruds/people.py
