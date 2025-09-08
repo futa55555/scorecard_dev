@@ -228,6 +228,7 @@ class Person(Base):
     height_cm = Column(Integer, nullable=True)
     weight_kg = Column(Integer, nullable=True)
     birthday = Column(Date, nullable=True)
+    perfecture = Column(Enum(PrefectureEnum), nullable=True)
 
     member_profiles = relationship("MemberProfile", back_populates="person")
     member_grades = relationship("MemberGrade", back_populates="person")
@@ -283,7 +284,6 @@ class GameMember(Base):
     person_id = Column(Integer, ForeignKey("people.id"), nullable=False)
     starting_batting_order = Column(Enum(BattingOrderEnum), nullable=True)
     starting_position = Column(Enum(PositionEnum), nullable=True)
-    entry_number = Column(Integer, default=0)
     
     person = relationship("Person", foreign_keys=[person_id], back_populates="game_members")
     game = relationship("Game", foreign_keys=[game_id], back_populates="game_members")

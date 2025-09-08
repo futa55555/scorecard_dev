@@ -122,7 +122,18 @@ class ForExtrabaseHit(BaseModel):
 class ExtrabaseHit(BaseModel):
     top_team: ForExtrabaseHit
     bottom_team: ForExtrabaseHit
+    
+    
+class GameInfoTop(BaseModel):
+    num: int
 
+    
+#-----------------
+# for live
+#-----------------
+
+class GameInfoLive(BaseModel):
+    num: int
 
 #-----------------
 # for progress
@@ -175,6 +186,10 @@ class InningProgress(BaseModel):
     progress: List[ForInningProgress]
 
 
+class GameInfoProgress(BaseModel):
+    num: int
+
+
 #-----------------
 # for stats
 #-----------------
@@ -222,3 +237,7 @@ class ForAllPitcherStats(BaseModel):
 class AllPitcherStats(BaseModel):
     top_team: ForAllPitcherStats
     bottom_team: ForAllPitcherStats
+
+
+class GameInfoStats(BaseModel):
+    num: int

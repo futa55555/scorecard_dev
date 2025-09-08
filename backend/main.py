@@ -6,13 +6,15 @@ import importlib
 import pkgutil
 import os
 from backend.models import Base
-from backend.database import engine
-from backend.routers.__init__ import init_data
+from backend.database import engine, SessionLocal
+from backend.seeds import init_data
 
 # DBの初期化（毎回リセットして作り直す）
 Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
-init_data()
+db = SessionLocal()
+init_data(db)
+db.close()
 
 app = FastAPI()
 
