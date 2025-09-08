@@ -10,8 +10,8 @@ from backend import models
 #-----------------
 
 class TeamBase(BaseModel):
-    name: int
-    short_name: int
+    name: str
+    short_name: str
     is_myteam: bool
     is_favorite: bool
     prefecture: models.PrefectureEnum
@@ -23,7 +23,9 @@ class TeamBase(BaseModel):
 class ForTeamMember(BaseModel):
     grade: models.GradeEnum
     player_count: int
+    coach_count: int
     manager_count: int
+    trainer_count: int
     analyst_count: int
     
     
@@ -34,14 +36,19 @@ class TeamMember(BaseModel):
 class ForRecentGame(BaseModel):
     my_team_score: int
     opposite_team_score: int
-    win_lose: str
     opposite_team_short_name: str
     date: date
-    tournament: str
+    tournament: Optional[str]
     
 
 class RecentGame(BaseModel):
     game: List[ForRecentGame]
+
+
+class TeamInfoTop(BaseModel):
+    team_base: TeamBase
+    team_member: List[ForTeamMember]
+    recent_game: List[ForRecentGame]
 
 
 #-----------------
@@ -53,11 +60,10 @@ class ForAllMembers(BaseModel):
     role: models.RoleEnum
     uniform_number: int
     name: str
-    throw: models.DominantHandEnum
-    bat: models.DominantHandEnum
+    pitching_side: models.DominantHandEnum
+    batting_side: models.DominantHandEnum
     height_cm: int
     weight_kg: int
-    prefecture: models.PrefectureEnum
     birthday: date
     grade: models.GradeEnum
     position_type: models.PositionTypeEnum
@@ -67,6 +73,13 @@ class AllMembers(BaseModel):
     team_name: str
     member: List[ForAllMembers]
     
+
+#-----------------
+# for results
+#-----------------
+
+
+
 
 #-----------------
 # for member_detail
@@ -91,16 +104,6 @@ class PitcherStats(BaseModel):
 
 
 class MemberPage(BaseModel):
-    role: models.RoleEnum
-    uniform_number: int
-    name: str
-    throw: models.DominantHandEnum
-    bat: models.DominantHandEnum
-    height_cm: int
-    weight_kg: int
-    prefecture: models.PrefectureEnum
-    birthday: date
-    grade: models.GradeEnum
-    position_type: models.PositionTypeEnum
+    member: ForAllMembers
     batter_stats: BatterStats
     pitcher_stats: PitcherStats
