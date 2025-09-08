@@ -20,6 +20,7 @@ class ForPerson(BaseModel):
     height_cm: int
     weight_kg: int
     birthday: date
+    prefecture: models.PrefectureEnum
     grade: models.GradeEnum
     position_type: models.PositionTypeEnum
     

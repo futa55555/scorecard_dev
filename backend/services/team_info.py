@@ -131,7 +131,8 @@ def get_all_member(
                 batting_side = person.batting_side,
                 height_cm = person.height_cm,
                 weight_kg = person.weight_kg,
-                birtyday = person.birthday,
+                birthday = person.birthday,
+                prefecture = person.prefecture,
                 grade = grade.grade,
                 position_type = position_type.position_type
             )

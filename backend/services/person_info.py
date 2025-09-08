@@ -23,6 +23,7 @@ def get_person(
         height_cm = person.height_cm,
         weight_kg = person.weight_kg,
         birthday = person.birthday,
+        prefecture = person.prefecture,
         grade = grade.grade,
         position_type = position_type.position_type
     )

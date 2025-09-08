@@ -39,7 +39,7 @@ def seed_people(db):
                 random.randint(1, 12),        # 月
                 random.randint(1, 28)         # 日
             ),
-            perfecture=random.choice(prefectures)
+            prefecture=random.choice(prefectures)
         )
         people.append(person)
 

@@ -228,7 +228,7 @@ class Person(Base):
     height_cm = Column(Integer, nullable=True)
     weight_kg = Column(Integer, nullable=True)
     birthday = Column(Date, nullable=True)
-    perfecture = Column(Enum(PrefectureEnum), nullable=True)
+    prefecture = Column(Enum(PrefectureEnum), nullable=True)
 
     member_profiles = relationship("MemberProfile", back_populates="person")
     member_grades = relationship("MemberGrade", back_populates="person")
