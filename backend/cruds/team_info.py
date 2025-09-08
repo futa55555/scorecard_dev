@@ -90,29 +90,3 @@ def get_all_member(
         )
         .all()
     )
-
-
-def get_member(
-    db: Session,
-    team_id: int,
-    person_id: int
-) -> Tuple[models.Person, models.MemberProfile, models.MemberGrade, models.PlayerPositionType]:
-    return (
-        db.query(
-            models.Person,
-            models.MemberProfile,
-            models.MemberGrade,
-            models.PlayerPositionType
-        )
-        .join(models.MemberProfile)
-        .join(models.MemberGrade)
-        .join(models.PlayerPositionType)
-        .filter(
-            (models.Person.id == person_id)
-            & (models.MemberProfile.team_id == team_id)
-            & (models.MemberProfile.until_date.is_(None))
-            & (models.MemberGrade.until_date.is_(None))
-            & (models.PlayerPositionType.until_date.is_(None))
-        )
-        .first()
-    )

@@ -138,27 +138,3 @@ def get_all_member(
         )
     
     return res
-
-
-def get_member(
-    db: Session,
-    team_id: int,
-    person_id: int
-) -> schema.ForAllMembers:
-    person_with_all_info = crud.get_member(db, team_id, person_id)
-    
-    person, profile, grade, position_type = person_with_all_info
-    
-    return schema.ForAllMembers(
-        person_id = person.id,
-        role = profile.role,
-        uniform_number = profile.uniform_number,
-        name = person.name,
-        pitching_side = person.pitching_side,
-        batting_side = person.batting_side,
-        height_cm = person.height_cm,
-        weight_kg = person.weight_kg,
-        birtyday = person.birthday,
-        grade = grade.grade,
-        position_type = position_type.position_type
-    )

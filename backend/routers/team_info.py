@@ -39,20 +39,3 @@ def get_all_members(
         team_name = team_name,
         member = member
     )
-    
-
-@router.get("/api/team_info/{team_id}/members/{person_id}", response_model=schema.MemberPage)
-def get_member_page(
-    team_id: int,
-    person_id: int,
-    db: Session = Depends(get_db)
-) -> schema.MemberPage:
-    member = service.get_member(db, person_id)
-    
-    batter_stats = service.get_batter_stats(db, person_id)
-    
-    return schema.MemberPage(
-        member = member,
-        batter_stats = batter_stats,
-        pitcher_stats = pitcher_stats
-    )
