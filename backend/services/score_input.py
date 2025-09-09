@@ -1,7 +1,7 @@
 # backend/services/score_input.py
 
 from fastapi import HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from backend import models
 from backend.schemas import score_input as schema
 from backend.cruds import score_input as crud
