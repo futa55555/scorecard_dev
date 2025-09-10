@@ -39,10 +39,7 @@ def get_team_member(
         "analyst_count": 0,
     })
     
-    for row in count_by_grade_and_role:
-        grade = row["grade"]
-        role = row["role"]
-        cnt = row["cnt"]
+    for cnt, grade, role in count_by_grade_and_role:
         
         if role == models.RoleEnum.player:
             grouped[grade]["player_count"] += cnt
