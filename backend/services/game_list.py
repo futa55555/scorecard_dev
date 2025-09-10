@@ -6,12 +6,13 @@ from backend.schemas import game_list as schema
 from backend.cruds import game_list as crud
 
 def get_game_with_team_name_list(
-    db: Session
+    db: Session,
+    limit: int
 ) -> List[schema.GameWithTeamName]:
     """
     チーム名付きで試合のリストを取得
     """
-    game_list = crud.get_game_list(db)
+    game_list = crud.get_game_list(db, limit)
     
     res = []
     for game in game_list:

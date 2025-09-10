@@ -10,7 +10,8 @@ from backend import models
 # ------------------------
 
 def get_game_list(
-    db: Session
+    db: Session,
+    limit: int
 ) -> List[models.Game]:
     """
     すべての試合を取得
@@ -21,5 +22,6 @@ def get_game_list(
             joinedload(models.Game.top_team),
             joinedload(models.Game.bottom_team)
         )
+        .limit(limit)
         .all()
     )

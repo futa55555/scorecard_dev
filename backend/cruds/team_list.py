@@ -6,12 +6,14 @@ from typing import List
 from backend import models
 
 def get_team_list(
-    db: Session
+    db: Session,
+    limit: int
 ) -> List[models.Team]:
     """
     すべてのチームを取得
     """
     return (
         db.query(models.Team)
+        .limit(limit)
         .all()
     )

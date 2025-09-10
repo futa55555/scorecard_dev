@@ -6,9 +6,10 @@ from backend.schemas import team_list as schema
 from backend.cruds import team_list as crud
 
 def get_team_list(
-    db: Session
+    db: Session,
+    limit: int = 10
 ) -> List[schema.TeamBase]:
-    team_list = crud.get_team_list(db)
+    team_list = crud.get_team_list(db, limit)
     
     res = []
     for team in team_list:

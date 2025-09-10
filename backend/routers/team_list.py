@@ -1,6 +1,6 @@
 # backend/routers/team_list.py
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from backend.database import get_db
 from backend.schemas import team_list as schema
@@ -10,11 +10,12 @@ router = APIRouter()
 
 @router.get("/api/team_list", response_model=schema.AllTeam)
 def get_team_list(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    limit: int = Query(10, ge=1, le=100, description="取得する件数")
 ) -> schema.AllTeam:
     """
     チームの一覧を返す
     """
     return schema.AllTeam(
-        team = service.get_team_list(db)
+        team = service.get_team_list(db, limit)
     )
