@@ -1,12 +1,12 @@
-# backend/seeds/member_profiles.py
+# backend/seeds/person_profiles.py
 
 from backend import models
 from datetime import date, timedelta
 import random
 
 
-def seed_member_profiles(db):
-    profiles = []
+def seed_person_profiles(db):
+    person_profiles = []
 
     roles = (
         ["player"] * 160 +
@@ -46,7 +46,7 @@ def seed_member_profiles(db):
                 since_date = current_date
                 until_date = None
 
-            profile = models.MemberProfile(
+            profile = models.PersonProfile(
                 person_id=person_id,
                 team_id=team_id,
                 since_date=since_date,
@@ -54,7 +54,7 @@ def seed_member_profiles(db):
                 uniform_number=uniform_number,
                 role=role
             )
-            profiles.append(profile)
+            person_profiles.append(profile)
 
-    db.add_all(profiles)
+    db.add_all(person_profiles)
     db.commit()

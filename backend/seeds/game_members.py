@@ -19,10 +19,10 @@ def seed_game_members(db):
 
             # 現役メンバーを取得
             members = (
-                db.query(models.MemberProfile)
+                db.query(models.PersonProfile)
                 .filter(
-                    models.MemberProfile.team_id == team_id,
-                    models.MemberProfile.until_date.is_(None)
+                    models.PersonProfile.team_id == team_id,
+                    models.PersonProfile.until_date.is_(None)
                 )
                 .all()
             )
