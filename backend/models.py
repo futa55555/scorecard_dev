@@ -1,6 +1,6 @@
 # backend/models.py
 
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, Enum, Table
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, Enum, Table, Boolean
 from sqlalchemy_utils import URLType
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import JSON, Time
@@ -62,15 +62,6 @@ class PrefectureEnum(str, enum.Enum):
     Okinawa = "沖縄"
 
 
-class GradeEnum(str, enum.Enum):
-    B1 = "B1"
-    B2 = "B2"
-    B3 = "B3"
-    B4 = "B4"
-    M1 = "M1"
-    M2 = "M2"
-
-
 class DominantHandEnum(str, enum.Enum):
     right = "R"
     left = "L"
@@ -128,11 +119,6 @@ class BattingOrderEnum(int, enum.Enum):
     No9 = 9
     FP = 10
     NOT = 0
-
-
-class TopBottomEnum(str, enum.Enum):
-    top = "top"
-    bottom = "bottom"
 
 
 class BattingFormEnum(str, enum.Enum):
@@ -245,6 +231,12 @@ class TeamCategory(Base):
     teams = relationship("Team", back_populates="category")
     leagues = relationship("League", back_populates="category")
 
+    tournaments = relationship(
+        "Tournament",
+        secondary="tournament_categories",
+        back_populates="categories"
+    )
+
 
 class League(Base):
     __tablename__ = "leagues"
@@ -285,6 +277,12 @@ class Team(Base):
         back_populates="favorite_teams"
     )
 
+    tournaments = relationship(
+        "Tournament",
+        secondary="tournament_teams",
+        back_populates="teams"
+    )
+
 
 user_favorite_teams = Table(
     "user_favorite_teams",
@@ -308,9 +306,7 @@ class Person(Base):
     prefecture = Column(Enum(PrefectureEnum), nullable=True)
 
     person_profiles = relationship("PersonProfile", back_populates="person")
-    person_grades = relationship("PersonGrade", back_populates="person")
     game_members = relationship("GameMember", back_populates="person")
-    player_position_types = relationship("PlayerPositionType", back_populates="person")
 
 
 class PersonProfile(Base):
@@ -326,30 +322,6 @@ class PersonProfile(Base):
 
     team = relationship("Team", foreign_keys=[team_id], back_populates="person_profiles")
     person = relationship("Person", foreign_keys=[person_id], back_populates="person_profiles")
-
-
-class PersonGrade(Base):
-    __tablename__ = "person_grades"
-
-    person_grade_id = Column(Integer, primary_key=True, index=True)
-    person_id = Column(Integer, ForeignKey("people.person_id"), nullable=False)
-    grade = Column(Enum(GradeEnum), nullable=True)
-    since_date = Column(Date, nullable=True)
-    until_date = Column(Date, nullable=True)
-
-    person = relationship("Person", foreign_keys=[person_id], back_populates="person_grades")
-
-
-class PlayerPositionType(Base):
-    __tablename__ = "player_position_types"
-
-    player_position_type_id = Column(Integer, primary_key=True, index=True)
-    person_id = Column(Integer, ForeignKey("people.person_id"), nullable=False)
-    position_type = Column(Enum(PositionTypeEnum), nullable=False)
-    since_date = Column(Date, nullable=True)
-    until_date = Column(Date, nullable=True)
-
-    person = relationship("Person", foreign_keys=[person_id], back_populates="player_position_types")
 
 
 class GameMember(Base):
@@ -386,64 +358,73 @@ class SubstitutionEvent(Base):
     in_member = relationship("GameMember", foreign_keys=[in_member_id], back_populates="substitution_events_as_in")
 
 
+class Tournament(Base):
+    __tablename__ = "tournaments"
+
+    tournament_id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), nullable=False)
+    since_date = Column(Date, nullable=True)
+    until_date = Column(Date, nullable=True)
+
+    games = relationship("Game", back_populates="tournament")
+
+    teams = relationship(
+        "Team",
+        secondary="tournament_teams",
+        back_populates="tournaments"
+    )
+
+    categories = relationship(
+        "TeamCategory",
+        secondary="tournament_categories",
+        back_populates="tournaments"
+    )
+
+
+tournament_teams = Table(
+    "tournament_teams",
+    Base.metadata,
+    Column("tournament_id", Integer, ForeignKey("tournaments.tournament_id"), primary_key=True),
+    Column("team_id", Integer, ForeignKey("teams.team_id"), primary_key=True),
+)
+
+tournament_categories = Table(
+    "tournament_categories",
+    Base.metadata,
+    Column("tournament_id", Integer, ForeignKey("tournaments.tournament_id"), primary_key=True),
+    Column("category_id", Integer, ForeignKey("team_categories.category_id"), primary_key=True),
+)
+
+
 class Game(Base):
     __tablename__ = "games"
 
     game_id = Column(Integer, primary_key=True, index=True)
     top_team_id = Column(Integer, ForeignKey("teams.team_id"), nullable=True)
     bottom_team_id = Column(Integer, ForeignKey("teams.team_id"), nullable=True)
+    top_bottom_desided = Column(Boolean, default=False, nullable=False)
     date = Column(Date, nullable=True)
     start_time = Column(Time, nullable=True)
     end_time = Column(Time, nullable=True)
-    tournament = Column(String(50), nullable=True)
+    tournament_id = Column(Integer, ForeignKey("tournaments.tournament_id"), nullable=True)
     location = Column(String(100), nullable=True)
     status = Column(Enum(GameStatusEnum), nullable=False)
 
     top_team = relationship("Team", foreign_keys=[top_team_id], back_populates="games_as_top_team")
     bottom_team = relationship("Team", foreign_keys=[bottom_team_id], back_populates="games_as_bottom_team")
+    tournament = relationship("Tournament", foreign_keys=[tournament_id], back_populates="games")
     game_members = relationship("GameMember", back_populates="game")
-    innings = relationship("Inning", back_populates="game")
-
-
-class Inning(Base):
-    __tablename__ = "innings"
-
-    inning_id = Column(Integer, primary_key=True, index=True)
-    game_id = Column(Integer, ForeignKey("games.game_id"), nullable=False)
-    inning_number = Column(Integer, nullable=False)
-    top_bottom = Column(Enum(TopBottomEnum), nullable=False)
-    score = Column(Integer, default=-1)  # -1はnot finished. 得点を代入してfinished.
-
-    game = relationship("Game", back_populates="innings")
-    atbats = relationship("AtBat", back_populates="inning")
-
-
-class AtBat(Base):
-    __tablename__ = "atbats"
-
-    atbat_id = Column(Integer, primary_key=True, index=True)
-    inning_id = Column(Integer, ForeignKey("innings.inning_id"), nullable=False)
-    responsible_pitcher_id = Column(Integer, ForeignKey("game_members.game_member_id"), nullable=True)
-    responsible_batter_id = Column(Integer, ForeignKey("game_members.game_member_id"), nullable=True)
-    final_pitch_event_id = Column(Integer, nullable=True)
-
-    inning = relationship("Inning", foreign_keys=[inning_id], back_populates="atbats")
-    responsible_pitcher = relationship("GameMember", foreign_keys=[responsible_pitcher_id], back_populates="atbats_as_pitcher")
-    responsible_batter = relationship("GameMember", foreign_keys=[responsible_batter_id], back_populates="atbats_as_batter")
-    pitch_events = relationship("PitchEvent", back_populates="atbat")
 
 
 class PitchEvent(Base):
     __tablename__ = "pitch_events"
 
     pitch_event_id = Column(Integer, primary_key=True, index=True)
-    atbat_id = Column(Integer, ForeignKey("atbats.atbat_id"), nullable=False)
     pitch_type = Column(Enum(PitchTypeEnum), nullable=False)
     pitch_type_detail = Column(String(50), nullable=True)
     batting_form = Column(Enum(BattingFormEnum), nullable=True)
     batting_side = Column(Enum(BattingSideEnum), nullable=True)
 
-    atbat = relationship("AtBat", foreign_keys=[atbat_id], back_populates="pitch_events")
     advance_events = relationship("AdvanceEvent", back_populates="pitch_event")
     substitution_events = relationship("SubstitutionEvent", back_populates="pitch_event")
 
