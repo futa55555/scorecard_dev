@@ -2,6 +2,8 @@
 
 from backend import models
 import random
+random.seed(42)
+
 
 def seed_game_members(db):
     game_members = []
@@ -59,7 +61,7 @@ def seed_game_members(db):
             starters = person_ids[:9]
             for idx, person_id in enumerate(starters):
                 gm = models.GameMember(
-                    game_id=game.id,
+                    game_id=game.game_id,
                     team_id=team_id,
                     person_id=person_id,
                     starting_batting_order=batting_orders[idx],
@@ -70,7 +72,7 @@ def seed_game_members(db):
             # それ以降はベンチ
             for idx, person_id in enumerate(person_ids[9:], start=10):
                 gm = models.GameMember(
-                    game_id=game.id,
+                    game_id=game.game_id,
                     team_id=team_id,
                     person_id=person_id,
                     starting_batting_order=models.BattingOrderEnum.NOT,

@@ -34,15 +34,15 @@ class ForInningScore(BaseModel):
 
 
 class InningScore(BaseModel):
-    top_team: ForGameBase
-    bottom_team: ForGameBase
+    top_team: ForInningScore
+    bottom_team: ForInningScore
 
 
 class MemberWithPosition(BaseModel):
     member_id: int
     member_name: str
     member_order: int
-    member_postion: models.PositionEnum
+    member_position: models.PositionEnum
 
 
 class ForStartingOrder(BaseModel):
@@ -72,7 +72,6 @@ class BenchMember(BaseModel):
     
 
 class EntryState(BaseModel):
-    substitution_type: models.SubstitutionTypeEnum
     batting_order: models.BattingOrderEnum
     position: models.PositionEnum
     game_member_id: int
@@ -125,9 +124,14 @@ class ExtrabaseHit(BaseModel):
     
     
 class GameInfoTop(BaseModel):
-    num: int
+    game_base: GameBase
+    inning_score: InningScore
+    starting_order: StartingOrder
+    bench_member: BenchMember
+    entry_history: EntryHistory
+    battery: Battery
 
-    
+
 #-----------------
 # for live
 #-----------------
@@ -241,3 +245,12 @@ class AllPitcherStats(BaseModel):
 
 class GameInfoStats(BaseModel):
     num: int
+    
+
+#-----------------
+# for members
+#-----------------
+
+class GameInfoMembers(BaseModel):
+    starting_member: StartingOrder
+    bench_member: BenchMember

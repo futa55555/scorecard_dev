@@ -10,12 +10,12 @@ def get_team_list(
     limit: int = 10
 ) -> List[schema.TeamBase]:
     team_list = crud.get_team_list(db, limit)
-    
+
     res = []
     for team in team_list:
         res.append(
             schema.TeamBase(
-                id = team.id,
+                id = team.team_id,
                 name = team.name,
                 short_name = team.short_name,
                 is_myteam = team.is_myteam,
@@ -26,5 +26,5 @@ def get_team_list(
                 color = team.color
             )
         )
-    
+
     return res

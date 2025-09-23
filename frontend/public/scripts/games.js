@@ -37,12 +37,12 @@ function fetchTeamsForSelect() {
 
             teams.forEach(team => {
                 const opt1 = document.createElement("option");
-                opt1.value = team.id;
+                opt1.value = team.team_id;
                 opt1.textContent = team.name;
                 team1Select.appendChild(opt1);
 
                 const opt2 = document.createElement("option");
-                opt2.value = team.id;
+                opt2.value = team.team_id;
                 opt2.textContent = team.name;
                 team2Select.appendChild(opt2);
             });
@@ -65,10 +65,10 @@ document.getElementById("add-game-form").addEventListener("submit", function (e)
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
-    .then(() => {
-        this.reset();
-        fetchGames();
-    });
+        .then(() => {
+            this.reset();
+            fetchGames();
+        });
 });
 
 // 試合削除

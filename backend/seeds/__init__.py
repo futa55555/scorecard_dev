@@ -7,6 +7,8 @@ from backend.seeds.member_grades import seed_member_grades
 from backend.seeds.player_position_types import seed_player_position_types
 from backend.seeds.games import seed_games
 from backend.seeds.game_members import seed_game_members
+from backend.seeds.innings import seed_innings
+
 
 def init_data(db):
     seed_teams(db)
@@ -16,3 +18,4 @@ def init_data(db):
     seed_player_position_types(db)
     seed_games(db)
     seed_game_members(db)
+    seed_innings(db)

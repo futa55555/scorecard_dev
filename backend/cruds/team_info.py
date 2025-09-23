@@ -14,7 +14,7 @@ def get_team(
 ) -> models.Team:
     return (
         db.query(models.Team)
-        .filter(models.Team.id == team_id)
+        .filter(models.Team.team_id == team_id)
         .first()
     )
 
@@ -25,7 +25,7 @@ def get_count_by_grade_and_role(
 ) -> List[Dict[str, any]]:
     return (
         db.query(
-            func.count(models.Person.id).label("cnt"),
+            func.count(models.Person.person_id).label("cnt"),
             models.MemberGrade.grade,
             models.MemberProfile.role
         )
@@ -42,7 +42,7 @@ def get_count_by_grade_and_role(
         )
         .all()
     )
-    
+
 
 def get_recent_game(
     db: Session,
@@ -52,7 +52,7 @@ def get_recent_game(
         db.query(models.Game)
         .filter(
             (models.Game.top_team_id == team_id)
-            | (models.Game.bottom_team_id == team_id)    
+            | (models.Game.bottom_team_id == team_id)
         )
         .options(
             joinedload(models.Game.innings),
@@ -66,7 +66,7 @@ def get_recent_game(
         .limit(5)
         .all()
     )
-    
+
 
 def get_all_member(
     db: Session,

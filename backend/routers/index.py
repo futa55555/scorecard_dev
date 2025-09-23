@@ -14,5 +14,5 @@ def get_myteam(db: Session = Depends(get_db)):
     """
     team = db.query(Team).filter(Team.is_myteam == True).first()
     if team:
-        return {"id": team.id, "name": team.name}
+        return {"id": team.team_id, "name": team.name}
     return {"id": None, "name": None}

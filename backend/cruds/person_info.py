@@ -23,7 +23,7 @@ def get_person(
         .join(models.MemberGrade)
         .join(models.PlayerPositionType)
         .filter(
-            (models.Person.id == person_id)
+            (models.Person.person_id == person_id)
             & (models.MemberProfile.until_date.is_(None))
             & (models.MemberGrade.until_date.is_(None))
             & (models.PlayerPositionType.until_date.is_(None))

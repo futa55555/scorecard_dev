@@ -27,7 +27,7 @@ function fetchAtBats() {
             data.atbats.forEach(atbat => {
                 const li = document.createElement("li");
                 li.innerHTML = `
-                    ${atbat.id}番
+                    ${atbat.atbat_id}番
                     ${atbat.inning}回${atbat.top_bottom === "top" ? "表" : "裏"}
                     #${atbat.batter_id}
                     ${atbat.result || ""}

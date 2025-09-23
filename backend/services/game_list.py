@@ -13,12 +13,12 @@ def get_game_with_team_name_list(
     チーム名付きで試合のリストを取得
     """
     game_list = crud.get_game_list(db, limit)
-    
+
     res = []
     for game in game_list:
         res.append(
             schema.GameWithTeamName(
-                id = game.id,
+                id = game.game_id,
                 top_team_short_name = game.top_team.short_name,
                 bottom_team_short_name = game.bottom_team.short_name,
                 date = game.date,
@@ -29,5 +29,5 @@ def get_game_with_team_name_list(
                 status = game.status
             )
         )
-        
+
     return res

@@ -14,11 +14,11 @@ def get_person_page(
     db: Session = Depends(get_db)
 ) -> schema.PersonPage:
     person = service.get_person(db, person_id)
-    
+
     batter_stats = service.get_batter_stats(db, person_id)
-    
+
     pitcher_stats = service.get_pitcher_stats(db, person_id)
-    
+
     return schema.PersonPage(
         person = person,
         batter_stats = batter_stats,

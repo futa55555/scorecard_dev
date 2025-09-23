@@ -4,21 +4,23 @@ from backend import models
 from datetime import date, timedelta
 import random
 
+
 def seed_member_profiles(db):
     profiles = []
 
     roles = (
-        ["player"] * 90 +
-        ["manager"] * 7 +
-        ["coach"] * 1 +
-        ["trainer"] * 1 +
-        ["analyst"] * 1
+        ["player"] * 160 +
+        ["manager"] * 25 +
+        ["coach"] * 5 +
+        ["trainer"] * 5 +
+        ["analyst"] * 5
     )
 
-    for person_id in range(1, 101):  # 100人
+    for person_id in range(1, 201):  # 100人
         # 開始基準年をランダムに決める
-        start_year = random.randint(2015, 2022)
-        current_date = date(start_year, random.randint(1, 12), random.randint(1, 28))
+        start_year = random.randint(2020, 2025)
+        current_date = date(start_year, random.randint(
+            1, 12), random.randint(1, 28))
 
         for j in range(5):
             # role を確率分布に基づいて選択
@@ -32,11 +34,13 @@ def seed_member_profiles(db):
 
             # 期間を決める
             if j < 4:  # 最初の4つは終了日あり
-                duration = timedelta(days=random.randint(200, 500))  # ざっくり半年〜1年半
+                duration = timedelta(
+                    days=random.randint(200, 500))  # ざっくり半年〜1年半
                 until_date = current_date + duration
                 since_date = current_date
                 # 次の開始日 = 終了日 + ギャップ（0〜180日）
-                current_date = until_date + timedelta(days=random.randint(0, 180))
+                current_date = until_date + \
+                    timedelta(days=random.randint(0, 180))
             else:
                 # 最後の1レコードは現役
                 since_date = current_date

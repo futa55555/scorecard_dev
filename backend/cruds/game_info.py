@@ -19,10 +19,10 @@ def get_game_base(
     """
     return (
         db.query(models.Game)
-        .filter(models.Game.id == game_id)
+        .filter(models.Game.game_id == game_id)
         .options(
-            joinedload(models.Game.top_team)
-            .joinedload(models.Game.bottom_team)
+            joinedload(models.Game.top_team),
+            joinedload(models.Game.bottom_team)
         )
         .first()
     )
@@ -39,12 +39,12 @@ def get_all_innings(
         db.query(models.Inning)
         .filter(models.Inning.game_id == game_id)
         .options(
-            joinedload(models.Inning.game)
-            .joinedload(models.Inning.atbats)
+            joinedload(models.Inning.game),
+            joinedload(models.Inning.atbats)
         )
         .all()
     )
-    
+
 
 def get_starting_member(
     db: Session,
@@ -57,7 +57,7 @@ def get_starting_member(
         db.query(models.GameMember)
         .filter(
             (models.GameMember.game_id == game_id)
-            & (models.GameMember.starting_batting_order > 0)
+            & (models.GameMember.starting_batting_order != models.BattingOrderEnum.NOT)
         )
         .options(
             joinedload(models.GameMember.person)
@@ -93,7 +93,7 @@ def get_bench_member(
         db.query(models.GameMember)
         .filter(
             (models.GameMember.game_id == game_id)
-            & (models.GameMember.starting_batting_order is None)
+            & (models.GameMember.starting_batting_order == models.PositionEnum.NOT)
         )
         .options(
             joinedload(models.GameMember.person)
@@ -111,12 +111,15 @@ def get_all_substitution_events(
     """
     return (
         db.query(models.SubstitutionEvent)
-        .filter(models.SubstitutionEvent.game_id == game_id)
+        .join(models.SubstitutionEvent.pitch_event)
+        .join(models.PitchEvent.atbat)
+        .join(models.AtBat.inning)
+        .filter(models.Inning.game_id == game_id)
         .options(
             joinedload(models.SubstitutionEvent.sub_member)
             .joinedload(models.GameMember.person)
         )
-        .order_by(models.SubstitutionEvent.id.asc())
+        .order_by(models.SubstitutionEvent.substitution_event_id.asc())
         .all()
     )
 
@@ -153,7 +156,7 @@ def get_latest_atbat_with_pitch_events(
         .options(
             joinedload(models.AtBat.pitch_events)
         )
-        .order_by(models.AtBat.id.desc())
+        .order_by(models.AtBat.atbat_id.desc())
         .first()
     )
 
@@ -169,25 +172,24 @@ def get_advance_events_of_latest_inning(
     latest_inning = (
         db.query(models.Inning)
         .filter(models.Inning.game_id == game_id)
-        .order_by(models.Inning.id.desc())
+        .order_by(models.Inning.inning_id.desc())
         .first()
     )
     if not latest_inning:
         raise HTTPException(status_code=404, detail="latest_inning not found")
-    
+
     advance_events_of_latest_inning = (
         db.query(models.AdvanceEvent)
         .join(models.PitchEvent)
         .join(models.AtBat)
         .join(models.Inning)
-        .filter(models.Inning.id == latest_inning.id)
+        .filter(models.Inning.inning_id == latest_inning.inning_id)
         .order_by(
-            models.PitchEvent.id.asc(),      # pitch_event.id 昇順
+            models.PitchEvent.pitch_event_id.asc(),      # pitch_event_id 昇順
             models.AdvanceEvent.runner_id.asc(),  # runnerごとにまとめる
             func.min(models.AdvanceEvent.from_base).over(
                 partition_by=models.AdvanceEvent.runner_id
             ).desc(),                       # runnerの初期位置（最大のfrom_base）降順
-            models.AdvanceEvent.from_base.asc()   # runner内でfrom_base 昇順
         )
         .options(
             joinedload(models.AdvanceEvent.pitch_event)
@@ -223,10 +225,10 @@ def get_all_innings_with_atbat(
             .joinedload(models.AtBat.pitch_events)
             .joinedload(models.PitchEvent.advance_events)
         )
-        .order_by(models.AtBat.id.asc())
+        .order_by(models.AtBat.atbat_id.asc())
         .all()
     )
-    
+
 
 def get_starting_order(
     db: Session,
@@ -287,7 +289,7 @@ def get_substitutions_by_pitch(
             (models.SubstitutionEvent.game_id == game_id)
             & (models.SubstitutionEvent.pitch_event_id <= pitch_event_id)
         )
-        .order_by(models.SubstitutionEvent.id.asc())
+        .order_by(models.SubstitutionEvent.substitution_event_id.asc())
         .all()
     )
 
@@ -301,11 +303,9 @@ def get_game_member_by_id(
     """
     return (
         db.query(models.GameMember)
-        .filter(models.GameMember.id == game_member_id)
+        .filter(models.GameMember.game_member_id == game_member_id)
         .options(
             joinedload(models.GameMember.person)
         )
         .first()
     )
-    
-

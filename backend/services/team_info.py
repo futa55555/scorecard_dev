@@ -12,7 +12,7 @@ def get_team_base(
     team_id: int
 ) -> schema.TeamBase:
     team = crud.get_team(db, team_id)
-    
+
     return schema.TeamBase(
         name = team.name,
         short_name = team.short_name,
@@ -23,14 +23,14 @@ def get_team_base(
         photo_url = team.photo_url,
         color = team.color
     )
-    
+
 
 def get_team_member(
     db: Session,
     team_id: int
 ) -> List[schema.ForTeamMember]:
     count_by_grade_and_role = crud.get_count_by_grade_and_role(db, team_id)
-    
+
     grouped = defaultdict(lambda: {
         "player_count": 0,
         "coach_count": 0,
@@ -38,9 +38,9 @@ def get_team_member(
         "trainer_count": 0,
         "analyst_count": 0,
     })
-    
+
     for cnt, grade, role in count_by_grade_and_role:
-        
+
         if role == models.RoleEnum.player:
             grouped[grade]["player_count"] += cnt
         elif role == models.RoleEnum.coach:
@@ -51,11 +51,11 @@ def get_team_member(
             grouped[grade]["trainer_count"] += cnt
         elif role == models.RoleEnum.analyst:
             grouped[grade]["analyst_count"] += cnt
-    
+
     res = [
         schema.ForTeamMember(grade = grade, **counts) for grade, counts in grouped.items()
     ]
-    
+
     return res
 
 
@@ -67,7 +67,7 @@ def get_game_score(
     for inning in game.innings:
         if inning.score >= 0:
             team_score[inning.top_bottom] += inning.score
-        
+
     if team_id == game.top_team_id:
         my_team_score = team_score[models.TopBottomEnum.top]
         opposite_team_score = team_score[models.TopBottomEnum.bottom]
@@ -76,7 +76,7 @@ def get_game_score(
         my_team_score = team_score[models.TopBottomEnum.bottom]
         opposite_team_score = team_score[models.TopBottomEnum.top]
         opposite_team_short_name = game.top_team.short_name
-        
+
     return schema.ForRecentGame(
         my_team_score = my_team_score,
         opposite_team_score = opposite_team_score,
@@ -91,13 +91,13 @@ def get_recent_game(
     team_id: int
 ) -> List[schema.ForRecentGame]:
     recent_game = crud.get_recent_game(db, team_id)
-    
+
     res = []
     for game in recent_game:
         res.append(
             get_game_score(team_id, game)
         )
-    
+
     return res
 
 
@@ -114,13 +114,13 @@ def get_all_member(
     team_id: int
 ) -> List[schema.ForAllMembers]:
     res = []
-    
+
     people_with_all_info = crud.get_all_member(db, team_id)
-    
+
     for person, profile, grade, position_type in people_with_all_info:
         res.append(
             schema.ForAllMembers(
-                person_id = person.id,
+                person_id = person.person_id,
                 role = profile.role,
                 uniform_number = profile.uniform_number,
                 name = person.name,
@@ -134,5 +134,5 @@ def get_all_member(
                 position_type = position_type.position_type
             )
         )
-    
+
     return res

@@ -3,6 +3,8 @@
 from backend import models
 from datetime import date
 import random
+random.seed(42)
+
 
 def seed_people(db):
     people = []
@@ -20,7 +22,7 @@ def seed_people(db):
     pitching_sides = list(models.DominantHandEnum)
     batting_sides = list(models.DominantHandEnum)
 
-    for i in range(1, 101):
+    for i in range(1, 201):
         # 1割くらいは外国人名
         if i % 10 == 0:
             name = random.choice(foreign_names)
@@ -35,7 +37,7 @@ def seed_people(db):
             height_cm=random.randint(160, 190),
             weight_kg=random.randint(55, 95),
             birthday=date(
-                random.randint(1995, 2006),   # 年
+                random.randint(2001, 2006),   # 年
                 random.randint(1, 12),        # 月
                 random.randint(1, 28)         # 日
             ),

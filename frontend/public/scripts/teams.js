@@ -17,10 +17,10 @@ function fetchTeams() {
 
                 // チーム名、マイチーム表示、削除ボタン、マイチーム切替ボタン
                 li.innerHTML = `
-                    <a href="/pages/team_members.html?team_id=${team.id}">${team.name}</a>
+                    <a href="/pages/team_members.html?team_id=${team.team_id}">${team.name}</a>
                     ${team.is_myteam ? "★" : ""}
-                    <button onclick="deleteTeam(${team.id})">削除</button>
-                    <button onclick="${team.is_myteam ? `unmarkMyTeam(${team.id})` : `markMyTeam(${team.id})`}">
+                    <button onclick="deleteTeam(${team.team_id})">削除</button>
+                    <button onclick="${team.is_myteam ? `unmarkMyTeam(${team.team_id})` : `markMyTeam(${team.team_id})`}">
                         ${team.is_myteam ? "マイチーム解除" : "マイチームに設定"}
                     </button>
                 `;

@@ -3,6 +3,8 @@
 from backend import models
 from datetime import date
 import random
+random.seed(42)
+
 
 def seed_player_position_types(db):
     positions = []
@@ -15,11 +17,11 @@ def seed_player_position_types(db):
         ["OF"] * 35    # 外野手: 35%
     )
 
-    for person_id in range(1, 101):
+    for person_id in range(1, 201):
         pos = models.PositionTypeEnum(random.choice(weighted_positions))
 
         # 入学年をランダムに決める（2015〜2022）
-        start_year = random.randint(2015, 2022)
+        start_year = random.randint(2020, 2025)
         since_date = date(start_year, 4, 1)
 
         ppt = models.PlayerPositionType(
