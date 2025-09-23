@@ -2,7 +2,7 @@
 
 from sqlalchemy import Column, Integer, String, ForeignKey, Date, Enum, Table
 from sqlalchemy_utils import URLType
-from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy.orm import relationship
 from sqlalchemy.types import JSON, Time
 from backend.database import Base
 import enum
@@ -236,20 +236,45 @@ class User(Base):
     )
 
 
+class TeamCategory(Base):
+    __tablename__ = "team_categories"
+
+    category_id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(100), nullable=False, unique=True)
+
+    teams = relationship("Team", back_populates="category")
+    leagues = relationship("League", back_populates="category")
+
+
+class League(Base):
+    __tablename__ = "leagues"
+
+    league_id = Column(Integer, primary_key=True, index=True)
+    category_id = Column(Integer, ForeignKey("team_categories.category_id"), nullable=True)
+    name = Column(String(100), nullable=False, unique=True)
+
+    category = relationship("TeamCategory", back_populates="leagues")
+    teams = relationship("Team", back_populates="league")
+
+
 class Team(Base):
     __tablename__ = "teams"
 
     team_id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
     short_name = Column(String(100), nullable=True)
+    category_id = Column(Integer, ForeignKey("team_categories.category_id"), nullable=True)
+    league_id = Column(Integer, ForeignKey("leagues.league_id"), nullable=True)
     prefecture = Column(Enum(PrefectureEnum), nullable=True)
-    league = Column(String(100), nullable=True)
     photo_url = Column(URLType, nullable=True)
     color = Column(String(100), nullable=True)
     admin_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
 
+
+    category = relationship("TeamCategory", back_populates="teams")
+    league = relationship("League", back_populates="teams")
     admin = relationship("User", back_populates="admin_teams")
-    member_profiles = relationship("MemberProfile", back_populates="team")
+    person_profiles = relationship("PersonProfile", back_populates="team")
     games_as_top_team = relationship("Game", foreign_keys="Game.top_team_id", back_populates="top_team")
     games_as_bottom_team = relationship("Game", foreign_keys="Game.bottom_team_id", back_populates="bottom_team")
     game_members = relationship("GameMember", back_populates="team")
@@ -282,16 +307,16 @@ class Person(Base):
     birthday = Column(Date, nullable=True)
     prefecture = Column(Enum(PrefectureEnum), nullable=True)
 
-    member_profiles = relationship("MemberProfile", back_populates="person")
-    member_grades = relationship("MemberGrade", back_populates="person")
+    person_profiles = relationship("PersonProfile", back_populates="person")
+    person_grades = relationship("PersonGrade", back_populates="person")
     game_members = relationship("GameMember", back_populates="person")
     player_position_types = relationship("PlayerPositionType", back_populates="person")
 
 
-class MemberProfile(Base):
-    __tablename__ = "member_profiles"
+class PersonProfile(Base):
+    __tablename__ = "person_profiles"
 
-    member_profile_id = Column(Integer, primary_key=True, index=True)
+    person_profile_id = Column(Integer, primary_key=True, index=True)
     person_id = Column(Integer, ForeignKey("people.person_id"), nullable=False)
     team_id = Column(Integer, ForeignKey("teams.team_id"), nullable=False)
     since_date = Column(Date, nullable=True)
@@ -299,20 +324,20 @@ class MemberProfile(Base):
     uniform_number = Column(Integer, nullable=True)
     role = Column(Enum(RoleEnum), nullable=True)
 
-    team = relationship("Team", foreign_keys=[team_id], back_populates="member_profiles")
-    person = relationship("Person", foreign_keys=[person_id], back_populates="member_profiles")
+    team = relationship("Team", foreign_keys=[team_id], back_populates="person_profiles")
+    person = relationship("Person", foreign_keys=[person_id], back_populates="person_profiles")
 
 
-class MemberGrade(Base):
-    __tablename__ = "member_grades"
+class PersonGrade(Base):
+    __tablename__ = "person_grades"
 
-    member_grade_id = Column(Integer, primary_key=True, index=True)
+    person_grade_id = Column(Integer, primary_key=True, index=True)
     person_id = Column(Integer, ForeignKey("people.person_id"), nullable=False)
     grade = Column(Enum(GradeEnum), nullable=True)
     since_date = Column(Date, nullable=True)
     until_date = Column(Date, nullable=True)
 
-    person = relationship("Person", foreign_keys=[person_id], back_populates="member_grades")
+    person = relationship("Person", foreign_keys=[person_id], back_populates="person_grades")
 
 
 class PlayerPositionType(Base):
