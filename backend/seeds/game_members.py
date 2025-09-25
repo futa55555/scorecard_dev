@@ -1,84 +1,24 @@
 # backend/seeds/game_members.py
 
+import json
+
 from backend import models
-import random
-random.seed(42)
 
 
 def seed_game_members(db):
-    game_members = []
+    with open("backend/seeds/data/game_members.json", "r", encoding="utf-8") as f:
+        game_member_data = json.load(f)
 
-    # 全ゲームを取得
-    games = db.query(models.Game).all()
-
-    for game in games:
-        # 各ゲームの2チーム
-        for team_id in [game.top_team_id, game.bottom_team_id]:
-            if team_id is None:
-                continue
-
-            # 現役メンバーを取得
-            members = (
-                db.query(models.PersonProfile)
-                .filter(
-                    models.PersonProfile.team_id == team_id,
-                    models.PersonProfile.until_date.is_(None)
-                )
-                .all()
-            )
-            person_ids = [m.person_id for m in members]
-
-            # シャッフルしてランダムな先発メンバーを作る
-            random.shuffle(person_ids)
-
-            # 打順: No1〜No9
-            batting_orders = [
-                models.BattingOrderEnum.No1,
-                models.BattingOrderEnum.No2,
-                models.BattingOrderEnum.No3,
-                models.BattingOrderEnum.No4,
-                models.BattingOrderEnum.No5,
-                models.BattingOrderEnum.No6,
-                models.BattingOrderEnum.No7,
-                models.BattingOrderEnum.No8,
-                models.BattingOrderEnum.No9,
-            ]
-
-            # 守備位置: P〜RF
-            positions = [
-                models.PositionEnum.P,
-                models.PositionEnum.C,
-                models.PositionEnum.FB,
-                models.PositionEnum.SB,
-                models.PositionEnum.TB,
-                models.PositionEnum.SS,
-                models.PositionEnum.LF,
-                models.PositionEnum.CF,
-                models.PositionEnum.RF,
-            ]
-
-            # 先発9人まで
-            starters = person_ids[:9]
-            for idx, person_id in enumerate(starters):
-                gm = models.GameMember(
-                    game_id=game.game_id,
-                    team_id=team_id,
-                    person_id=person_id,
-                    starting_batting_order=batting_orders[idx],
-                    starting_position=positions[idx]
-                )
-                game_members.append(gm)
-
-            # それ以降はベンチ
-            for idx, person_id in enumerate(person_ids[9:], start=10):
-                gm = models.GameMember(
-                    game_id=game.game_id,
-                    team_id=team_id,
-                    person_id=person_id,
-                    starting_batting_order=models.BattingOrderEnum.NOT,
-                    starting_position=models.PositionEnum.NOT
-                )
-                game_members.append(gm)
+    game_members = [
+        models.GameMember(
+            game_member_id=game_member["game_member_id"],
+            game_record_id=game_member["game_record_id"],
+            team_id=game_member["team_id"],
+            person_id=game_member["person_id"],
+            is_eligible=game_member["is_eligible"]
+        )
+        for game_member in game_member_data
+    ]
 
     db.add_all(game_members)
     db.commit()

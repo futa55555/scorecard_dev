@@ -1,60 +1,27 @@
 # backend/seeds/person_profiles.py
 
+import json
+from datetime import date
+
 from backend import models
-from datetime import date, timedelta
-import random
 
 
 def seed_person_profiles(db):
-    person_profiles = []
+    with open("backend/seeds/data/person_profiles.json", "r", encoding="utf-8") as f:
+        person_profile_data = json.load(f)
 
-    roles = (
-        ["player"] * 160 +
-        ["manager"] * 25 +
-        ["coach"] * 5 +
-        ["trainer"] * 5 +
-        ["analyst"] * 5
-    )
-
-    for person_id in range(1, 201):  # 100人
-        # 開始基準年をランダムに決める
-        start_year = random.randint(2020, 2025)
-        current_date = date(start_year, random.randint(
-            1, 12), random.randint(1, 28))
-
-        for j in range(5):
-            # role を確率分布に基づいて選択
-            role = models.RoleEnum(random.choice(roles))
-
-            # チームIDをランダム
-            team_id = random.randint(1, 6)
-
-            # 背番号をランダム
-            uniform_number = random.randint(1, 99)
-
-            # 期間を決める
-            if j < 4:  # 最初の4つは終了日あり
-                duration = timedelta(
-                    days=random.randint(200, 500))  # ざっくり半年〜1年半
-                until_date = current_date + duration
-                since_date = current_date
-                # 次の開始日 = 終了日 + ギャップ（0〜180日）
-                current_date = until_date + \
-                    timedelta(days=random.randint(0, 180))
-            else:
-                # 最後の1レコードは現役
-                since_date = current_date
-                until_date = None
-
-            profile = models.PersonProfile(
-                person_id=person_id,
-                team_id=team_id,
-                since_date=since_date,
-                until_date=until_date,
-                uniform_number=uniform_number,
-                role=role
-            )
-            person_profiles.append(profile)
+    person_profiles = [
+        models.PersonProfile(
+            person_profile_id=person_profile["person_profile_id"],
+            person_id=person_profile["person_id"],
+            team_id=person_profile["team_id"],
+            since_date=date.fromisoformat(person_profile["since_date"]),
+            until_date=date.fromisoformat(person_profile["until_date"]) if person_profile["until_date"] else None,
+            uniform_number=person_profile["uniform_number"],
+            role=models.RoleEnum[person_profile["role"]]
+        )
+        for person_profile in person_profile_data
+    ]
 
     db.add_all(person_profiles)
     db.commit()

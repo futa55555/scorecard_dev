@@ -1,0 +1,62 @@
+[
+	{
+		"user_id": 1,
+		"name": "aoi_ishikawa",
+		"password": "aoi",
+		"birthday": "2007-09-24"
+	},
+	{
+		"user_id": 2,
+		"name": "yuto_suzuki",
+		"password": "yuto",
+		"birthday": "2004-08-01"
+	},
+	{
+		"user_id": 3,
+		"name": "sota_morita",
+		"password": "sota",
+		"birthday": "2009-02-22"
+	},
+	{
+		"user_id": 4,
+		"name": "yuto_yoshida",
+		"password": "yuto",
+		"birthday": "2000-12-13"
+	},
+	{
+		"user_id": 5,
+		"name": "hina_suzuki",
+		"password": "hina",
+		"birthday": "2009-03-29"
+	},
+	{
+		"user_id": 6,
+		"name": "sakura_matsumoto",
+		"password": "sakura",
+		"birthday": "2005-05-20"
+	},
+	{
+		"user_id": 7,
+		"name": "haruto_kobayashi",
+		"password": "haruto",
+		"birthday": "2009-09-10"
+	},
+	{
+		"user_id": 8,
+		"name": "sakura_takahashi",
+		"password": "sakura",
+		"birthday": "2000-06-05"
+	},
+	{
+		"user_id": 9,
+		"name": "aoi_yoshida",
+		"password": "aoi",
+		"birthday": "2002-10-26"
+	},
+	{
+		"user_id": 10,
+		"name": "nanami_yoshida",
+		"password": "nanami",
+		"birthday": "2001-01-20"
+	}
+]

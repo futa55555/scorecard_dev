@@ -1,20 +1,24 @@
 # backend/seeds/tournaments.py
 
+import json
+from datetime import date
+
 from backend import models
-from datetime import date, time
+
 
 def seed_tournaments(db):
+    with open("backend/seeds/data/tournaments.json", "r", encoding="utf-8") as f:
+        tournament_data = json.load(f)
+
     tournaments = [
         models.Tournament(
-            name = "練習試合",
-            since_date = None,
-            until_date = None
-        ),
-        models.Tournament(
-            name = "2025年春季リーグ",
-            since_date = date(2025, 4, 1),
-            until_date = date(2025, 8, 31)
+            tournament_id=tournament["tournament_id"],
+            name=tournament["name"],
+            since_date=date.fromisoformat(tournament["since_date"]) if tournament["since_date"] else None,
+            until_date=date.fromisoformat(tournament["until_date"]) if tournament["until_date"] else None
         )
+        for tournament in tournament_data
     ]
+
     db.add_all(tournaments)
     db.commit()

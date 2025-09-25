@@ -1,25 +1,24 @@
 # backend/seeds/users.py
 
+import json
+from datetime import date
+
 from backend import models
-from datetime import date, time
+
 
 def seed_users(db):
+    with open("backend/seeds/data/users.json", "r", encoding="utf-8") as f:
+        user_data = json.load(f)
+
     users = [
         models.User(
-            name = "reira_okamura",
-            password = "reira",
-            birthday = date(2006, 4, 1)
-        ),
-        models.User(
-            name = "asami_kawana",
-            password = "asami",
-            birthday = date(2006, 5, 1)
-        ),
-        models.User(
-            name = "rio_kobayashi",
-            password = "rio",
-            birthday = date(2006, 6, 1)
+            user_id=user["user_id"],
+            name=user["name"],
+            password=user["password"],
+            birthday=date.fromisoformat(user["birthday"])
         )
+        for user in user_data
     ]
+
     db.add_all(users)
     db.commit()

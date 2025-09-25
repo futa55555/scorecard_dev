@@ -1,49 +1,31 @@
 # backend/seeds/people.py
 
+import json
+
 from backend import models
-from datetime import date
-import random
-random.seed(42)
 
 
 def seed_people(db):
-    people = []
+    with open("backend/seeds/data/people.json", "r", encoding="utf-8") as f:
+        person_data = json.load(f)
 
-    surnames = ["山田", "佐藤", "鈴木", "高橋", "伊藤", "小林", "加藤", "吉田", "中村", "渡辺",
-                "松本", "井上", "木村", "林", "清水", "山本", "石川", "森", "池田", "橋本"]
-    given_names = ["太郎", "一郎", "健太", "翔", "優斗", "大輔", "直樹", "拓海", "陽介", "和也",
-                   "誠", "真司", "悠真", "亮", "徹", "翔太", "遼", "健司", "弘樹", "淳"]
-    foreign_names = [
-        "John Smith", "Carlos González", "Mike Johnson", "David Brown", "Alex Wilson",
-        "Chris Taylor", "Robert Davis", "Daniel Martinez", "Kevin White", "Thomas Anderson"
-    ]
-
-    prefectures = list(models.PrefectureEnum)
-    pitching_sides = list(models.DominantHandEnum)
-    batting_sides = list(models.DominantHandEnum)
-
-    for i in range(1, 201):
-        # 1割くらいは外国人名
-        if i % 10 == 0:
-            name = random.choice(foreign_names)
-        else:
-            name = random.choice(surnames) + " " + random.choice(given_names)
-
-        person = models.Person(
-            name=name,
-            pitching_side=random.choice(pitching_sides),
-            batting_side=random.choice(batting_sides),
-            photo_url=f"https://example.com/players/player{i:03d}.png",
-            height_cm=random.randint(160, 190),
-            weight_kg=random.randint(55, 95),
-            birthday=date(
-                random.randint(2001, 2006),   # 年
-                random.randint(1, 12),        # 月
-                random.randint(1, 28)         # 日
-            ),
-            prefecture=random.choice(prefectures)
+    people = [
+        models.Person(
+            person_id=person["person_id"],
+            last_name=person["last_name"],
+            first_name=person["first_name"],
+            middle_name=person["middle_name"],
+            gender=models.GenderEnum[person["gender"]],
+            height_cm=person["height_cm"],
+            weight_kg=person["weight_kg"],
+            birthday=person["birthday"],
+            prefecture=models.PrefectureEnum[person["prefecture"]],
+            pitching_side=models.DominantHandEnum[person["pitching_side"]],
+            batting_side=models.DominantHandEnum[person["batting_side"]],
+            photo_url=person["photo_url"]
         )
-        people.append(person)
+        for person in person_data
+    ]
 
     db.add_all(people)
     db.commit()

@@ -8,6 +8,7 @@ from backend.seeds.people import seed_people
 from backend.seeds.person_profiles import seed_person_profiles
 from backend.seeds.tournaments import seed_tournaments
 from backend.seeds.games import seed_games
+from backend.seeds.game_records import seed_game_records
 from backend.seeds.game_members import seed_game_members
 
 from backend.seeds.user_favorite_teams import seed_user_favorite_teams
@@ -25,6 +26,7 @@ def init_data(db):
     seed_person_profiles(db)
     seed_tournaments(db)
     seed_games(db)
+    seed_game_records(db)
     seed_game_members(db)
 
     seed_user_favorite_teams(db)

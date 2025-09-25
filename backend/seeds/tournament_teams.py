@@ -1,22 +1,22 @@
 # backend/seeds/tournament_teams.py
 
+import json
+
 from backend import models
-from datetime import date, time
+
 
 def seed_tournament_teams(db):
+    with open("backend/seeds/data/tournament_teams.json", "r", encoding="utf-8") as f:
+        tournament_team_data = json.load(f)
+
     tournament_teams = [
-        models.TournamentTeam(tournament_id=1, team_id=1),
-        models.TournamentTeam(tournament_id=1, team_id=2),
-        models.TournamentTeam(tournament_id=1, team_id=3),
-        models.TournamentTeam(tournament_id=1, team_id=4),
-        models.TournamentTeam(tournament_id=1, team_id=5),
-        models.TournamentTeam(tournament_id=1, team_id=6),
-        models.TournamentTeam(tournament_id=2, team_id=1),
-        models.TournamentTeam(tournament_id=2, team_id=2),
-        models.TournamentTeam(tournament_id=2, team_id=3),
-        models.TournamentTeam(tournament_id=2, team_id=4),
-        models.TournamentTeam(tournament_id=2, team_id=5),
-        models.TournamentTeam(tournament_id=2, team_id=6),
+        models.TournamentTeam(
+            tournament_team_id=tournament_team["tournament_team_id"],
+            tournament_id=tournament_team["tournament_id"],
+            team_id=tournament_team["team_id"]
+        )
+        for tournament_team in tournament_team_data
     ]
+
     db.add_all(tournament_teams)
     db.commit()
