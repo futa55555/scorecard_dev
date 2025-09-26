@@ -7,13 +7,13 @@
 		"league_id": 1,
 		"prefecture": "Tokyo",
 		"photo_url": "https://example.com/team_1.png",
-		"color": "#E93AF6",
+		"color": "#2681eaff",
 		"admin_user_id": 3
 	},
 	{
 		"team_id": 2,
 		"name": "早稲田大学男子ソフトボール部",
-		"short_name": "早大",
+		"short_name": "早稲田",
 		"category_id": 1,
 		"league_id": 1,
 		"prefecture": "Tokyo",
