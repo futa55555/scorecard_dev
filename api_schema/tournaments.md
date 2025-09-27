@@ -6,10 +6,9 @@
 
 **Request**
 
-  Parameter     Type   Description            Required
-  ------------- ------ ---------------------- ----------
-  category_id   int    カテゴリID   ❌
-  year          int    開催年       ❌
+| Parameter | Type | Description | Required |
+| --------- | ---- | ----------- | -------- |
+| category_id | int | カテゴリーID | ❌ |
 
 **Response**
 
@@ -17,7 +16,15 @@
 {
     "status": "success",
     "data": [
-        { "id": 1, "name": "春季リーグ戦", "category_id": 1, "start_date": "2025-04-01", "end_date": "2025-06-01" }
+        {
+            "tournament_id": 1,
+            "name": "2025年春季リーグ",
+            "since_date": "2025-04-01",
+            "until_date": "2025-05-31"
+        },
+        {
+            ...
+        }
     ]
 }
 ```
@@ -34,15 +41,10 @@
 {
     "status": "success",
     "data": {
-        "id": 1,
-        "name": "春季リーグ戦",
-        "category_id": 1,
-        "start_date": "2025-04-01",
-        "end_date": "2025-06-01",
-        "teams": [
-            { "id": 1, "name": "東京大学" },
-            { "id": 2, "name": "国士舘大学" }
-        ]
+        "tournament_id": 1,
+        "name": "2025年春季リーグ",
+        "since_date": "2025-04-01",
+        "until_date": "2025-05-31",
     }
 }
 ```
@@ -57,10 +59,9 @@
 
 ``` json
 {
-    "name": "秋季リーグ戦",
-    "category_id": 1,
-    "start_date": "2025-09-01",
-    "end_date": "2025-11-01"
+    "name": "2026年春季リーグ",
+    "since_date": "2026-04-01",
+    "until_date": "2026-05-31"
 }
 ```
 
@@ -69,7 +70,9 @@
 ``` json
 {
     "status": "success",
-    "data": { "id": 2, "name": "秋季リーグ戦" }
+    "data": {
+        "tournament_id": 4
+    }
 }
 ```
 
@@ -83,8 +86,7 @@
 
 ``` json
 {
-    "name": "大会名変更",
-    "end_date": "2025-11-10"
+    "until_date": "2026-06-10"
 }
 ```
 
@@ -93,7 +95,9 @@
 ``` json
 {
     "status": "success",
-    "data": { "id": 2, "name": "大会名変更", "end_date": "2025-11-10" }
+    "data": {
+        "tournament_id": 4
+    }
 }
 ```
 

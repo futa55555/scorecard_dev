@@ -6,9 +6,9 @@
 
 **Request**
 
-  Parameter     Type   Description            Required
-  ------------- ------ ---------------------- ----------
-  category_id   int    カテゴリIDでフィルタ   ❌
+| Parameter | Type | Description | Required |
+| --------- | ---- | ----------- | -------- |
+| category_id | int | カテゴリーID | ❌ |
 
 **Response**
 
@@ -16,8 +16,14 @@
 {
     "status": "success",
     "data": [
-        { "id": 1, "name": "東京都大学ソフトボール連盟", "category_id": 1, "category_name": "大学" },
-        { "id": 2, "name": "関東社会人リーグ", "category_id": 2, "category_name": "社会人" }
+        {
+            "league_id": 1,
+            "name": "東京都大学ソフトボール連盟",
+            "category_id": 1
+        },
+        {
+            ...
+        }
     ]
 }
 ```
@@ -30,9 +36,9 @@
 
 **Request**
 
-  Parameter   Type   Description   Required
-  ----------- ------ ------------- ----------
-  league_id   int    リーグID      ✅
+| Parameter | Type | Description | Required |
+| --------- | ---- | ----------- | -------- |
+| league_id | int | リーグID | ✅ |
 
 **Response**
 
@@ -40,14 +46,9 @@
 {
     "status": "success",
     "data": {
-        "id": 1,
+        "league_id": 1,
         "name": "東京都大学ソフトボール連盟",
-        "category_id": 1,
-        "category_name": "大学",
-        "teams": [
-            { "id": 1, "name": "東京大学" },
-            { "id": 2, "name": "国士舘大学" }
-        ]
+        "category_id": 1
     }
 }
 ```
@@ -62,7 +63,7 @@
 
 ``` json
 {
-    "name": "新リーグ名",
+    "name": "関東大学ソフトボール連盟",
     "category_id": 1
 }
 ```
@@ -72,7 +73,9 @@
 ``` json
 {
     "status": "success",
-    "data": { "id": 3, "name": "新リーグ名", "category_id": 1 }
+    "data": {
+        "league_id": 3
+    }
 }
 ```
 
@@ -86,7 +89,7 @@
 
 ``` json
 {
-  "name": "リーグ名変更"
+    "name": "関西大学ソフトボール連盟"
 }
 ```
 
@@ -95,7 +98,9 @@
 ``` json
 {
     "status": "success",
-    "data": { "id": 3, "name": "リーグ名変更" }
+    "data": {
+        "league_id": 3
+    }
 }
 ```
 
@@ -103,7 +108,7 @@
 
 ## DELETE /leagues/{league_id}
 
-リーグを削除（論理削除推奨）
+リーグを削除
 
 **Response**
 

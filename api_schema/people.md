@@ -1,27 +1,28 @@
 # People API Schema
 
-## GET /people/{team_id}
+## GET /people/{person_id}
 
-チームに所属する人物一覧を取得
+特定の人物詳細を取得
 
 **Response**
 
 ``` json
 {
     "status": "success",
-    "data": [
-        {
-            "person_id": 1,
-            "last_name": "石井",
-            "first_name": "徹",
-            "middle_name": "",
-            "uniform_number": 66,
-            "role": "選手"
-        },
-        {
-            ...
-        }
-    ]
+    "data": {
+        "person_id": 1,
+        "last_name": "石井",
+        "first_name": "徹",
+        "middle_name": "",
+        "gender": "男性",
+        "height_cm": 161,
+        "weight_kg": 93,
+        "birthday": "2006-09-03",
+        "prefecture": "北海道",
+        "pitching_side": "右投",
+        "batting_side": "右打",
+        "photo_url": "https://example.com/people/001.png"
+    }
 }
 ```
 
@@ -41,7 +42,7 @@
         "last_name": "石井",
         "first_name": "徹",
         "middle_name": "",
-        "gender": "男",
+        "gender": "男性",
         "height_cm": 161,
         "weight_kg": 93,
         "birthday": "2006-09-03",

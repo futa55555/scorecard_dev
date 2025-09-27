@@ -1,4 +1,4 @@
-# Team API Schema
+# Teams API Schema
 
 ## GET /teams
 
@@ -9,6 +9,8 @@
 | Parameter | Type | Description | Required |
 | --------- | ---- | ----------- | -------- |
 | category_id | int | カテゴリーID | ❌ |
+| league_id | int | リーグID | ❌ |
+| tournament_id | int | 大会ID | ❌ |
 
 **Response**
 
@@ -19,8 +21,14 @@
         {
             "team_id": 1,
             "name": "東京大学ソフトボール部",
-            "short_name": "東大",
-            "league": "東京都大学ソフトボール連盟",
+            "category": {
+                "category_id": 1,
+                "name": "大学男子"
+            },
+            "league": {
+                "league_id": 1,
+                "name": "東京都大学ソフトボール連盟"
+            },
             "prefecture": "東京",
             "color": "#2681eaff"
         },
@@ -33,37 +41,9 @@
 
 ------------------------------------------------------------------------
 
-## GET /teams/{user_id}/favorite
+## GET /teams/{team_id}/detail
 
-お気に入りのチーム一覧を取得
-
-**Response**
-
-``` json
-{
-    "status": "success",
-    "data": [
-        {
-            "team_id": 1,
-            "name": "東京大学ソフトボール部",
-            "short_name": "東大",
-            "category": "大学男子",
-            "league": "東京都大学ソフトボール連盟",
-            "prefecture": "東京",
-            "color": "#2681eaff"
-        },
-        {
-            ...
-        }
-    ]
-}
-```
-
-------------------------------------------------------------------------
-
-## GET /teams/{team_id}
-
-特定のチーム詳細を取得
+チームの詳細情報を取得
 
 **Response**
 
@@ -74,8 +54,14 @@
         "team_id": 1,
         "name": "東京大学ソフトボール部",
         "short_name": "東大",
-        "category": "大学男子",
-        "league": "東京都大学ソフトボール連盟",
+        "category": {
+            "category_id": 1,
+            "name": "大学男子"
+        },
+        "league": {
+            "league_id": 1,
+            "name": "東京都大学ソフトボール連盟"
+        },
         "prefecture": "東京",
         "photo_url": "https://example.com/team_1.png",
         "color": "#2681eaff"
@@ -85,27 +71,81 @@
 
 ------------------------------------------------------------------------
 
-## GET /teams/{person_id}
+## GET /teams/{team_id}/active_people
 
-所属したチームを取得
+チームの現役の所属人物を取得
 
 **Response**
 
 ``` json
 {
     "status": "success",
-    "data": [
-        {
-            "team_id": 8,
-            "since_date": "2021-10-13",
-            "until_date": "2023-01-25",
-            "uniform_number": 37,
-            "role": "選手"
-        },
-        {
-            ...
-        }
-    ]
+    "data": {
+        "team_id": 1,
+        "active_people": [
+            {
+                "person_id": 1,
+                "last_name": "石井",
+                "first_name": "徹",
+                "middle_name": "",
+                "person_profiles": [
+                    {
+                        "person_profile_id": 2,
+                        "since_date": "2023-01-26",
+                        "until_date": null,
+                        "uniform_number": 66,
+                        "role": "選手"
+                    },
+                    {
+                        ...
+                    }
+                ]
+            },
+            {
+                ...
+            }
+        ]
+    }
+}
+```
+
+------------------------------------------------------------------------
+
+## GET /teams/{team_id}/retired_people
+
+チームの過去の所属人物を取得
+
+**Response**
+
+``` json
+{
+    "status": "success",
+    "data": {
+        "team_id": 1,
+        "retired_people": [
+            {
+                "person_id": 12,
+                "last_name": "後藤",
+                "first_name": "優斗",
+                "middle_name": "",
+                "person_profiles": [
+                    {
+                        "person_profile_id": 23,
+                        "since_date": "2024-05-20",
+                        "until_date": "2024-10-12",
+                        "uniform_number":94,
+                        "role": "選手"
+                    },
+                    {
+                        ...
+                    }
+                ]
+            },
+            {
+                ...
+            }
+        ]
+    }
 }
 ```
 

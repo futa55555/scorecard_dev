@@ -9,6 +9,7 @@
 | Parameter | Type | Description | Required |
 | --------- | ---- | ----------- | -------- |
 | category_id | int | カテゴリーID | ❌ |
+| league_id | int | リーグID | ❌ |
 | tournament_id | int | 大会ID | ❌ |
 | team_id | int | チームID | ❌ |
 
@@ -20,7 +21,10 @@
     "data": [
         {
             "game_id": 1,
-            "tournament": "2025年秋季リーグ",
+            "tournament": {
+                "tournament_id": 2,
+                "name": "2025年秋季リーグ"
+            },
             "top_team": {
                 "team_id": 2,
                 "short_name": "早稲田"
@@ -30,8 +34,23 @@
                 "short_name": "立教"
             },
             "date": "2025-10-19",
-            "location": "大類ソフトボールパーク",
-            "status": "進行中"
+            "game_records": [
+                {
+                    "game_record_id": 1,
+                    "user": {
+                        "user_id": 1,
+                        "name": "aoi_ishikawa"
+                    },
+                    "score": {
+                        "top_team": 2,
+                        "bottom_team": 4,
+                    },
+                    "status": "試合中"
+                },
+                {
+                    ...
+                }
+            ]
         },
         {
             ...
@@ -42,9 +61,9 @@
 
 ------------------------------------------------------------------------
 
-## GET /games/{game_id}
+## GET /games/{game_id}/detail
 
-特定の試合詳細を取得
+試合の詳細情報を取得
 
 **Response**
 
@@ -53,21 +72,36 @@
     "status": "success",
     "data": {
         "game_id": 1,
-        "tournament": "2025年秋季リーグ",
+        "tournament": {
+            "tournament_id": 2,
+            "name": "2025年秋季リーグ"
+        },
         "top_team": {
             "team_id": 2,
-            "name": "早稲田大学男子ソフトボール部"
+            "name": "早稲田大学男子ソフトボール部",
+            "short_name": "早稲田"
         },
         "bottom_team": {
             "team_id": 5,
-            "name": "立教大学ソフトボール部"
+            "name": "立教大学ソフトボール部",
+            "short_name": "立教"
         },
         "date": "2025-10-19",
-        "start_time": "15:06:10",
-        "end_time": "17:34:59",
+        "start_time": "15:00:00",
         "location": "大類ソフトボールパーク",
-        "status": "進行中"
-    },
+        "game_records": [
+            {
+                "game_record_id": 1,
+                "user": {
+                    "user_id": 1,
+                    "name": "aoi_ishikawa"
+                }
+            },
+            {
+                ...
+            }
+        ]
+    }
 }
 ```
 
