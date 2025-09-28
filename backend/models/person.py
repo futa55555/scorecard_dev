@@ -1,6 +1,6 @@
 # backend/models/person.py
 
-from sqlalchemy import Column, ForeignKey, Integer, String, Enum
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Enum
 from sqlalchemy.orm import relationship
 from backend.database import Base
 from backend.models import favorite_people_table
@@ -18,10 +18,15 @@ class Person(Base):
     first_name = Column(String(100), nullable=False)
     middle_name = Column(String(100), default=None)
     prefecture = Column(Enum(PrefectureEnum), nullable=True)
+    is_official = Column(Boolean, nullable=False)
 
     # 3. Foreign Keys
+    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
+    created_by_organization_id = Column(Integer, ForeignKey("organizations.organization_id"), nullable=False)
 
     # 4. Parent Relationship
+    created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_people")
+    created_by_organization = relationship("Organization", foreign_keys=[created_by_organization_id], back_populates="created_people")
 
     # 5. Children Relationship
     player_positions = relationship("PlayerPosition", back_populates="person")

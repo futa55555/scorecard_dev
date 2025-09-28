@@ -24,6 +24,8 @@ class Organization(Base):
     chief_admin_user = relationship("User", foreign_keys=[chief_admin_user_id], back_populates="chief_admin_organizations")
 
     # 5. Children Relationship
+    created_people = relationship("Person", back_populates="created_by_organization")
+    created_person_profiles = relationship("PersonProfile", back_populates="created_by_organization")
     tournaments = relationship("Tournament", back_populates="organization")
     game_records = relationship("GameRecord", back_populates="organization")
 

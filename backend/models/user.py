@@ -8,6 +8,7 @@ from backend.models import (
     favorite_people_table,
     favorite_tournaments_table,
     organizations_admin_users_table,
+    leagues_admin_users_table,
     teams_admin_users_table
 )
 
@@ -28,8 +29,11 @@ class User(Base):
     own_person = relationship("Person", foreign_keys=[own_person_id], back_populates="own_user")
 
     # 5. Children Relationship
+    chief_admin_leagues = relationship("League", back_populates="chief_admin_user")
     chief_admin_teams = relationship("Team", back_populates="chief_admin_user")
     chief_admin_organizations = relationship("Organization", back_populates="chief_admin_user")
+    created_people = relationship("Person", back_populates="created_by_user")
+    created_person_profiles = relationship("PersonProfile", back_populates="created_by_user")
     game_events = relationship("GameEvent", back_populates="user")
 
     # 6. Many-to-many Relationship
@@ -37,4 +41,5 @@ class User(Base):
     favorite_people = relationship("Person", secondary=favorite_people_table, back_populates="fans")
     favorite_tournaments = relationship("Tournament", secondary=favorite_tournaments_table, back_populates="fans")
     admin_organizations = relationship("Organization", secondary=organizations_admin_users_table, back_populates="admin_users")
+    admin_leagues = relationship("League", secondary=leagues_admin_users_table, back_populates="admin_users")
     admin_teams = relationship("Team", secondary=teams_admin_users_table, back_populates="admin_users")

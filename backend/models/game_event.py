@@ -1,6 +1,6 @@
 # backend/models/game_event.py
 
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from backend.database import Base
 

@@ -1,6 +1,6 @@
 # backend/models/tournament.py
 
-from sqlalchemy import Column, ForeignKey, Integer, String, Date
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Date
 from sqlalchemy.orm import relationship
 from backend.database import Base
 from backend.models import (
@@ -21,6 +21,7 @@ class Tournament(Base):
     name = Column(String(100), nullable=False)
     since_date = Column(Date, nullable=False)
     until_date = Column(Date, nullable=False)
+    is_official = Column(Boolean, nullable=False)
 
     # 3. Foreign Keys
     organization_id = Column(Integer, ForeignKey("organizations.organization_id"), nullable=False)

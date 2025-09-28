@@ -31,6 +31,13 @@ organizations_admin_users_table = Table(
     Column("organization_id", Integer, ForeignKey("organizations.organization_id"), primary_key=True)
 )
 
+leagues_admin_users_table = Table(
+    "leagues_admin_users_table",
+    Base.metabase,
+    Column("user_id", Integer, ForeignKey("users.user_id"), primary_key=True),
+    Column("league_id", Integer, ForeignKey("leagues.league_id"), primary_key=True)
+)
+
 teams_admin_users_table = Table(
     "teams_admin_users_table",
     Base.metabase,
