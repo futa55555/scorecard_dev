@@ -1,10 +1,6 @@
 [
     {
         "category_id": 1,
-        "name": "大学男子"
-    },
-    {
-        "category_id": 2,
-        "name": "社会人女子"
+        "name": "test_category_1"
     }
 ]

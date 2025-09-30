@@ -1,12 +1,7 @@
 [
     {
         "league_id": 1,
-        "category_id": 1,
-        "name": "東京都大学ソフトボール連盟"
-    },
-    {
-        "league_id": 2,
-        "category_id": 2,
-        "name": "JDリーグ"
+        "name": "test_league_1",
+        "chief_admin_user_id": 1
     }
 ]

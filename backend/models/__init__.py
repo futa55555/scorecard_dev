@@ -1,6 +1,7 @@
 # backend/models/__init__.py
 
 from .person import Person
+from .person_profile import PersonProfile
 from .player_position import PlayerPosition
 from .user import User
 from .category import Category
@@ -35,6 +36,7 @@ from .associations import (
 
 __all__ = [
     "Person",
+    "PersonProfile",
     "PlayerPosition",
     "User",
     "Category",
