@@ -48,7 +48,7 @@ def init_data():
             batting_side="L",
             photo_url="https://dp24045870.lolipop.jp/members/photo.html/2020/osaka.JPG",
         ),
-        
+
         # 48期
         models.Person(
             name="相川智",
@@ -62,7 +62,7 @@ def init_data():
             batting_side="R",
             photo_url="https://example.com/",
         ),
-        
+
         # 49期
         models.Person(
             name="島崎修一",
@@ -82,7 +82,7 @@ def init_data():
             batting_side="R",
             photo_url="https://dp24045870.lolipop.jp/members/photo.html/2022/fujikawa.jpg",
         ),
-        
+
         # 50期
         models.Person(
             name="大岡祥也",
@@ -120,7 +120,7 @@ def init_data():
             batting_side="R",
             photo_url="https://dp24045870.lolipop.jp/members/photo.html/2023/torii.jpg",
         ),
-        
+
         # 51期
         models.Person(
             name="芦谷光太郎",
@@ -200,7 +200,7 @@ def init_data():
             batting_side="R",
             photo_url="https://example.com/",
         ),
-        
+
         # 52期
         models.Person(
             name="野村優空",
@@ -211,7 +211,7 @@ def init_data():
     ]
     db.add_all(people_Tokyo)
     db.commit()
-    
+
     # メンバー(Person)の初期データ
     people_Tokyo_copy = [
         # 47期
@@ -221,7 +221,7 @@ def init_data():
             batting_side="L",
             photo_url="https://dp24045870.lolipop.jp/members/photo.html/2020/osaka.JPG",
         ),
-        
+
         # 48期
         models.Person(
             name="2相川智",
@@ -235,7 +235,7 @@ def init_data():
             batting_side="R",
             photo_url="https://example.com/",
         ),
-        
+
         # 49期
         models.Person(
             name="2島崎修一",
@@ -255,7 +255,7 @@ def init_data():
             batting_side="R",
             photo_url="https://dp24045870.lolipop.jp/members/photo.html/2022/fujikawa.jpg",
         ),
-        
+
         # 50期
         models.Person(
             name="2大岡祥也",
@@ -293,7 +293,7 @@ def init_data():
             batting_side="R",
             photo_url="https://dp24045870.lolipop.jp/members/photo.html/2023/torii.jpg",
         ),
-        
+
         # 51期
         models.Person(
             name="2芦谷光太郎",
@@ -373,7 +373,7 @@ def init_data():
             batting_side="R",
             photo_url="https://example.com/",
         ),
-        
+
         # 52期
         models.Person(
             name="2野村優空",
@@ -384,7 +384,7 @@ def init_data():
     ]
     db.add_all(people_Tokyo_copy)
     db.commit()
-    
+
     # people_Waseda = [
     #     models.Person(
     #         name="田中雄輔",
@@ -437,8 +437,8 @@ def init_data():
     # ]
     # db.add_all(people_Waseda)
     # db.commit()
-    
-    
+
+
     # メンバー(MemberProfile)の初期データ
     member_profiles_Tokyo = [
         # 47期
@@ -459,7 +459,7 @@ def init_data():
             uniform_number=31,
             role="coach",
         ),
-        
+
         # 48期
         # 相川(31)
         models.MemberProfile(
@@ -479,7 +479,7 @@ def init_data():
             uniform_number=5,
             role="player",
         ),
-        
+
         # 49期
         # 島崎(17)
         models.MemberProfile(
@@ -526,7 +526,7 @@ def init_data():
             uniform_number=20,
             role="manager"
         ),
-        
+
         # 50期
         # 大岡(8)
         models.MemberProfile(
@@ -594,7 +594,7 @@ def init_data():
             uniform_number=26,
             role="manager"
         ),
-        
+
         # 51期
         # 芦谷
         models.MemberProfile(
@@ -711,7 +711,7 @@ def init_data():
     ]
     db.add_all(member_profiles_Tokyo)
     db.commit()
-    
+
     member_profiles_Tokyo_copy = [
         # 47期
         # 逢坂(30)
@@ -731,7 +731,7 @@ def init_data():
             uniform_number=31,
             role="coach",
         ),
-        
+
         # 48期
         # 相川(31)
         models.MemberProfile(
@@ -751,7 +751,7 @@ def init_data():
             uniform_number=5,
             role="player",
         ),
-        
+
         # 49期
         # 島崎(17)
         models.MemberProfile(
@@ -798,7 +798,7 @@ def init_data():
             uniform_number=20,
             role="manager"
         ),
-        
+
         # 50期
         # 大岡(8)
         models.MemberProfile(
@@ -866,7 +866,7 @@ def init_data():
             uniform_number=26,
             role="manager"
         ),
-        
+
         # 51期
         # 芦谷
         models.MemberProfile(
@@ -995,8 +995,8 @@ def init_data():
     )
     db.add(game)
     db.commit()
-    
-    
+
+
     # 試合の登録選手
     game_members_1 = [
         models.GameMember(
@@ -1035,4 +1035,3 @@ def init_data():
     db.commit()
 
     db.close()
-    

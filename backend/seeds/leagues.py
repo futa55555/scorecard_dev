@@ -5,7 +5,7 @@ from backend import models
 
 
 def seed_leagues(db):
-    with open("./data/leagues.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/leagues.json", "r", encoding="utf-8") as f:
         league_data = json.load(f)
 
     leagues = [

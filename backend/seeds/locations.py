@@ -5,7 +5,7 @@ from backend import models
 
 
 def seed_locations(db):
-    with open("./data/locations.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/locations.json", "r", encoding="utf-8") as f:
         location_data = json.load(f)
 
     locations = [

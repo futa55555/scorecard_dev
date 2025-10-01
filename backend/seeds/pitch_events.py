@@ -5,7 +5,7 @@ from backend import models
 
 
 def seed_pitch_events(db):
-    with open("./data/pitch_events.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/pitch_events.json", "r", encoding="utf-8") as f:
         pitch_event_data = json.load(f)
 
     pitch_events = [

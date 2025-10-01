@@ -3,7 +3,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, Date, Time
 from sqlalchemy.orm import relationship
 from backend.database import Base
-from backend.models import organizations_games_table
 
 class Game(Base):
     __tablename__ = "games"
@@ -34,4 +33,3 @@ class Game(Base):
     game_records = relationship("GameRecord", back_populates="game")
 
     # 6. Many-to-many Relationship
-    organizations = relationship("Organization", secondary=organizations_games_table, back_populates="games")

@@ -5,16 +5,12 @@ from backend import models
 
 
 def seed_favorite_people(db):
-    with open("../data/associations/favorite_people.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/associations/favorite_people.json", "r", encoding="utf-8") as f:
         favorite_person_data = json.load(f)
 
-    favorite_people = [
-        models.favorite_people_table(
-            user_id=favorite_person["user_id"],
-            person_id=favorite_person["person_id"]
+    if favorite_person_data:
+        db.execute(
+            models.favorite_people_table.insert(),
+            favorite_person_data
         )
-        for favorite_person in favorite_person_data
-    ]
-
-    db.add_all(favorite_people)
-    db.commit()
+        db.commit()

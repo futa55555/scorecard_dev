@@ -6,11 +6,11 @@ from backend import models
 
 
 def seed_player_positions(db):
-    with open("./data/player_positions.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/player_positions.json", "r", encoding="utf-8") as f:
         player_position_data = json.load(f)
 
     player_positions = [
-        models.PersonProfile(
+        models.PlayerPosition(
             player_position_id=player_position["player_position_id"],
             position_type=models.PositionTypeEnum[player_position["position_type"]],
             since_date=date.fromisoformat(player_position["since_date"]),

@@ -5,16 +5,12 @@ from backend import models
 
 
 def seed_teams_admin_users(db):
-    with open("../data/associations/teams_admin_users.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/associations/teams_admin_users.json", "r", encoding="utf-8") as f:
         team_admin_user_data = json.load(f)
 
-    team_admin_users = [
-        models.teams_admin_users_table(
-            user_id=team_admin_user["user_id"],
-            team_id=team_admin_user["team_id"]
+    if team_admin_user_data:
+        db.execute(
+            models.teams_admin_users_table.insert(),
+            team_admin_user_data
         )
-        for team_admin_user in team_admin_user_data
-    ]
-
-    db.add_all(team_admin_users)
-    db.commit()
+        db.commit()

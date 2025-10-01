@@ -5,16 +5,12 @@ from backend import models
 
 
 def seed_teams_tournaments(db):
-    with open("../data/associations/teams_tournaments.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/associations/teams_tournaments.json", "r", encoding="utf-8") as f:
         team_tournament_data = json.load(f)
 
-    teams_tournaments = [
-        models.teams_tournaments_table(
-            team_id=team_tournament["team_id"],
-            tournament_id=team_tournament["tournament_id"]
+    if team_tournament_data:
+        db.execute(
+            models.teams_tournaments_table.insert(),
+            team_tournament_data
         )
-        for team_tournament in team_tournament_data
-    ]
-
-    db.add_all(teams_tournaments)
-    db.commit()
+        db.commit()

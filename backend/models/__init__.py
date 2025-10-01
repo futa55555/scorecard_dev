@@ -60,7 +60,6 @@ __all__ = [
     "Category",
     "League",
     "Team",
-    "Organization",
     "Location",
     "Tournament",
     "Game",

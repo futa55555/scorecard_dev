@@ -3,7 +3,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Enum
 from sqlalchemy.orm import relationship
 from backend.database import Base
-from backend.models import favorite_people_table
+from .associations import favorite_people_table
 
 from .enums import PrefectureEnum
 
@@ -21,16 +21,14 @@ class Person(Base):
     is_official = Column(Boolean, nullable=False)
 
     # 3. Foreign Keys
-    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
-    created_by_organization_id = Column(Integer, ForeignKey("organizations.organization_id"), nullable=False)
+    created_by_user_id = Column(Integer, ForeignKey("users.user_id", name="fk_created_by_user"), nullable=False)
 
     # 4. Parent Relationship
     created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_people")
-    created_by_organization = relationship("Organization", foreign_keys=[created_by_organization_id], back_populates="created_people")
 
     # 5. Children Relationship
     player_positions = relationship("PlayerPosition", back_populates="person")
-    own_user = relationship("User", back_populates="own_person")
+    own_user = relationship("User", foreign_keys="User.own_person_id", back_populates="own_person")
     game_members = relationship("GameMember", back_populates="person")
 
     # 6. Many-to-many Relationship

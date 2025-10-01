@@ -6,7 +6,7 @@ from backend import models
 
 
 def seed_person_profiles(db):
-    with open("./data/person_profiles.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/person_profiles.json", "r", encoding="utf-8") as f:
         person_profile_data = json.load(f)
 
     person_profiles = [

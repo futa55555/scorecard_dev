@@ -5,7 +5,7 @@ from backend import models
 
 
 def seed_categories(db):
-    with open("./data/categories.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/categories.json", "r", encoding="utf-8") as f:
         category_data = json.load(f)
 
     categories = [

@@ -5,7 +5,7 @@ from backend import models
 
 
 def seed_substitution_events(db):
-    with open("./data/substitution_events.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/substitution_events.json", "r", encoding="utf-8") as f:
         substitution_event_data = json.load(f)
 
     substitution_events = [

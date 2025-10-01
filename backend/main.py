@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 import importlib
 import pkgutil
 import os
-from backend.models import Base
+from backend.database import Base
 from backend.database import engine, SessionLocal
 from backend.seeds import init_data
 

@@ -6,7 +6,7 @@ from backend import models
 
 
 def seed_games(db):
-    with open("./data/games.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/games.json", "r", encoding="utf-8") as f:
         game_data = json.load(f)
 
     games = [
@@ -19,7 +19,7 @@ def seed_games(db):
             bottom_team_id=game["bottom_team_id"] if game["bottom_team_id"] else None,
             tournament_id=game["tournament_id"],
             location_id=game["location_id"],
-            tournament_id=game["tournament_id"]
+            created_by_user_id=game["created_by_user_id"]
         )
         for game in game_data
     ]

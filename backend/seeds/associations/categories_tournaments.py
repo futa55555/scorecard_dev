@@ -5,16 +5,12 @@ from backend import models
 
 
 def seed_categories_tournaments(db):
-    with open("../data/associations/categories_tournaments.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/associations/categories_tournaments.json", "r", encoding="utf-8") as f:
         category_tournament_data = json.load(f)
 
-    categories_tournaments = [
-        models.categories_tournaments_table(
-            category_id=category_tournament["category_id"],
-            tournament_id=category_tournament["tournament_id"]
+    if category_tournament_data:
+        db.execute(
+            models.categories_tournaments_table.insert(),
+            category_tournament_data
         )
-        for category_tournament in category_tournament_data
-    ]
-
-    db.add_all(categories_tournaments)
-    db.commit()
+        db.commit()

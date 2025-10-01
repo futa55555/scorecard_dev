@@ -3,7 +3,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from backend.database import Base
-from backend.models import (
+from .associations import (
     favorite_teams_table,
     favorite_people_table,
     favorite_tournaments_table,
@@ -22,7 +22,7 @@ class User(Base):
     password = Column(String(100), nullable=False)
 
     # 3. Foreign Keys
-    own_person_id = Column(Integer, ForeignKey("people.person_id"), nullable=True, unique=True)
+    own_person_id = Column(Integer, ForeignKey("people.person_id", name="fk_own_person"), nullable=True)
 
     # 4. Parent Relationship
     own_person = relationship("Person", foreign_keys=[own_person_id], back_populates="own_user")
@@ -30,7 +30,7 @@ class User(Base):
     # 5. Children Relationship
     chief_admin_leagues = relationship("League", back_populates="chief_admin_user")
     chief_admin_teams = relationship("Team", back_populates="chief_admin_user")
-    created_people = relationship("Person", back_populates="created_by_user")
+    created_people = relationship("Person", foreign_keys="Person.created_by_user_id", back_populates="created_by_user")
     created_person_profiles = relationship("PersonProfile", back_populates="created_by_user")
     created_player_positions = relationship("PlayerPosition", back_populates="created_by_user")
     created_locations = relationship("Location", back_populates="created_by_user")

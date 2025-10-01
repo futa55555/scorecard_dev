@@ -3,7 +3,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Enum
 from sqlalchemy.orm import relationship
 from backend.database import Base
-from backend.models import (
+from .associations import (
     favorite_teams_table,
     teams_admin_users_table,
     categories_teams_table,
@@ -32,8 +32,8 @@ class Team(Base):
     league = relationship("League", foreign_keys=[league_id], back_populates="teams")
 
     # 5. Children Relationship
-    games_as_top_team = relationship("Game", back_populates="top_team")
-    games_as_bottom_team = relationship("Game", back_populates="bottom_team")
+    games_as_top_team = relationship("Game", foreign_keys="Game.top_team_id", back_populates="top_team")
+    games_as_bottom_team = relationship("Game", foreign_keys="Game.bottom_team_id", back_populates="bottom_team")
 
     # 6. Many-to-many Relationship
     person_profiles = relationship("PersonProfile", back_populates="team")

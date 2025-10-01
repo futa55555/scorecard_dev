@@ -5,7 +5,7 @@ from backend import models
 
 
 def seed_game_records(db):
-    with open("./data/game_records.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/game_records.json", "r", encoding="utf-8") as f:
         game_record_data = json.load(f)
 
     game_records = [

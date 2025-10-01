@@ -5,7 +5,7 @@ from backend import models
 
 
 def seed_advance_events(db):
-    with open("./data/advance_events.json", "r", encoding="utf-8") as f:
+    with open("backend/seeds/data/advance_events.json", "r", encoding="utf-8") as f:
         advance_event_data = json.load(f)
 
     advance_events = [

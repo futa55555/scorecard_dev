@@ -3,7 +3,7 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Enum
 from sqlalchemy.orm import relationship
 from backend.database import Base
-from backend.models import (
+from .associations import (
     teams_locations_table,
     locations_tournaments_table
 )

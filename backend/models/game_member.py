@@ -24,7 +24,7 @@ class GameMember(Base):
     created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_game_members")
 
     # 5. Children Relationship
-    substitution_events_as_out_game_member = relationship("SubstitutionEvent", back_populates="out_game_member")
-    substitution_events_as_in_game_member = relationship("SubstitutionEvent", back_populates="in_game_member")
+    substitution_events_as_out_game_member = relationship("SubstitutionEvent", foreign_keys="SubstitutionEvent.out_game_member_id", back_populates="out_game_member")
+    substitution_events_as_in_game_member = relationship("SubstitutionEvent", foreign_keys="SubstitutionEvent.in_game_member_id", back_populates="in_game_member")
 
     # 6. Many-to-many Relationship
