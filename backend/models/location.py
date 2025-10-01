@@ -1,6 +1,6 @@
 # backend/models/location.py
 
-from sqlalchemy import Column, Integer, String, Enum
+from sqlalchemy import Column, ForeignKey, Integer, String, Enum
 from sqlalchemy.orm import relationship
 from backend.database import Base
 from backend.models import (
@@ -20,8 +20,10 @@ class Location(Base):
     prefecture = Column(Enum(PrefectureEnum), nullable=False)
 
     # 3. Foreign Keys
+    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
 
     # 4. Parent Relationship
+    created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_locations")
 
     # 5. Children Relationship
     games = relationship("Game", back_populates="location")

@@ -16,10 +16,12 @@ class GameMember(Base):
     # 3. Foreign Keys
     person_id = Column(Integer, ForeignKey("people.person_id"), nullable=False)
     game_record_id = Column(Integer, ForeignKey("game_records.game_record_id"), nullable=False)
+    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
 
     # 4. Parent Relationship
     person = relationship("Person", foreign_keys=[person_id], back_populates="game_members")
     game_record = relationship("GameRecord", foreign_keys=[game_record_id], back_populates="game_members")
+    created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_game_members")
 
     # 5. Children Relationship
     substitution_events_as_out_game_member = relationship("SubstitutionEvent", back_populates="out_game_member")

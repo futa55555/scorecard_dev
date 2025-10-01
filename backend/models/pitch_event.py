@@ -14,9 +14,11 @@ class PitchEvent(Base):
 
     # 3. Foreign Keys
     game_event_id = Column(Integer, ForeignKey("game_events.game_event_id"), nullable=False, unique=True)
+    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
 
     # 4. Parent Relationship
     game_event = relationship("GameEvent", foreign_keys=[game_event_id], back_populates="pitch_event")
+    created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_pitch_events")
 
     # 5. Children Relationship
 

@@ -2,17 +2,30 @@
 
 ## 共通レスポンス形式
 
+### 成功
 ``` json
 {
-    "status": "success",   // or "error"
-    "data": { ... },       // 成功時のデータ
-    "error": null          // 失敗時のみエラーメッセージ
+    "status": "success",
+    "data": { ... },
+    "message": "User created successfully",
+    "code": null
+}
+```
+
+### 失敗
+```json
+{
+    "status": "error",
+    "data": null,
+    "message": "Invalid username or password",
+    "code": "VALIDATION_ERROR"
 }
 ```
 
 -   `status`: API呼び出しの結果
 -   `data`: 成功時の返却データ
--   `error`: 失敗時のエラー内容（詳細メッセージやコード）
+-   `message`: 詳細メッセージやコード（開発者向け）
+-   `code`: エラーコード（機械向け）
 
 ------------------------------------------------------------------------
 

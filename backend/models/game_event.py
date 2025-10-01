@@ -13,12 +13,12 @@ class GameEvent(Base):
     # 2. Local Columns
 
     # 3. Foreign Keys
-    user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
     game_record_id = Column(Integer, ForeignKey("game_records.game_record_id"), nullable=False)
+    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
 
     # 4. Parent Relationship
-    user = relationship("User", foreign_keys=[user_id], back_populates="game_events")
     game_record = relationship("GameRecord", foreign_keys=[game_record_id], back_populates="game_events")
+    created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_game_events")
 
     # 5. Children Relationship
     advance_events = relationship("AdvanceEvent", back_populates="game_event")

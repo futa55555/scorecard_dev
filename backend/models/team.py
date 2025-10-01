@@ -24,7 +24,7 @@ class Team(Base):
     prefecture = Column(Enum(PrefectureEnum), nullable=True)
 
     # 3. Foreign Keys
-    chief_admin_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
+    chief_admin_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=True)
     league_id = Column(Integer, ForeignKey("leagues.league_id"), nullable=True)
 
     # 4. Parent Relationship

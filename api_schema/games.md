@@ -2,18 +2,19 @@
 
 ## GET /games
 
-試合一覧を取得
+Get all games.  
+Filter can be applied with optional parameters.
 
-**Request**
+### Request
 
 | Parameter | Type | Description | Required |
 | --------- | ---- | ----------- | -------- |
-| category_id | int | カテゴリーID | ❌ |
-| league_id | int | リーグID | ❌ |
-| tournament_id | int | 大会ID | ❌ |
-| team_id | int | チームID | ❌ |
+| category_id | int | Category ID | ❌ |
+| league_id | int | League ID | ❌ |
+| tournament_id | int | Tournament ID | ❌ |
+| team_id | int | Team ID | ❌ |
 
-**Response**
+### Response
 
 ``` json
 {
@@ -45,7 +46,7 @@
                         "top_team": 2,
                         "bottom_team": 4,
                     },
-                    "status": "試合中"
+                    "status": "ongoing"
                 },
                 {
                     ...
@@ -55,7 +56,9 @@
         {
             ...
         }
-    ]
+    ],
+    "message": "Games fetched successfully",
+    "code": null
 }
 ```
 
@@ -63,9 +66,9 @@
 
 ## GET /games/{game_id}/detail
 
-試合の詳細情報を取得
+Get detailed information of a specific game.
 
-**Response**
+### Response
 
 ``` json
 {
@@ -101,7 +104,9 @@
                 ...
             }
         ]
-    }
+    },
+    "message": "Game information fetched successfully",
+    "code": null
 }
 ```
 
@@ -109,9 +114,9 @@
 
 ## POST /games
 
-試合を新規作成
+Create a new game.
 
-**Request**
+### Request
 
 ``` json
 {
@@ -126,14 +131,16 @@
 }
 ```
 
-**Response**
+### Response
 
 ``` json
 {
     "status": "success",
     "data": {
         "game_id": 101
-    }
+    },
+    "message": "Game Created successfully",
+    "code": null
 }
 ```
 
@@ -141,27 +148,29 @@
 
 ## PATCH /games/{game_id}
 
-試合情報を更新
+Update information of a specific game.
 
-**Request**
+### Request
 
 ``` json
 {
-  "location": "サーティーフォー保土ケ谷球場",
-  "status": "ongoing"
+    "location": "サーティーフォー保土ケ谷球場",
+    "status": "ongoing"
 }
 ```
 
-**Response**
+### Response
 
 ``` json
 {
-  "status": "success",
-  "data": {
-    "id": 101,
-    "location": "サーティーフォー保土ケ谷球場",
-    "status": "進行中"
-  }
+    "status": "success",
+    "data": {
+        "game_id": 101,
+        "location": "サーティーフォー保土ケ谷球場",
+        "status": "ongoing"
+    },
+    "message": "Game updated successfully",
+    "code": null
 }
 ```
 
@@ -169,13 +178,15 @@
 
 ## DELETE /games/{game_id}
 
-試合を削除
+Delete a specific game.
 
-**Response**
+### Response
 
 ``` json
 {
-  "status": "success",
-  "data": null
+    "status": "success",
+    "data": null,
+    "message": "Game deleted successfully",
+    "code": null
 }
 ```

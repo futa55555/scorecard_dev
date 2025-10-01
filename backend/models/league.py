@@ -19,7 +19,7 @@ class League(Base):
     name = Column(String(100), nullable=False)
 
     # 3. Foreign Keys
-    chief_admin_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
+    chief_admin_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=True)
 
     # 4. Parent Relationship
     chief_admin_user = relationship("User", foreign_keys=[chief_admin_user_id], back_populates="chief_admin_leagues")

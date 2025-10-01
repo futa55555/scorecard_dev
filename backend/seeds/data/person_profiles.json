@@ -4,11 +4,10 @@
 		"uniform_number": 1,
 		"role": "player",
 		"since_date": "2021-04-01",
-		"until_date": "2025-05-31",
-		"is_official": true,
+		"until_date": null,
+		"is_official": false,
 		"person_id": 1,
 		"team_id": 1,
-		"created_by_user_id": 1,
-		"created_by_organization_id": 1
+		"created_by_user_id": 1
 	}
 ]

@@ -1,12 +1,11 @@
 [
 	{
 		"person_id": 1,
-		"last_name": "test_person_1_last_name",
-		"first_name": "test_person_1_first_name",
-		"middle_name": "test_person_1_middle_name",
+		"last_name": "Takeru",
+		"first_name": "Ishikawa",
+		"middle_name": null,
 		"prefecture": "tokyo",
-		"is_official": true,
-		"created_by_user_id": 1,
-		"created_by_organization_id": 1
+		"is_official": false,
+		"created_by_user_id": 1
 	}
 ]

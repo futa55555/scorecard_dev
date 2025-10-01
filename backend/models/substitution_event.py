@@ -26,11 +26,13 @@ class SubstitutionEvent(Base):
     game_event_id = Column(Integer, ForeignKey("game_events.game_event_id"), nullable=False)
     out_game_member_id = Column(Integer, ForeignKey("game_members.game_member_id"), nullable=True)
     in_game_member_id = Column(Integer, ForeignKey("game_members.game_member_id"), nullable=True)
+    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
 
     # 4. Parent Relationship
     game_event = relationship("GameEvent", foreign_keys=[game_event_id], back_populates="substitution_events")
     out_game_member = Column(Integer, foreign_keys=[out_game_member_id], back_populates="substitusion_events_as_out_game_member")
     in_game_member = Column(Integer, foreign_keys=[in_game_member_id], back_populates="substitution_events_as_in_game_member")
+    created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_substitution_events")
 
     # 5. Children Relationship
 

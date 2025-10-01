@@ -1,12 +1,11 @@
 # backend/seeds/people.py
 
 import json
-
 from backend import models
 
 
 def seed_people(db):
-    with open("backend/seeds/data/people.json", "r", encoding="utf-8") as f:
+    with open("./data/people.json", "r", encoding="utf-8") as f:
         person_data = json.load(f)
 
     people = [
@@ -15,14 +14,9 @@ def seed_people(db):
             last_name=person["last_name"],
             first_name=person["first_name"],
             middle_name=person["middle_name"],
-            gender=models.GenderEnum[person["gender"]],
-            height_cm=person["height_cm"],
-            weight_kg=person["weight_kg"],
-            birthday=person["birthday"],
             prefecture=models.PrefectureEnum[person["prefecture"]],
-            pitching_side=models.DominantHandEnum[person["pitching_side"]],
-            batting_side=models.DominantHandEnum[person["batting_side"]],
-            photo_url=person["photo_url"]
+            is_official=person["is_official"],
+            created_by_user_id=person["created_by_user_id"]
         )
         for person in person_data
     ]

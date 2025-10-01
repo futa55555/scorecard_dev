@@ -2,12 +2,11 @@
 
 import json
 from datetime import date
-
 from backend import models
 
 
 def seed_users(db):
-    with open("backend/seeds/data/users.json", "r", encoding="utf-8") as f:
+    with open("./data/users.json", "r", encoding="utf-8") as f:
         user_data = json.load(f)
 
     users = [

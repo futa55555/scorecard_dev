@@ -4,13 +4,13 @@
 
 リーグ一覧を取得
 
-**Request**
+### Request
 
 | Parameter | Type | Description | Required |
 | --------- | ---- | ----------- | -------- |
 | category_id | int | カテゴリーID | ❌ |
 
-**Response**
+### Response
 
 ``` json
 {
@@ -34,13 +34,13 @@
 
 リーグ詳細を取得
 
-**Request**
+### Request
 
 | Parameter | Type | Description | Required |
 | --------- | ---- | ----------- | -------- |
 | league_id | int | リーグID | ✅ |
 
-**Response**
+### Response
 
 ``` json
 {
@@ -59,7 +59,7 @@
 
 新しいリーグを作成
 
-**Request**
+### Request
 
 ``` json
 {
@@ -68,7 +68,7 @@
 }
 ```
 
-**Response**
+### Response
 
 ``` json
 {
@@ -85,7 +85,7 @@
 
 リーグ情報を更新
 
-**Request**
+### Request
 
 ``` json
 {
@@ -93,7 +93,7 @@
 }
 ```
 
-**Response**
+### Response
 
 ``` json
 {
@@ -110,7 +110,7 @@
 
 リーグを削除
 
-**Response**
+### Response
 
 ``` json
 {

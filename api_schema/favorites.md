@@ -4,7 +4,7 @@
 
 お気に入りのチームによる試合一覧を取得
 
-**Response**
+### Response
 
 ``` json
 {
@@ -51,7 +51,7 @@
 
 お気に入りのチーム一覧を取得
 
-**Response**
+### Response
 
 ``` json
 {
@@ -85,7 +85,7 @@
 
 お気に入りの大会一覧を取得
 
-**Response**
+### Response
 
 ``` json
 {
@@ -110,7 +110,7 @@
 
 お気に入りの人物一覧を取得
 
-**Response**
+### Response
 
 ```json
 {
@@ -139,7 +139,7 @@
 
 新しいをお気に入りに登録
 
-**Request**
+### Request
 
 ```json
 {
@@ -148,7 +148,7 @@
 }
 ```
 
-**Response**
+### Response
 
 ```json
 {

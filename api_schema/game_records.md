@@ -4,7 +4,7 @@
 
 試合記録の共通情報を取得
 
-**Response**
+### Response
 
 ```json
 {
@@ -24,7 +24,7 @@
 
 試合記録の得点板を取得
 
-**Response**
+### Response
 
 ```json
 {
@@ -60,7 +60,7 @@
 
 試合記録のスタメンを取得
 
-**Response**
+### Response
 
 ```json
 {
@@ -114,7 +114,7 @@
 
 試合記録の控え選手を取得
 
-**Response**
+### Response
 
 ```json
 {
@@ -164,7 +164,7 @@
 
 試合記録の経過情報を取得
 
-**Response**
+### Response
 
 ```json
 {
@@ -269,7 +269,7 @@
 
 試合記録の最新の状況を取得
 
-**Response**
+### Response
 
 ```json
 {
@@ -347,7 +347,7 @@
 
 新しい試合記録を作成
 
-**Request**
+### Request
 
 ```json
 {
@@ -356,7 +356,7 @@
 }
 ```
 
-**Response**
+### Response
 
 ```json
 {
@@ -373,7 +373,7 @@
 
 既存の試合記録を更新
 
-**Request**
+### Request
 
 ```json
 {
@@ -381,7 +381,7 @@
 }
 ```
 
-**Response**
+### Response
 
 ```json
 {
@@ -399,7 +399,7 @@
 
 試合記録を削除
 
-**Request**
+### Request
 
 ```json
 {
@@ -407,7 +407,7 @@
 }
 ```
 
-**Response**
+### Response
 
 ```json
 {

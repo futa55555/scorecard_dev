@@ -4,6 +4,8 @@
         "position_type": "P",
         "since_date": "2021-04-01",
         "until_date": "2025-05-31",
-        "person_id": 1
+        "is_official": false,
+        "person_id": 1,
+        "created_by_user_id": 1
     }
 ]

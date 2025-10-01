@@ -4,13 +4,13 @@
 
 大会一覧を取得
 
-**Request**
+### Request
 
 | Parameter | Type | Description | Required |
 | --------- | ---- | ----------- | -------- |
 | category_id | int | カテゴリーID | ❌ |
 
-**Response**
+### Response
 
 ``` json
 {
@@ -35,7 +35,7 @@
 
 大会詳細を取得
 
-**Response**
+### Response
 
 ``` json
 {
@@ -55,7 +55,7 @@
 
 新しい大会を作成
 
-**Request**
+### Request
 
 ``` json
 {
@@ -65,7 +65,7 @@
 }
 ```
 
-**Response**
+### Response
 
 ``` json
 {
@@ -82,7 +82,7 @@
 
 大会情報を更新
 
-**Request**
+### Request
 
 ``` json
 {
@@ -90,7 +90,7 @@
 }
 ```
 
-**Response**
+### Response
 
 ``` json
 {
@@ -107,7 +107,7 @@
 
 大会を削除
 
-**Response**
+### Response
 
 ``` json
 {

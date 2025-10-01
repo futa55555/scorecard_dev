@@ -4,7 +4,7 @@
 		"name": "test_team_1",
 		"short_name": "tt1",
 		"prefecture": "Tokyo",
-		"chief_admin_user_id": 1,
+		"chief_admin_user_id": null,
 		"league_id": 1
 	}
 ]

@@ -4,7 +4,7 @@
 
 カテゴリ一覧を取得
 
-**Response**
+### Response
 
 ``` json
 {
@@ -27,7 +27,7 @@
 
 カテゴリー詳細を取得
 
-**Response**
+### Response
 
 ``` json
 {
@@ -45,7 +45,7 @@
 
 カテゴリーを新規作成
 
-**Request**
+### Request
 
 ```json
 {
@@ -53,7 +53,7 @@
 }
 ```
 
-**Response**
+### Response
 
 ```json
 {
@@ -70,7 +70,7 @@
 
 カテゴリー情報を更新
 
-**Request**
+### Request
 
 ```json
 {
@@ -78,7 +78,7 @@
 }
 ```
 
-**Response**
+### Response
 
 ```json
 {
@@ -95,7 +95,7 @@
 
 カテゴリーを削除
 
-**Response**
+### Response
 
 ```json
 {

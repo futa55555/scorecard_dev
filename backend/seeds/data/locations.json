@@ -1,7 +1,8 @@
 [
     {
-        "location": 1,
+        "location_id": 1,
         "name": "test_location_1",
-        "prefecture": "tokyo"
+        "prefecture": "tokyo",
+        "created_by_user_id": 1
     }
 ]

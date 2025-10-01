@@ -1,7 +1,7 @@
 [
     {
         "league_id": 1,
-        "name": "test_league_1",
-        "chief_admin_user_id": 1
+        "name": "東京都大学ソフトボール連盟",
+        "chief_admin_user_id": null
     }
 ]
