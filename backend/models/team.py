@@ -32,12 +32,11 @@ class Team(Base):
     league = relationship("League", foreign_keys=[league_id], back_populates="teams")
 
     # 5. Children Relationship
+    person_profiles = relationship("PersonProfile", back_populates="team")
     games_as_top_team = relationship("Game", foreign_keys="Game.top_team_id", back_populates="top_team")
     games_as_bottom_team = relationship("Game", foreign_keys="Game.bottom_team_id", back_populates="bottom_team")
 
     # 6. Many-to-many Relationship
-    person_profiles = relationship("PersonProfile", back_populates="team")
-    people = relationship("Person", secondary="person_profiles", viewonly=True)
     fans = relationship("User", secondary=favorite_teams_table, back_populates="favorite_teams")
     admin_users = relationship("User", secondary=teams_admin_users_table, back_populates="admin_teams")
     categories = relationship("Category", secondary=categories_teams_table, back_populates="teams")

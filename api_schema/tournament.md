@@ -1,17 +1,21 @@
-# Tournaments API Schema
+# Tournament API Schema
 
 ## GET /tournaments
 
-大会一覧を取得
+大会一覧を取得。  
+カテゴリー、リーグ、チーム、お気に入りでフィルター可。
 
 ### Request
 
 | Parameter | Type | Description | Required |
 | --------- | ---- | ----------- | -------- |
 | category_id | int | カテゴリーID | ❌ |
+| league_id | int | リーグID | ❌ |
+| team_id | int | チームID | ❌ |
+| favorite | bool | true, false | ❌ |
 
 ### Response
-
+**成功**
 ``` json
 {
     "status": "success",
@@ -33,10 +37,10 @@
 
 ## GET /tournaments/{tournament_id}
 
-大会詳細を取得
+大会詳細を取得。
 
 ### Response
-
+**成功**
 ``` json
 {
     "status": "success",
@@ -45,6 +49,50 @@
         "name": "2025年春季リーグ",
         "since_date": "2025-04-01",
         "until_date": "2025-05-31",
+        "games": [
+            {
+                "game_id": 1,
+                "date": "2025-04-08",
+                "top_team": {
+                    "team_id": 1,
+                    "name": "東京大学ソフトボール部"
+                },
+                "bottom_team": {
+                    "team_id": 2,
+                    "name": "早稲田大学男子ソフトボール部"
+                }
+            },
+            {
+                ...
+            }
+        ],
+        "categories": [
+            {
+                "category_id": 1,
+                "name": "大学男子"
+            },
+            {
+                ...
+            }
+        ],
+        "teams": [
+            {
+                "team_id": 1,
+                "name": "東京大学ソフトボール部"
+            },
+            {
+                ...
+            }
+        ],
+        "locations": [
+            {
+                "location_id": 1,
+                "name": "東京大学駒場キャンパス野球場"
+            },
+            {
+                ...
+            }
+        ]
     }
 }
 ```

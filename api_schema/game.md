@@ -1,57 +1,44 @@
-# Games API Schema
+# Game API Schema
 
 ## GET /games
 
-Get all games.  
-Filter can be applied with optional parameters.
+試合一覧を取得。  
+カテゴリー、リーグ、大会、チームでフィルター可。
 
 ### Request
-
 | Parameter | Type | Description | Required |
 | --------- | ---- | ----------- | -------- |
-| category_id | int | Category ID | ❌ |
-| league_id | int | League ID | ❌ |
-| tournament_id | int | Tournament ID | ❌ |
-| team_id | int | Team ID | ❌ |
+| category_id | int | カテゴリーID | ❌ |
+| league_id | int | リーグID | ❌ |
+| tournament_id | int | 大会ID | ❌ |
+| team_id | int | チームID | ❌ |
 
 ### Response
-
+**成功**
 ``` json
 {
     "status": "success",
     "data": [
         {
             "game_id": 1,
-            "tournament": {
-                "tournament_id": 2,
-                "name": "2025年秋季リーグ"
-            },
+            "date": "2025-04-08",
+            "start_time": "12:00:00",
             "top_team": {
-                "team_id": 2,
-                "short_name": "早稲田"
+                "team_id": 1,
+                "name": "東京大学ソフトボール部"
             },
             "bottom_team": {
-                "team_id": 5,
-                "short_name": "立教"
+                "team_id": 2,
+                "name": "早稲田大学男子ソフトボール部"
             },
-            "date": "2025-10-19",
-            "game_records": [
-                {
-                    "game_record_id": 1,
-                    "user": {
-                        "user_id": 1,
-                        "name": "aoi_ishikawa"
-                    },
-                    "score": {
-                        "top_team": 2,
-                        "bottom_team": 4,
-                    },
-                    "status": "ongoing"
-                },
-                {
-                    ...
-                }
-            ]
+            "location": {
+                "location_id": 1,
+                "name": "東京大学駒場キャンパス野球場"
+            },
+            "tournament": {
+                "tournament_id": 1,
+                "name": "2025年春季リーグ"
+            }
         },
         {
             ...
@@ -64,46 +51,39 @@ Filter can be applied with optional parameters.
 
 ------------------------------------------------------------------------
 
-## GET /games/{game_id}/detail
+## GET /games/{game_id}
 
-Get detailed information of a specific game.
+試合の詳細情報を取得。
 
 ### Response
-
+**成功**
 ``` json
 {
     "status": "success",
     "data": {
         "game_id": 1,
-        "tournament": {
-            "tournament_id": 2,
-            "name": "2025年秋季リーグ"
-        },
+        "date": "2025-04-08",
+        "start_time": "12:00:00",
         "top_team": {
-            "team_id": 2,
-            "name": "早稲田大学男子ソフトボール部",
-            "short_name": "早稲田"
+            "team_id": 1,
+            "name": "東京大学ソフトボール部"
         },
         "bottom_team": {
-            "team_id": 5,
-            "name": "立教大学ソフトボール部",
-            "short_name": "立教"
+            "team_id": 2,
+            "name": "早稲田大学男子ソフトボール部"
         },
-        "date": "2025-10-19",
-        "start_time": "15:00:00",
-        "location": "大類ソフトボールパーク",
-        "game_records": [
-            {
-                "game_record_id": 1,
-                "user": {
-                    "user_id": 1,
-                    "name": "aoi_ishikawa"
-                }
-            },
-            {
-                ...
-            }
-        ]
+        "location": {
+            "location_id": 1,
+            "name": "東京大学駒場キャンパス野球場"
+        },
+        "tournament": {
+            "tournament_id": 1,
+            "name": "2025年春季リーグ"
+        },
+        "created_by_user": {
+            "user_id": 1,
+            "name": "aoi_takahashi"
+        }
     },
     "message": "Game information fetched successfully",
     "code": null

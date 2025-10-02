@@ -27,11 +27,10 @@ class Person(Base):
     created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_people")
 
     # 5. Children Relationship
+    person_profiles = relationship("PersonProfile", back_populates="person")
     player_positions = relationship("PlayerPosition", back_populates="person")
     own_user = relationship("User", foreign_keys="User.own_person_id", back_populates="own_person")
     game_members = relationship("GameMember", back_populates="person")
 
     # 6. Many-to-many Relationship
-    person_profiles = relationship("PersonProfile", back_populates="person")
-    teams = relationship("Team", secondary="person_profiles", viewonly=True)
     fans = relationship("User", secondary=favorite_people_table, back_populates="favorite_people")
