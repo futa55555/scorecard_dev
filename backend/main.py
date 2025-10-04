@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware   # ← 追加
 import importlib
 import pkgutil
 import os
@@ -17,6 +18,20 @@ init_data(db)
 db.close()
 
 app = FastAPI()
+
+# CORS 設定 ← ここ追加
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5500",   # Live Serverなど
+        "http://127.0.0.1:5500",
+        "http://localhost:3000",   # 将来ViteやReactを使うとき用
+        "http://127.0.0.1:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ルーター自動登録（backend/routers/*.py すべて読み込み）
 import backend.routers  # パッケージとして認識させる
