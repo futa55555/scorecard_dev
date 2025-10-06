@@ -16,10 +16,10 @@ class Game(Base):
     ent_time = Column(Time, nullable=True)
 
     # 3. Foreign Keys
-    top_team_id = Column(Integer, ForeignKey("teams.team_id"), nullable=False)
-    bottom_team_id = Column(Integer, ForeignKey("teams.team_id"), nullable=False)
+    top_team_id = Column(Integer, ForeignKey("teams.team_id"), nullable=True)
+    bottom_team_id = Column(Integer, ForeignKey("teams.team_id"), nullable=True)
     location_id = Column(Integer, ForeignKey("locations.location_id"), nullable=True)
-    tournament_id = Column(Integer, ForeignKey("tournaments.tournament_id"), nullable=False)
+    tournament_id = Column(Integer, ForeignKey("tournaments.tournament_id"), nullable=True)
     created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
 
     # 4. Parent Relationship

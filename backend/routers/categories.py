@@ -1,28 +1,23 @@
 # backend/routers/categories.py
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from backend.database import get_db
-from backend.models import Category
+from backend import utils, schemas, services
 
 router = APIRouter(prefix="/api/categories", tags=["categories"])
 
-@router.get("/")
-def list_categories(
-    db: Session = Depends(get_db),
-    include: list[str] | None = Query([], description="Include related leagues.")
-):
-    """
-    カテゴリー一覧を取得
-    include=leaguesで所属するリーグ一覧も取得
-    """
-
-@router.get("/{category_id}")
-def get_category(
-    category_id: int,
+@router.get(
+    "/summary/",
+    response_model=schemas.CategorySummariesResponse,
+    summary="カテゴリー概要一覧を取得"
+)
+def get_category_summaries(
     db: Session = Depends(get_db)
-):
-    """
-    カテゴリー詳細を取得
-    所属するリーグ一覧、さらに各リーグに所属するチーム一覧、無所属のチーム一覧も取得
-    """
+) -> schemas.CategorySummariesResponse:
+    category_summaries = services.get_category_summaries(db)
+
+    return utils.get_response(
+        data=category_summaries,
+        target="category summaries"
+    )

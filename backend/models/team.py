@@ -20,7 +20,7 @@ class Team(Base):
 
     # 2. Local Columns
     name = Column(String(100), nullable=False)
-    short_name = Column(String(100), nullable=False)
+    short_name = Column(String(100), nullable=True)
     prefecture = Column(Enum(PrefectureEnum), nullable=True)
 
     # 3. Foreign Keys

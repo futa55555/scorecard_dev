@@ -1,6 +1,18 @@
 [
     {
         "category_id": 1,
+        "name": "大学女子"
+    },
+    {
+        "category_id": 2,
         "name": "大学男子"
+    },
+    {
+        "category_id": 3,
+        "name": "社会人女子"
+    },
+    {
+        "category_id": 4,
+        "name": "社会人男子"
     }
 ]

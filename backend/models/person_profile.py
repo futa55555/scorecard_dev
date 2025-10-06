@@ -24,7 +24,7 @@ class PersonProfile(Base):
     role = Column(Enum(RoleEnum), nullable=False)
     since_date = Column(Date, nullable=False)
     until_date = Column(Date, nullable=True)
-    is_official = Column(Boolean, nullable=False)
+    is_official = Column(Boolean, nullable=True)
 
     # 3. Foreign Keys
     person_id = Column(Integer, ForeignKey("people.person_id"), nullable=False)

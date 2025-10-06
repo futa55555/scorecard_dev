@@ -3,12 +3,16 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from backend.database import get_db
-from backend.models import Person
+from backend import utils, schemas, services
 
 router = APIRouter(prefix="/api/people", tags=["people"])
 
-@router.get("/")
-def list_people(
+@router.get(
+    "/",
+    response_model=schemas.PersonListResponse,
+    summary="メンバー一覧を取得"
+)
+def get_person_list(
     db: Session = Depends(get_db),
     category_id: int | None = Query(None, description="Filter people by category ID."),
     league_id: int | None = Query(None, description="Filter people by league ID."),
@@ -16,19 +20,27 @@ def list_people(
     prefecture: str | None = Query(None, description="Filter people by prefecture."),
     position_type: str | None = Query(None, description="Filter people by position type."),
     favorite: bool | None = Query(None, description="Filter people by favorite status")
-):
-    """
-    人物一覧を取得
-    カテゴリー、リーグ、チーム、出身都道府県、ポジション、お気に入りでフィルター可
-    現在の所属チームと背番号、役割とポジションを合わせて取得
-    """
+) -> schemas.PersonListResponse:
+    person_list = services.get_person_list(db, category_id)
 
-@router.get("/{person_id}")
-def get_person(
+    return utils.get_response(
+        data=person_list,
+        target="person list"
+    )
+
+
+@router.get(
+    "/{person_id}/",
+    response_model=schemas.PersonDetailResponse,
+    summary="メンバー詳細を取得"
+)
+def get_person_detail(
     person_id: int,
     db: Session = Depends(get_db)
-):
-    """
-    人物の詳細情報を取得
-    過去のチーム遍歴やポジションの変遷も合わせて取得
-    """
+) -> schemas.PersonDetailResponse:
+    person_detail = services.get_person_detail(db, person_id)
+
+    return utils.get_response(
+        data=person_detail,
+        target="person detail"
+    )

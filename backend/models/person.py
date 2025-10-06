@@ -15,10 +15,10 @@ class Person(Base):
 
     # 2. Local Columns
     last_name = Column(String(100), nullable=False)
-    first_name = Column(String(100), nullable=False)
+    first_name = Column(String(100), nullable=True)
     middle_name = Column(String(100), default=None)
     prefecture = Column(Enum(PrefectureEnum), nullable=True)
-    is_official = Column(Boolean, nullable=False)
+    is_official = Column(Boolean, nullable=True)
 
     # 3. Foreign Keys
     created_by_user_id = Column(Integer, ForeignKey("users.user_id", name="fk_created_by_user"), nullable=False)

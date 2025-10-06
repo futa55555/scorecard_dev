@@ -2,15 +2,15 @@
 
 from sqlalchemy.orm import Session, joinedload
 from backend import models
-from backend.utils.db import db_exception_handler
+from backend.utils.db_exception import db_exception_handler
 
 @db_exception_handler
 def list_teams(
     db: Session,
-    category_id: int | None = None,
-    league_id: int | None = None,
+    category: int | None = None,
+    league: int | None = None,
     prefecture: str | None = None,
-    user_id: int | None = None
+    user: int | None = None
 ) -> list[models.Team]:
     """
     チーム一覧を取得。
@@ -25,23 +25,23 @@ def list_teams(
         )
     )
 
-    if category_id is not None:
+    if category is not None:
         query = query.filter(
             models.Team.categories.any(
-                models.Category.category_id == category_id
+                models.Category.category_id == category
             )
         )
 
-    if league_id is not None:
-        query = query.filter(models.Team.league_id == league_id)
+    if league is not None:
+        query = query.filter(models.Team.league_id == league)
 
     if prefecture is not None:
         query = query.filter(models.Team.prefecture == prefecture)
 
-    if user_id is not None:
+    if user is not None:
         query = query.filter(
             models.Team.fans.any(
-                models.User.user_id == user_id
+                models.User.user_id == user
             )
         )
 
@@ -51,7 +51,7 @@ def list_teams(
 @db_exception_handler
 def get_team(
     db: Session,
-    team_id: int
+    team: int
 ) -> models.Team:
     """
     チームの詳細情報を取得
@@ -59,7 +59,7 @@ def get_team(
     """
     return (
         db.query(models.Team)
-        .filter(models.Team.team_id == team_id)
+        .filter(models.Team.team_id == team)
         .options(
             joinedload(models.Team.categories),
             joinedload(models.Team.league),

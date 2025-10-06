@@ -1,0 +1,34 @@
+<!-- frontend/pages/category/team_detail.html -->
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ソフナビ</title>
+    <link rel="icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script type="module" src="../../js/main/category/teamDetail.js" defer></script>
+</head>
+
+<body>
+    <header id="header"></header>
+
+    <nav id="navbar"></nav>
+
+    <section id="team-detail">
+        <div id="team-base"></div>
+
+        <div id="team-tab">
+            <div class="team-tab active" data-target="team-tab-overview">トップ</div>
+            <div class="team-tab" data-target="team-tab-people">メンバー</div>
+            <div class="team-tab" data-target="team-tab-games">試合</div>
+        </div>
+
+        <div class="tab-content active" id="team-tab-overview"></div>
+        <div class="tab-content" id="team-tab-people"></div>
+        <div class="tab-content" id="team-tab-games"></div>
+    </section>
+</body>
+
+</html>

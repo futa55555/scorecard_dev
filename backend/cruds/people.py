@@ -3,7 +3,7 @@
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import and_
 from backend import models
-from backend.utils.db import db_exception_handler
+from backend.utils.db_exception import db_exception_handler
 
 @db_exception_handler
 def list_people(
