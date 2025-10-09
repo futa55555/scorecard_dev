@@ -1,44 +1,71 @@
 # backend/cruds/leagues.py
 
 from sqlalchemy.orm import Session, joinedload
-from backend import models
-from backend.utils.db_exception import db_exception_handler
+from backend import models, utils
 
-@db_exception_handler
-def list_leagues(
+@utils.db_exception_handler
+def get_league_summaries(
+    db: Session,
+    category_id: int | None = None
+) -> list[models.League]:
+    """
+    リーグの概要一覧を取得
+    """
+    query = db.query(models.League)
+
+    if category_id is not None:
+        query = query.filter(
+            models.League.categories.any(models.Category.category_id == category_id)
+        )
+
+    league_summaries = query.all()
+    return league_summaries
+
+
+@utils.db_exception_handler
+def get_league_list(
     db: Session,
     category_id: int | None = None
 ) -> list[models.League]:
     """
     リーグ一覧を取得
-    フィルター用で、最低限の情報のみ
     """
-    query = db.query(models.League)
+    query = (
+        db.query(models.League)
+        .options(
+            joinedload(models.League.categories),
+            joinedload(models.League.teams)
+        )
+    )
 
     if category_id is not None:
-        query.filter(
+        query = query.filter(
             models.League.categories.any(models.Category.category_id == category_id)
         )
 
-    leagues = query.all()
-    return leagues
+    league_list = query.all()
+    return league_list
 
-@db_exception_handler
-def get_league(
+
+@utils.db_exception_handler
+def get_league_detail(
     db: Session,
     league_id: int
 ) -> models.League:
     """
     リーグの詳細情報を取得
-    管理者、所属チーム、カテゴリーも合わせて取得
     """
-    return (
+    query = (
         db.query(models.League)
         .filter(models.League.league_id == league_id)
         .options(
             joinedload(models.League.chief_admin_user),
+            joinedload(models.League.categories),
+            joinedload(models.League.tournaments),
+            joinedload(models.League.admin_users),
             joinedload(models.League.teams),
-            joinedload(models.League.categories)
         )
-        .first()
     )
+
+    league_detail = query.first()
+    return league_detail

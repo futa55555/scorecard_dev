@@ -1,23 +1,27 @@
 # backend/schemas/__init__.pyi
 
 from .common import CommonResponse
-from .category import CategorySummary, CategorySummaries, CategorySummariesResponse
-from .league import LeagueSummary, LeagueSummaries, LeagueSummariesResponse, LeagueDetail, LeagueDetailResponse
-from .location import LocationSummary
-from .tournament import TournamentSummary
-from .user import UserSummary
-from .team import TeamSummary, TeamSummaries, TeamSummariesResponse, TeamItem, TeamList, TeamListResponse, TeamDetail, TeamDetailResponse
-from .person import PersonSummary, PersonItem, PersonList, PersonListResponse, PersonDetail, PersonDetailResponse
-from .game import GameItem, GameList, GameListResponse, GameDetail, GameDetailResponse
+from .category import CategoryBase, CategorySummary, CategorySummariesResponse
+from .league import LeagueBase, LeagueSummary, LeagueSummariesResponse, LeagueListItem, LeagueListResponse, LeagueDetail, LeagueDetailResponse
+from .location import LocationBase
+from .tournament import TournamentBase
+from .user import UserBase
+from .team import TeamBase, TeamListItem, TeamListResponse, TeamDetail, TeamDetailResponse
+from .person import PersonBase, PersonListItem, PersonListResponse, PersonDetail, PersonDetailResponse
+from .person_profile import PersonProfileBase, PersonProfileListItem
+from .player_position import PlayerPositionBase, PlayerPositionListItem
+from .game import GameBase, GameListItem, GameListResponse, GameDetail, GameDetailResponse
 
 __all__ = [
     "CommonResponse",
-    "CategorySummary", "CategorySummaries", "CategorySummariesResponse",
-    "LeagueSummary", "LeagueSummaries", "LeagueSummariesResponse", "LeagueDetail", "LeagueDetailResponse",
-    "LocationSummary",
-    "TournamentSummary",
-    "UserSummary",
-    "TeamSummary", "TeamSummaries", "TeamSummariesResponse", "TeamItem", "TeamList", "TeamListResponse", "TeamListResponse", "TeamDetail", "TeamDetailResponse",
-    "PersonSummary", "PersonItem", "PersonList", "PersonListResponse", "PersonDetail", "PersonDetailResponse",
-    "GameItem", "GameList", "GameListResponse", "GameDetail", "GameDetailResponse"
+    "CategoryBase", "CategorySummary", "CategorySummariesResponse",
+    "LeagueBase", "LeagueSummary", "LeagueSummariesResponse", "LeagueListItem", "LeagueListResponse", "LeagueDetail", "LeagueDetailResponse",
+    "LocationBase",
+    "TournamentBase",
+    "UserBase",
+    "TeamBase", "TeamListItem", "TeamListResponse", "TeamListResponse", "TeamDetail", "TeamDetailResponse",
+    "PersonBase", "PersonListItem", "PersonListResponse", "PersonDetail", "PersonDetailResponse",
+    "PersonProfileBase", "PersonProfileListItem",
+    "PlayerPositionBase", "PlayerPositionListItem",
+    "GameBase", "GameListItem", "GameListResponse", "GameDetail", "GameDetailResponse"
 ]

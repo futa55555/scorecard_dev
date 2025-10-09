@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/leagues", tags=["leagues"])
 @router.get(
     "/summary/",
     response_model=schemas.LeagueSummariesResponse,
-    summary="リーグ概要一覧を取得"
+    summary="リーグの概要一覧を取得"
 )
 def get_league_summaries(
     db: Session = Depends(get_db),
@@ -25,9 +25,26 @@ def get_league_summaries(
 
 
 @router.get(
+    "/",
+    response_model=schemas.LeagueListResponse,
+    summary="リーグ一覧を取得"
+)
+def get_league_list(
+    db: Session = Depends(get_db),
+    category_id: int | None = Query(None, description="Filter leagues by category ID.")
+) -> schemas.LeagueListResponse:
+    league_list = services.get_league_list(db, category_id)
+
+    return utils.get_response(
+        data=league_list,
+        target="league list"
+    )
+
+
+@router.get(
     "/{league_id}/",
     response_model=schemas.LeagueDetailResponse,
-    summary="リーグ詳細を取得"
+    summary="リーグの詳細情報を取得"
 )
 def get_league_detail(
     league_id: int,

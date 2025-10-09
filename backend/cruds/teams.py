@@ -1,21 +1,17 @@
 # backend/cruds/teams.py
 
 from sqlalchemy.orm import Session, joinedload
-from backend import models
-from backend.utils.db_exception import db_exception_handler
+from sqlalchemy import and_
+from backend import models, utils
 
-@db_exception_handler
-def list_teams(
+@utils.db_exception_handler
+def get_team_list(
     db: Session,
-    category: int | None = None,
-    league: int | None = None,
-    prefecture: str | None = None,
-    user: int | None = None
+    category_id: int | None = None,
+    league_id: int | None = None
 ) -> list[models.Team]:
     """
-    チーム一覧を取得。
-    カテゴリー、カテゴリーも合わせて取得。
-    カテゴリー、リーグ、都道府県、お気に入りでフィルター可。
+    チーム一覧を取得
     """
     query = (
         db.query(models.Team)
@@ -25,50 +21,51 @@ def list_teams(
         )
     )
 
-    if category is not None:
+    if category_id is not None:
         query = query.filter(
-            models.Team.categories.any(
-                models.Category.category_id == category
-            )
+            models.Team.categories.any(models.Category.category_id == category_id)
         )
 
-    if league is not None:
-        query = query.filter(models.Team.league_id == league)
+    if league_id is not None:
+        query = query.filter(models.Team.league_id == league_id)
 
-    if prefecture is not None:
-        query = query.filter(models.Team.prefecture == prefecture)
+    team_list = query.all()
+    return team_list
 
-    if user is not None:
-        query = query.filter(
-            models.Team.fans.any(
-                models.User.user_id == user
-            )
-        )
 
-    teams = query.all()
-    return teams
-
-@db_exception_handler
-def get_team(
+@utils.db_exception_handler
+def get_team_detail(
     db: Session,
-    team: int
+    team_id: int
 ) -> models.Team:
     """
     チームの詳細情報を取得
-    カテゴリー、リーグ、管理者、人物一覧、試合一覧も合わせて取得
     """
-    return (
+    query = (
         db.query(models.Team)
-        .filter(models.Team.team_id == team)
+        .filter(
+            and_(
+                models.Team.team_id == team_id,
+                models.Team.person_profiles.any(
+                    models.PersonProfile.until_date.is_(None)
+                )
+            )
+        )
         .options(
-            joinedload(models.Team.categories),
-            joinedload(models.Team.league),
             joinedload(models.Team.chief_admin_user),
+            joinedload(models.Team.league),
+            joinedload(models.Team.categories),
+            joinedload(models.Team.locations),
+            joinedload(models.Team.tournaments),
+            joinedload(models.Team.admin_users),
             joinedload(models.Team.person_profiles)
                 .joinedload(models.PersonProfile.person)
-                .joinedload(models.Person.player_positions),
+                    .joinedload(models.Person.person_profiles)
+                    .joinedload(models.Person.player_positions),
             joinedload(models.Team.games_as_bottom_team),
             joinedload(models.Team.games_as_top_team)
         )
-        .first()
     )
+
+    team_detail = query.first()
+    return team_detail

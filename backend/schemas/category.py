@@ -3,6 +3,13 @@
 from pydantic import BaseModel, ConfigDict
 from . import common
 
+class CategoryBase(BaseModel):
+    category_id: int
+    name: str
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class CategorySummary(BaseModel):
     category_id: int
     name: str
@@ -10,9 +17,5 @@ class CategorySummary(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class CategorySummaries(list[CategorySummary]):
-    pass
-
-
-class CategorySummariesResponse(common.CommonResponse[CategorySummaries]):
+class CategorySummariesResponse(common.CommonResponse[list[CategorySummary]]):
     pass

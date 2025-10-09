@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, ConfigDict
 
-class UserSummary(BaseModel):
+class UserBase(BaseModel):
     user_id: int
     name: str
 

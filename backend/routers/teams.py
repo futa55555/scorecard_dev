@@ -8,31 +8,16 @@ from backend import utils, schemas, services
 router = APIRouter(prefix="/api/teams", tags=["teams"])
 
 @router.get(
-    "/summary/",
-    response_model=schemas.TeamSummariesResponse,
-    summary="チーム概要一覧を取得"
-)
-def get_team_summaries(
-    db: Session = Depends(get_db),
-    category: int | None = Query(None, description="Filter teams by category ID.")
-) -> schemas.TeamSummariesResponse:
-    team_summaries = services.get_team_summaries(db, category)
-
-    return utils.get_response(
-        data=team_summaries,
-        target="team summaries"
-    )
-
-
-@router.get(
     "/",
     response_model=schemas.TeamListResponse,
     summary="チーム一覧を取得"
 )
 def get_team_list(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    category_id: int | None = Query(None, description="Filter people by category ID."),
+    league_id: int | None = Query(None, description="Filter people by league ID.")
 ) -> schemas.TeamListResponse:
-    team_list = services.get_team_list(db)
+    team_list = services.get_team_list(db, category_id, league_id)
 
     return utils.get_response(
         data=team_list,
@@ -43,7 +28,7 @@ def get_team_list(
 @router.get(
     "/{team_id}/",
     response_model=schemas.TeamDetailResponse,
-    summary="チーム詳細を取得"
+    summary="チームの詳細情報を取得"
 )
 def get_team_detail(
     team_id: int,

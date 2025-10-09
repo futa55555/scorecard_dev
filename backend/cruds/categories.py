@@ -1,17 +1,16 @@
 # backend/cruds/categories.py
 
 from sqlalchemy.orm import Session
-from backend import models
-from backend.utils.db_exception import db_exception_handler
+from backend import models, utils
 
-@db_exception_handler
-def list_categories(
+@utils.db_exception_handler
+def get_category_summaries(
     db: Session
 ) -> list[models.Category]:
     """
-    カテゴリー一覧を取得
+    カテゴリーの概要一覧を取得
     """
     query = db.query(models.Category)
 
-    categories = query.all()
-    return categories
+    category_summaries = query.all()
+    return category_summaries

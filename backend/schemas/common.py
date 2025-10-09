@@ -1,11 +1,11 @@
 # backend/schemas/common.py
 
-from pydantic.generics import GenericModel
+from pydantic import BaseModel
 from typing import Generic, TypeVar
 
 T = TypeVar("T")
 
-class CommonResponse(GenericModel, Generic[T]):
+class CommonResponse(BaseModel, Generic[T]):
     status: str
     data: T
     message: str

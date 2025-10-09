@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/categories", tags=["categories"])
 @router.get(
     "/summary/",
     response_model=schemas.CategorySummariesResponse,
-    summary="カテゴリー概要一覧を取得"
+    summary="カテゴリーの概要一覧を取得"
 )
 def get_category_summaries(
     db: Session = Depends(get_db)

@@ -15,11 +15,9 @@ router = APIRouter(prefix="/api/games", tags=["games"])
 def get_game_list(
     db: Session = Depends(get_db),
     category_id: int | None = Query(None, description="Filter games by category ID."),
-    league_id: int | None = Query(None, description="Filter games by league ID."),
-    tournament_id: int | None = Query(None, description="Filter games by tournament ID."),
-    team_id: int | None = Query(None, description="Filter games by team ID.")
+    league_id: int | None = Query(None, description="Filter games by league ID.")
 ) -> schemas.GameListResponse:
-    game_list = services.get_game_list(db, category_id)
+    game_list = services.get_game_list(db, category_id, league_id)
 
     return utils.get_response(
         data=game_list,
@@ -30,7 +28,7 @@ def get_game_list(
 @router.get(
     "/{game_id}/",
     response_model=schemas.GameDetailResponse,
-    summary="試合詳細を取得"
+    summary="試合の詳細情報を取得"
 )
 def get_game_detail(
     game_id: int,

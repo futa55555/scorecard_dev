@@ -4,47 +4,32 @@ from pydantic import BaseModel, ConfigDict
 from backend import models
 from . import common, user, person_profile, player_position
 
-class PersonSummary(BaseModel):
-    person_id: int
-    last_name: str
-    first_name: str
-    middle_name: str
-
-    model_config = ConfigDict(from_attributes=True)
-
-
-class PersonItem(BaseModel):
+class PersonBase(BaseModel):
     person_id: int
     last_name: str
     first_name: str
     middle_name: str
     prefecture: models.PrefectureEnum
-    created_by_user: user.UserSummary
-    person_profile: person_profile.PersonProfileItem
-    player_position: player_position.PlayerPositionItem
-    own_user: user.UserSummary
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class PersonList(list[PersonItem]):
+class PersonListItem(PersonBase):
+    person_profiles: list[person_profile.PersonProfileListItem]
+    player_position: list[player_position.PlayerPositionListItem]
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class PersonListResponse(common.CommonResponse[list[PersonListItem]]):
     pass
 
 
-class PersonListResponse(common.CommonResponse[PersonList]):
-    pass
-
-
-class PersonDetail(BaseModel):
-    person_id: int
-    last_name: str
-    first_name: str
-    middle_name: str
-    prefecture: models.PrefectureEnum
-    created_by_user: user.UserSummary
-    person_profiles: list[person_profile.PersonProfileItem]
-    player_positions: list[player_position.PlayerPositionItem]
-    own_user: user.UserSummary
+class PersonDetail(PersonBase):
+    created_by_user: user.UserBase
+    person_profiles: list[person_profile.PersonProfileListItem]
+    player_positions: list[player_position.PlayerPositionListItem]
+    own_user: user.UserBase
 
     model_config = ConfigDict(from_attributes=True)
 

@@ -6,11 +6,11 @@ from backend import schemas, cruds
 
 def get_category_summaries(
     db: Session
-) -> schemas.CategorySummaries:
+) -> list[schemas.CategorySummary]:
     """
-    カテゴリー概要一覧を取得
+    カテゴリーの概要一覧を取得
     """
-    categories = cruds.list_categories(db)
+    category_summaries = cruds.get_category_summaries(db)
 
-    adapter = TypeAdapter(schemas.CategorySummaries)
-    return adapter.validate_python(categories)
+    adapter = TypeAdapter(list[schemas.CategorySummary])
+    return adapter.validate_python(category_summaries)

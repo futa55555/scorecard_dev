@@ -15,13 +15,9 @@ router = APIRouter(prefix="/api/people", tags=["people"])
 def get_person_list(
     db: Session = Depends(get_db),
     category_id: int | None = Query(None, description="Filter people by category ID."),
-    league_id: int | None = Query(None, description="Filter people by league ID."),
-    team_id: int | None = Query(None, description="Filter people by team ID."),
-    prefecture: str | None = Query(None, description="Filter people by prefecture."),
-    position_type: str | None = Query(None, description="Filter people by position type."),
-    favorite: bool | None = Query(None, description="Filter people by favorite status")
+    league_id: int | None = Query(None, description="Filter people by league ID.")
 ) -> schemas.PersonListResponse:
-    person_list = services.get_person_list(db, category_id)
+    person_list = services.get_person_list(db, category_id, league_id)
 
     return utils.get_response(
         data=person_list,
@@ -32,7 +28,7 @@ def get_person_list(
 @router.get(
     "/{person_id}/",
     response_model=schemas.PersonDetailResponse,
-    summary="メンバー詳細を取得"
+    summary="メンバーの詳細情報を取得"
 )
 def get_person_detail(
     person_id: int,

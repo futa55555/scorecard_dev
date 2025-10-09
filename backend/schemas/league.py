@@ -1,7 +1,18 @@
 # backend/schemas/league.py
 
 from pydantic import BaseModel, ConfigDict
-from . import common, category, tournament, team, user
+from . import common, category, tournament, user
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .team import TeamBase
+
+class LeagueBase(BaseModel):
+    league_id: int
+    name: str
+
+    model_config = ConfigDict(from_attributes=True)
+
 
 class LeagueSummary(BaseModel):
     league_id: int
@@ -10,21 +21,27 @@ class LeagueSummary(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class LeagueSummaries(list[LeagueSummary]):
+class LeagueSummariesResponse(common.CommonResponse[list[LeagueSummary]]):
     pass
 
 
-class LeagueSummariesResponse(common.CommonResponse[LeagueSummaries]):
+class LeagueListItem(LeagueBase):
+    categories: list[category.CategoryBase]
+    teams: list["TeamBase"]
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class LeagueListResponse(common.CommonResponse[list[LeagueListItem]]):
     pass
 
 
-class LeagueDetail(BaseModel):
-    name: str
-    chief_admin_user: user.UserSummary
-    categories: list[category.CategorySummary]
-    tournaments: list[tournament.TournamentSummary]
-    admin_users: list[user.UserSummary]
-    teams: list[team.TeamSummary]
+class LeagueDetail(LeagueBase):
+    chief_admin_user: user.UserBase
+    categories: list[category.CategoryBase]
+    tournaments: list[tournament.TournamentBase]
+    admin_users: list[user.UserBase]
+    teams: list["TeamBase"]
 
     model_config = ConfigDict(from_attributes=True)
 
