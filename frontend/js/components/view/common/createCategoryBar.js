@@ -2,20 +2,20 @@
  * File: frontend/js/components/common/createCategoryBar.js
  */
 
-import { getCategoryList } from "../../../clients/category/getCategoryList.js"
+export async function createCategoryBar(categoryList) {
+    const params = new URLSearchParams(window.location.search)
+    const categoryId = Number(params.get("category"))
 
-export async function createCategoryBar(categoryId) {
-    const categoryBar = document.createElement("div")
-
-
-    let categoryList = await getCategoryList()
     categoryList = [
         { category_id: 0, name: "すべて" },
         ...categoryList
     ]
 
-
     const currentPath = window.location.pathname
+
+
+    const categoryBar = document.createElement("div")
+
 
     categoryList.forEach(category => {
         const link = document.createElement("a")

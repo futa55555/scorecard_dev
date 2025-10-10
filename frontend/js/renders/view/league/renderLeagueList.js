@@ -5,7 +5,16 @@
 import { getLeagueList } from "../../../clients/league/getLeagueList.js"
 import { createLeagueCard } from "../../../components/view/league/createLeagueCard.js"
 
-export async function renderLeagueList(leagueList, categoryId) {
+export async function renderLeagueList(categoryId) {
+    const leagueList = document.querySelector(".league-list")
+    if (!leagueList) {
+        console.error(`[renderLeagueList] Error: <div class="league-list"> not found`)
+    }
+
+
+    leagueList.innerHTML = ""
+
+
     const leagueData = await getLeagueList(categoryId)
 
     leagueData.forEach(league => {

@@ -2,13 +2,14 @@
  * File: frontend/js/renders/common/renderHeader.js
  */
 
+import { getCategorySummaries } from "../../../clients/category/getCategorySummaries.js"
 import { createCategoryBar } from "../../../components/view/common/createCategoryBar.js"
 
 export async function renderHeader(categoryId) {
     const header = document.querySelector(".header")
 
     if (!header) {
-        console.error("[renderHeader] Error: <header id='header'> not found")
+        console.error("[renderHeader] Error: <header class='header'> not found")
         return
     }
 
@@ -26,6 +27,7 @@ export async function renderHeader(categoryId) {
     header.append(title)
 
 
-    const bar = await createCategoryBar(categoryId)
+    let categoryList = await getCategorySummaries()
+    const bar = await createCategoryBar(categoryList)
     header.append(bar)
 }

@@ -2,9 +2,9 @@
  * File: frontend/js/renders/view/team/renderTeamSections.js
  */
 
-import { createTeamSectionTitle } from "../../../components/view/team/createTeamSectionTitle.js"
+import { getLeagueSummaries } from "../../../clients/league/getLeagueSummaries.js"
 import { createTeamFilter } from "../../../components/view/team/createTeamFilter.js"
-import { createTeamList } from "../../../components/view/team/createTeamList.js"
+import { renderTeamList } from "./renderTeamList.js"
 
 export async function renderTeamSection(categoryId) {
     const teamSection = document.querySelector(".team-section")
@@ -16,9 +16,21 @@ export async function renderTeamSection(categoryId) {
 
     teamSection.innerHTML = ""
 
-    const teamSectionTitle = createTeamSectionTitle()
-    const teamFilter = createTeamFilter(categoryId)
-    const teamList = await createTeamList(categoryId)
 
-    teamSection.append(teamSectionTitle, teamList)
+    const teamSectionTitle = document.createElement("div")
+    teamSectionTitle.classList.add("team-section-title")
+    teamSectionTitle.textContent = "チーム一覧"
+    teamSection.append(teamSectionTitle)
+
+
+    const leagueSummaries = await getLeagueSummaries(categoryId)
+    const teamFilter = createTeamFilter(categoryId, leagueSummaries)
+    teamSection.append(teamFilter)
+
+
+    const teamList = document.createElement("div")
+    teamList.classList.add("team-list")
+    teamSection.append(teamList)
+
+    renderTeamList(categoryId)
 }
