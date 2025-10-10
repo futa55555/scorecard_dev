@@ -8,7 +8,7 @@ class PersonBase(BaseModel):
     person_id: int
     last_name: str
     first_name: str
-    middle_name: str
+    middle_name: str | None = None
     prefecture: models.PrefectureEnum
 
     model_config = ConfigDict(from_attributes=True)
@@ -16,7 +16,7 @@ class PersonBase(BaseModel):
 
 class PersonListItem(PersonBase):
     person_profiles: list[person_profile.PersonProfileListItem]
-    player_position: list[player_position.PlayerPositionListItem]
+    player_positions: list[player_position.PlayerPositionListItem]
 
     model_config = ConfigDict(from_attributes=True)
 

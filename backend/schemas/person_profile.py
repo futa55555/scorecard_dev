@@ -14,13 +14,13 @@ class PersonProfileBase(BaseModel):
     uniform_number: int
     role: models.RoleEnum
     since_date: date
-    until_date: date
+    until_date: date | None = None
 
     model_config = ConfigDict(from_attributes=True)
 
 
 class PersonProfileListItem(PersonProfileBase):
     team: "TeamBase"
-    created_by_user: user.UserBase
+    created_by_user: user.UserBase | None = None
 
     model_config = ConfigDict(from_attributes=True)
