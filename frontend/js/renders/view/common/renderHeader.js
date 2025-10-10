@@ -2,13 +2,13 @@
  * File: frontend/js/renders/common/renderHeader.js
  */
 
-import { createCategoryBar } from "../../components/common/createCategoryBar.js"
+import { createCategoryBar } from "../../../components/view/common/createCategoryBar.js"
 
-export async function renderHeader(currentCategoryId) {
-    const header = document.getElementById("header")
+export async function renderHeader(categoryId) {
+    const header = document.querySelector(".header")
 
     if (!header) {
-        console.error("Error: <header id='header'> not found.")
+        console.error("[renderHeader] Error: <header id='header'> not found")
         return
     }
 
@@ -26,6 +26,6 @@ export async function renderHeader(currentCategoryId) {
     header.append(title)
 
 
-    const bar = await createCategoryBar(currentCategoryId)
+    const bar = await createCategoryBar(categoryId)
     header.append(bar)
 }

@@ -13,3 +13,17 @@ for _, module_name, _ in pkgutil.walk_packages(__path__, prefix=f"{__name__}."):
         if inspect.isclass(obj) and issubclass(obj, BaseModel) and obj is not BaseModel:
             globals()[name] = obj
             __all__.append(name)
+
+
+from backend.schemas import league, team
+
+for cls in [
+    league.LeagueListItem,
+    league.LeagueListResponse,
+    league.LeagueDetail,
+    league.LeagueDetailResponse,
+    team.TeamBase,
+    team.TeamListItem,
+    team.TeamDetail,
+]:
+    cls.model_rebuild()

@@ -1,20 +1,19 @@
 /**
- * File: frontend/js/main/category/teams.js
+ * File: frontend/js/main/view/teamList.js
  */
 
-import { renderHeader } from "../../renders/common/renderHeader.js"
-import { renderNavbar } from "../../renders/common/renderNavbar.js"
-import { renderTeamList } from "../../renders/team/renderTeamList.js"
+import { renderHeader } from "../../renders/view/common/renderHeader.js"
+import { renderNavbar } from "../../renders/view/common/renderNavbar.js"
+import { renderTeamSection } from "../../renders/view/team/renderTeamSection.js"
 
 async function renderInitial() {
     const params = new URLSearchParams(window.location.search)
-    const currentCategoryId = Number(params.get("category"))
+    const categoryId = Number(params.get("category"))
 
-    await renderHeader(currentCategoryId)
-    renderNavbar(currentCategoryId)
+    await renderHeader(categoryId)
+    renderNavbar(categoryId)
 
-    const filters = { categoryId: currentCategoryId }
-    renderTeamList(filters)
+    renderTeamSection(categoryId)
 }
 
 async function init() {

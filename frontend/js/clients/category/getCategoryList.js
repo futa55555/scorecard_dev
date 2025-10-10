@@ -9,7 +9,7 @@ export async function getCategoryList() {
         const data = await apiFetch("/api/categories/summary/")
         return data
     } catch (err) {
-        console.error(`getCategoryList() failed: ${err.message}`)
+        console.error(`[getCategoryList] Error: ${err.message}`)
         throw err
     }
 }

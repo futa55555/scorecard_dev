@@ -2,8 +2,12 @@
  * File: frontend/js/renders/common/renderNavbar.js
  */
 
-export function renderNavbar(currentCategoryId) {
-    const navbar = document.getElementById("navbar")
+export function renderNavbar(categoryId) {
+    const navbar = document.querySelector(".navbar")
+
+    if (!navbar) {
+        console.error(`[renderNavbar] Error: <nav class="navbar"> not found`)
+    }
 
     const navList = [
         { text: "トップ", link: "index" },
@@ -13,15 +17,15 @@ export function renderNavbar(currentCategoryId) {
     ]
 
     const currentPath = window.location.pathname
-    const afterCategory = currentPath.split("/category/")[1]
+    const afterCategory = currentPath.split("/view/")[1]
     const currentPage = afterCategory.split(/[/.]/)[0]
 
     navList.forEach(nav => {
         const link = document.createElement("a")
         link.textContent = nav.text
 
-        if (currentCategoryId !== 0) {
-            link.href = `./${nav.link}.html?category=${currentCategoryId}`
+        if (categoryId !== 0) {
+            link.href = `./${nav.link}.html?category=${categoryId}`
         } else {
             link.href = `./${nav.link}.html`
         }

@@ -1,18 +1,22 @@
 /**
- * File: frontend/js/clients/team/getTeamList.js
+ * File: frontend/js/clients/tournament/getTournamentList.js
  */
 
 import { apiFetch } from "../base.js"
 import { buildQuery } from "../base.js"
 
-export async function getTeamList(filters = {}) {
+export async function getTournamentList(categoryId) {
     try {
+        const filters = {
+            category_id: categoryId
+        }
+
         const endpoint = buildQuery("/api/tournaments/", filters)
 
         const data = await apiFetch(endpoint)
         return data
     } catch (err) {
-        console.error(`getTeamList() failed: ${err.message}`)
+        console.error(`[getTournamentList] Error: ${err.message}`)
         throw err
     }
 }

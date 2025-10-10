@@ -1,15 +1,20 @@
 /**
- * File: frontend/js/clients/getLeagueSummary.js
+ * File: frontend/js/clients/league/getLeagueSummary.js
  */
 
 import { apiFetch } from "../base.js"
 
 export async function getLeagueSummary(categoryId) {
     try {
-        const data = await apiFetch("/api/leagues")
+        let endpoint = "/api/leagues/summary"
+
+        if (categoryId) {
+            endpoint += `?category=${categoryId}`
+        }
+        const data = await apiFetch(endpoint)
         return data
     } catch (err) {
-        console.error(`getLeagueSummary() failed: ${err.message}`)
+        console.error(`[getLeagueSummary] Error: ${err.message}`)
         throw err
     }
 }

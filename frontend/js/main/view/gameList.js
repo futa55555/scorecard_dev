@@ -7,10 +7,10 @@ import { renderNavbar } from "../../renders/common/renderNavbar.js"
 
 async function renderInitial() {
     const params = new URLSearchParams(window.location.search)
-    const currentCategoryId = Number(params.get("category"))
+    const categoryId = Number(params.get("category"))
 
-    await renderHeader(currentCategoryId)
-    renderNavbar(currentCategoryId)
+    await renderHeader(categoryId)
+    renderNavbar(categoryId)
 }
 
 async function init() {

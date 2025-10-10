@@ -46,3 +46,13 @@ export async function apiFetch(endpoint, options = {}) {
     console.log(`[${endpoint}] Success: ${json.message || "Request completed"}`);
     return json.data ?? json;
 }
+
+
+export function buildQuery(endpoint, filters = {}) {
+    const query = Object.entries(filters)
+        .filter(([_, value]) => value !== null && value !== undefined && value > 0)
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        .join("&")
+
+    return query ? `${endpoint}?${query}` : endpoint
+}
