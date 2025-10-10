@@ -21,7 +21,7 @@ class Person(Base):
     is_official = Column(Boolean, nullable=True)
 
     # 3. Foreign Keys
-    created_by_user_id = Column(Integer, ForeignKey("users.user_id", name="fk_created_by_user"), nullable=False)
+    created_by_user_id = Column(Integer, ForeignKey("users.user_id", name="fk_created_by_user"), nullable=True)
 
     # 4. Parent Relationship
     created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_people")

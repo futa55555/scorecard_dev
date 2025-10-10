@@ -8,7 +8,6 @@ import { renderTeamList } from "./renderTeamList.js"
 
 export async function renderTeamSection(categoryId) {
     const teamSection = document.querySelector(".team-section")
-
     if (!teamSection) {
         console.error(`[renderTeamSection] Error: <section class="team-section"> not found`)
     }

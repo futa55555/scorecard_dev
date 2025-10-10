@@ -29,7 +29,7 @@ class PersonProfile(Base):
     # 3. Foreign Keys
     person_id = Column(Integer, ForeignKey("people.person_id"), nullable=False)
     team_id = Column(Integer, ForeignKey("teams.team_id"), nullable=False)
-    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
+    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=True)
 
     # 4. Parent Relationship
     person = relationship("Person", foreign_keys=[person_id], back_populates="person_profiles")

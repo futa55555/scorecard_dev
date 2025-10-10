@@ -14,6 +14,9 @@ def get_person_list(
     """
     person_list = cruds.get_person_list(db, category_id, league_id)
 
+    # ✅ ここでPersonListItemを再構築（依存を含めて再解決）
+    schemas.PersonListItem.model_rebuild(force=True)
+
     adapter = TypeAdapter(list[schemas.PersonListItem])
     return adapter.validate_python(person_list)
 

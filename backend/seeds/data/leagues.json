@@ -3,5 +3,25 @@
         "league_id": 1,
         "name": "東京都大学ソフトボール連盟",
         "chief_admin_user_id": null
+    },
+    {
+        "league_id": 2,
+        "name": "関西学生ソフトボール連盟",
+        "chief_admin_user_id": null
+    },
+    {
+        "league_id": 3,
+        "name": "JDリーグ",
+        "chief_admin_user_id": null
+    },
+    {
+        "league_id": 4,
+        "name": "JSリーグ",
+        "chief_admin_user_id": null
+    },
+    {
+        "league_id": 5,
+        "name": "日本リーグ",
+        "chief_admin_user_id": null
     }
 ]

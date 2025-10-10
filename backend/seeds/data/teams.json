@@ -1,10 +1,1002 @@
 [
 	{
 		"team_id": 1,
-		"name": "test_team_1",
-		"short_name": "tt1",
+		"name": "東京大学ソフトボール部",
+		"short_name": "東大",
 		"prefecture": "Tokyo",
 		"chief_admin_user_id": null,
 		"league_id": 1
+	},
+	{
+		"team_id": 2,
+		"name": "立教大学ソフトボール部",
+		"short_name": "立教",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 3,
+		"name": "帝京大学ソフトボール部",
+		"short_name": "帝京",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 4,
+		"name": "東京女子体育大学ソフトボール部",
+		"short_name": "東女体",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 5,
+		"name": "日本女子体育大学ソフトボール部",
+		"short_name": "日女体",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 6,
+		"name": "東京富士大学ソフトボール部",
+		"short_name": "富士大",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 7,
+		"name": "実践女子大学ソフトボール部",
+		"short_name": "実践女",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 8,
+		"name": "日本体育大学男子ソフトボール部",
+		"short_name": "日体大",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 9,
+		"name": "日本体育大学女子ソフトボール部",
+		"short_name": "日体大",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 10,
+		"name": "国士舘大学男子ソフトボール部",
+		"short_name": "国士舘",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 11,
+		"name": "国士舘大学女子ソフトボール部",
+		"short_name": "国士舘",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 12,
+		"name": "中央大学男子ソフトボール部",
+		"short_name": "中央",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 13,
+		"name": "中央大学女子ソフトボール部",
+		"short_name": "中央",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 14,
+		"name": "早稲田大学男子ソフトボール部",
+		"short_name": "早稲田",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 15,
+		"name": "早稲田大学女子ソフトボール部",
+		"short_name": "早稲田",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 16,
+		"name": "慶應義塾大学男子ソフトボール部",
+		"short_name": "慶應",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 17,
+		"name": "慶應義塾大学女子ソフトボール部",
+		"short_name": "慶應",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 18,
+		"name": "日本大学男子ソフトボール部",
+		"short_name": "日大",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 19,
+		"name": "日本大学女子ソフトボール部",
+		"short_name": "日大",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 20,
+		"name": "明治大学男子ソフトボール部",
+		"short_name": "明治",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 21,
+		"name": "明治大学女子ソフトボール部",
+		"short_name": "明治",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 22,
+		"name": "桜美林大学男子ソフトボール部",
+		"short_name": "桜美林",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 23,
+		"name": "桜美林大学女子ソフトボール部",
+		"short_name": "桜美林",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 24,
+		"name": "東京学芸大学男子ソフトボール部",
+		"short_name": "学芸大",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 25,
+		"name": "東京学芸大学女子ソフトボール部",
+		"short_name": "学芸大",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 26,
+		"name": "成蹊大学男子ソフトボール部",
+		"short_name": "成蹊",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 27,
+		"name": "成蹊大学女子ソフトボール部",
+		"short_name": "成蹊",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 28,
+		"name": "学習院大学男子ソフトボール部",
+		"short_name": "学習院",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 29,
+		"name": "学習院大学女子ソフトボール部",
+		"short_name": "学習院",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 30,
+		"name": "東洋大学男子ソフトボール部",
+		"short_name": "東洋",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 31,
+		"name": "東洋大学女子ソフトボール部",
+		"short_name": "東洋",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 1
+	},
+	{
+		"team_id": 32,
+		"name": "大阪青山大学ソフトボール部",
+		"short_name": "青山",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 33,
+		"name": "大阪大谷大学ソフトボール部",
+		"short_name": "大谷",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 34,
+		"name": "大阪経済大学男子ソフトボール部",
+		"short_name": "阪経",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 35,
+		"name": "大阪経済大学女子ソフトボール部",
+		"short_name": "阪経",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 36,
+		"name": "大阪経済法科大学ソフトボール部",
+		"short_name": "経法",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 37,
+		"name": "大阪工業大学ソフトボール部",
+		"short_name": "阪工",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 38,
+		"name": "大阪公立大学男子ソフトボール部",
+		"short_name": "公立",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 39,
+		"name": "大阪公立大学女子ソフトボール部",
+		"short_name": "公立",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 40,
+		"name": "大阪国際大学ソフトボール部",
+		"short_name": "阪国",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 41,
+		"name": "大阪産業大学ソフトボール部",
+		"short_name": "産大",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 42,
+		"name": "大阪体育大学ソフトボール部",
+		"short_name": "体大",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 43,
+		"name": "大阪大学ソフトボール部",
+		"short_name": "阪大",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 44,
+		"name": "関西学院大学ソフトボール部",
+		"short_name": "関学",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 45,
+		"name": "関西大学男子ソフトボール部",
+		"short_name": "関大",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 46,
+		"name": "関西大学女子ソフトボール部",
+		"short_name": "関大",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 47,
+		"name": "京都大学ソフトボール部",
+		"short_name": "京大",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 48,
+		"name": "京都産業大学男子ソフトボール部",
+		"short_name": "京産",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 49,
+		"name": "京都産業大学女子ソフトボール部",
+		"short_name": "京産",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 50,
+		"name": "京都女子大学ソフトボール部",
+		"short_name": "京女",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 51,
+		"name": "京都先端科学大学男子ソフトボール部",
+		"short_name": "京先",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 52,
+		"name": "京都先端科学大学女子ソフトボール部",
+		"short_name": "京先",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 53,
+		"name": "神戸親和女子大学ソフトボール部",
+		"short_name": "親和",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 54,
+		"name": "四天王寺大学男子ソフトボール部",
+		"short_name": "四天",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 55,
+		"name": "四天王寺大学女子ソフトボール部",
+		"short_name": "四天",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 56,
+		"name": "園田学園女子大学ソフトボール部",
+		"short_name": "園田",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 57,
+		"name": "太成学院大学ソフトボール部",
+		"short_name": "太成",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 58,
+		"name": "天理大学ソフトボール部",
+		"short_name": "天理",
+		"prefecture": "Nara",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 59,
+		"name": "同志社大学男子ソフトボール部",
+		"short_name": "同志",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 60,
+		"name": "同志社大学女子ソフトボール部",
+		"short_name": "同志",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 61,
+		"name": "奈良学園大学ソフトボール部",
+		"short_name": "奈学",
+		"prefecture": "Nara",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 62,
+		"name": "羽衣国際大学ソフトボール部",
+		"short_name": "羽衣",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 63,
+		"name": "兵庫教育大学男子ソフトボール部",
+		"short_name": "兵教",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 64,
+		"name": "兵庫教育大学女子ソフトボール部",
+		"short_name": "兵教",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 65,
+		"name": "兵庫県立大学ソフトボール部",
+		"short_name": "県立",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 66,
+		"name": "びわこ成蹊スポーツ大学ソフトボール部",
+		"short_name": "びわ成",
+		"prefecture": "Shiga",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 67,
+		"name": "佛教大学男子ソフトボール部",
+		"short_name": "佛教",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 68,
+		"name": "佛教大学女子ソフトボール部",
+		"short_name": "佛教",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 69,
+		"name": "武庫川女子大学ソフトボール部",
+		"short_name": "武庫",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 70,
+		"name": "立命館大学男子ソフトボール部",
+		"short_name": "立命",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 71,
+		"name": "立命館大学女子ソフトボール部",
+		"short_name": "立命",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 72,
+		"name": "龍谷大学男子ソフトボール部",
+		"short_name": "龍谷",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 73,
+		"name": "龍谷大学女子ソフトボール部",
+		"short_name": "龍谷",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 74,
+		"name": "近畿大学生物理工学部ソフトボール部",
+		"short_name": "近大",
+		"prefecture": "Wakayama",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 75,
+		"name": "甲南大学ソフトボール部",
+		"short_name": "甲南",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 76,
+		"name": "神戸学院大学ソフトボール部",
+		"short_name": "神院",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 77,
+		"name": "神戸大学ソフトボール部",
+		"short_name": "神大",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 78,
+		"name": "摂南大学ソフトボール部",
+		"short_name": "摂南",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 79,
+		"name": "和歌山大学ソフトボール部",
+		"short_name": "和大",
+		"prefecture": "Wakayama",
+		"chief_admin_user_id": null,
+		"league_id": 2
+	},
+	{
+		"team_id": 80,
+		"name": "トヨタ レッドテリアーズ",
+		"short_name": "トヨタ",
+		"prefecture": "Aichi",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 81,
+		"name": "豊田自動織機 シャイニングべガ",
+		"short_name": "豊田織機",
+		"prefecture": "Aichi",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 82,
+		"name": "東海理化 チェリーブロッサムズ",
+		"short_name": "東海理化",
+		"prefecture": "Aichi",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 83,
+		"name": "日本精工 ブレイブベアリーズ",
+		"short_name": "日本精工",
+		"prefecture": "Shiga",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 84,
+		"name": "SGホールディングス ギャラクシースターズ",
+		"short_name": "SGHD",
+		"prefecture": "Kyoto",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 85,
+		"name": "SHIONOGI レインボーストークス",
+		"short_name": "塩野義",
+		"prefecture": "Hyogo",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 86,
+		"name": "伊予銀行 ヴェールズ",
+		"short_name": "伊予銀",
+		"prefecture": "Ehime",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 87,
+		"name": "タカギ北九州 ウォーターウェーブ",
+		"short_name": "タカギ",
+		"prefecture": "Fukuoka",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 88,
+		"name": "ホンダ リヴェルタ",
+		"short_name": "ホンダ",
+		"prefecture": "Tochigi",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 89,
+		"name": "ビックカメラ高崎 ビークイーン",
+		"short_name": "ビック",
+		"prefecture": "Gunma",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 90,
+		"name": "太陽誘電 ソルフィーユ",
+		"short_name": "太陽誘電",
+		"prefecture": "Gunma",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 91,
+		"name": "戸田中央 メディックス埼玉",
+		"short_name": "戸田中",
+		"prefecture": "Saitama",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 92,
+		"name": "日立 サンディーバ",
+		"short_name": "日立",
+		"prefecture": "Kanagawa",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 93,
+		"name": "大垣ミナモ",
+		"short_name": "ミナモ",
+		"prefecture": "Gifu",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 94,
+		"name": "NECプラットフォームズ レッドファルコンズ",
+		"short_name": "NEC",
+		"prefecture": "Shizuoka",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 95,
+		"name": "デンソー ブライトペガサス",
+		"short_name": "デンソー",
+		"prefecture": "Aichi",
+		"chief_admin_user_id": null,
+		"league_id": 3
+	},
+	{
+		"team_id": 96,
+		"name": "MORI ALL WAVE KANOYA",
+		"short_name": "KANOYA",
+		"prefecture": "Kagoshima",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 97,
+		"name": "大和電機 Blue Lakers",
+		"short_name": "大和電機",
+		"prefecture": "Nara",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 98,
+		"name": "Citrine Ichinomiya",
+		"short_name": "Citrine",
+		"prefecture": "Aichi",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 99,
+		"name": "花王コスメ小田原 Phoenix",
+		"short_name": "花王",
+		"prefecture": "Kanagawa",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 100,
+		"name": "靜甲",
+		"short_name": "靜甲",
+		"prefecture": "Shizuoka",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 101,
+		"name": "ルネス紅葉 スポーツ柔整専門学校",
+		"short_name": "ルネス",
+		"prefecture": "Shiga",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 102,
+		"name": "VONDS市原 Emerald Green",
+		"short_name": "VONDS",
+		"prefecture": "Chiba",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 103,
+		"name": "厚木SC",
+		"short_name": "厚木SC",
+		"prefecture": "Kanagawa",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 104,
+		"name": "YKK",
+		"short_name": "YKK",
+		"prefecture": "Toyama",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 105,
+		"name": "平林金属 Peachblossoms",
+		"short_name": "平林金属",
+		"prefecture": "Okayama",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 106,
+		"name": "小泉病院 Blue Arrows",
+		"short_name": "小泉病院",
+		"prefecture": "Nagano",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 107,
+		"name": "ペヤング",
+		"short_name": "ペヤング",
+		"prefecture": "Gunma",
+		"chief_admin_user_id": null,
+		"league_id": 4
+	},
+	{
+		"team_id": 108,
+		"name": "SAGAダイワアクト",
+		"short_name": "SAGA",
+		"prefecture": "Saga",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 109,
+		"name": "Honda",
+		"short_name": "Honda",
+		"prefecture": "Tochigi",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 110,
+		"name": "トヨタ",
+		"short_name": "トヨタ",
+		"prefecture": "Aichi",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 111,
+		"name": "平林金属",
+		"short_name": "平林金属",
+		"prefecture": "Okayama",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 112,
+		"name": "日本エコシステム",
+		"short_name": "日本エコ",
+		"prefecture": "Tokyo",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 113,
+		"name": "デンソー",
+		"short_name": "デンソー",
+		"prefecture": "Aichi",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 114,
+		"name": "ジェイテクト",
+		"short_name": "JTEKT",
+		"prefecture": "Aichi",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 115,
+		"name": "旭化成",
+		"short_name": "旭化成",
+		"prefecture": "Miyazaki",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 116,
+		"name": "三重ヴェルデウィン",
+		"short_name": "三重V",
+		"prefecture": "Mie",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 117,
+		"name": "高知パシフィックウェーブ",
+		"short_name": "高知",
+		"prefecture": "Kochi",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 118,
+		"name": "埼玉県庁クラブ",
+		"short_name": "埼玉",
+		"prefecture": "Saitama",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 119,
+		"name": "大阪桃次郎",
+		"short_name": "桃次郎",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 120,
+		"name": "豊田自動織機",
+		"short_name": "豊田織機",
+		"prefecture": "Aichi",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 121,
+		"name": "大阪・堺グローバル",
+		"short_name": "堺",
+		"prefecture": "Osaka",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 122,
+		"name": "山口水産",
+		"short_name": "山口",
+		"prefecture": "Yamaguchi",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 123,
+		"name": "愛媛ウエスト",
+		"short_name": "愛媛W",
+		"prefecture": "Ehime",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 124,
+		"name": "熊本嶋田クラブ",
+		"short_name": "熊本",
+		"prefecture": "Kumamoto",
+		"chief_admin_user_id": null,
+		"league_id": 5
+	},
+	{
+		"team_id": 125,
+		"name": "安川電機",
+		"short_name": "安川",
+		"prefecture": "Fukuoka",
+		"chief_admin_user_id": null,
+		"league_id": 5
 	}
 ]

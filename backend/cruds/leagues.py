@@ -29,21 +29,45 @@ def get_league_list(
 ) -> list[models.League]:
     """
     リーグ一覧を取得
+    category_id が指定されている場合は、そのカテゴリに属するチームを持つリーグのみ返す
+    また、各リーグに含まれる teams も指定カテゴリ所属のものに限定する
     """
-    query = (
-        db.query(models.League)
-        .options(
+    query = db.query(models.League)
+
+    # ===== category_id が指定されている場合 =====
+    if category_id is not None:
+        query = (
+            query
+            .filter(
+                models.League.teams.any(
+                    models.Team.categories.any(models.Category.category_id == category_id)
+                )
+            )
+            .options(
+                joinedload(models.League.categories),
+                joinedload(models.League.teams)
+                .joinedload(models.Team.categories)
+            )
+            .distinct()
+        )
+    # ===== category_id が None の場合 =====
+    else:
+        query = query.options(
             joinedload(models.League.categories),
             joinedload(models.League.teams)
-        )
-    )
-
-    if category_id is not None:
-        query = query.filter(
-            models.League.categories.any(models.Category.category_id == category_id)
+            .joinedload(models.Team.categories)
         )
 
     league_list = query.all()
+
+    # 各リーグ内の teams を category_id に応じて絞る
+    if category_id is not None:
+        for league in league_list:
+            league.teams = [
+                team for team in league.teams
+                if any(cat.category_id == category_id for cat in team.categories)
+            ]
+
     return league_list
 
 

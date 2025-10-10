@@ -1,1 +1,30 @@
-[]
+[
+    {
+        "category_id": 1,
+        "league_id": 1
+    },
+    {
+        "category_id": 1,
+        "league_id": 2
+    },
+    {
+        "category_id": 2,
+        "league_id": 1
+    },
+    {
+        "category_id": 2,
+        "league_id": 2
+    },
+    {
+        "category_id": 3,
+        "league_id": 3
+    },
+    {
+        "category_id": 3,
+        "league_id": 4
+    },
+    {
+        "category_id": 4,
+        "league_id": 5
+    }
+]
