@@ -16,7 +16,6 @@ init_data(db)
 db.close()
 
 app = FastAPI()
-app.include_router(routers)
 
 # CORS 設定 ← ここ追加
 app.add_middleware(
@@ -33,6 +32,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(routers)
 
 # 静的ファイル
 # app.mount("/static", StaticFiles(directory="frontend/public"), name="static")
