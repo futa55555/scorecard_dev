@@ -13,7 +13,7 @@ export function createTeamItem(teamData) {
 
     nameLink.textContent = teamData.name
 
-    nameLink.href = `/pages/teams?team=${teamData.team_id}`
+    nameLink.href = `/pages/view/team_detail.html?team=${teamData.team_id}`
 
     teamName.append(nameLink)
     team.append(teamName)
@@ -24,7 +24,7 @@ export function createTeamItem(teamData) {
 
     leagueLink.textContent = teamData.league_id
 
-    leagueLink.href = `/pages/leagues?team=${teamData.league_id}`
+    leagueLink.href = `/pages/view/laegue_detail.html?league_id=${teamData.league_id}`
 
     teamLeague.append(leagueLink)
     team.append(teamLeague)

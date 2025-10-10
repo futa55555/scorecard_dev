@@ -7,7 +7,7 @@ import { buildQuery } from "../base.js"
 
 export async function getTeamList(filters = {}) {
     try {
-        const endpoint = buildQuery("/api/tournaments/", filters)
+        const endpoint = buildQuery("/api/teams/", filters)
 
         const data = await apiFetch(endpoint)
         return data

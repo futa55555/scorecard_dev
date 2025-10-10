@@ -2,7 +2,7 @@
  * File: frontend/js/renders/common/renderTournamentSection.js
  */
 
-import { createTournamentTitle } from "../../../components/view/tournament/createTournamentTitle.js"
+import { createTournamentSectionTitle } from "../../../components/view/tournament/createTournamentSectionTitle.js"
 import { createTournamentList } from "../../../components/view/tournament/createTournamentList.js"
 
 export async function renderTournamentSection(categoryId) {
@@ -14,8 +14,8 @@ export async function renderTournamentSection(categoryId) {
 
     tournamentSection.innerHTML = ""
 
-    const tournamentTitle = createTournamentTitle()
+    const tournamentSectionTitle = createTournamentSectionTitle()
     const tournamentList = await createTournamentList(categoryId)
 
-    tournamentSection.append(tournamentTitle, tournamentList)
+    tournamentSection.append(tournamentSectionTitle, tournamentList)
 }
