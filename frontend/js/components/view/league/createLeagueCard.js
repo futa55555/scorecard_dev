@@ -2,17 +2,30 @@
  * File: frontend/js/components/view/league/createLeagueCard.js
  */
 
+import { createToggleButton } from "../common/createToggleButton.js"
+
 export function createLeagueCard(league) {
     const leagueCard = document.createElement("div")
     leagueCard.classList.add("league-card")
 
+
+    const leagueHeader = document.createElement("div")
+    leagueHeader.classList.add("league-header")
+
     const leagueName = document.createElement("div")
     leagueName.classList.add("league-card__name")
     leagueName.textContent = league.name
-    leagueCard.append(leagueName)
+    leagueHeader.append(leagueName)
+
+    const leagueToggleButton = createToggleButton("league")
+    leagueHeader.append(leagueToggleButton)
+
+    leagueCard.append(leagueHeader)
+
 
     const leagueTeamList = document.createElement("div")
-    leagueTeamList.classList.add("league-card__team-list")
+    leagueTeamList.classList.add("list", "league-card__team-list")
+    leagueTeamList.style.display = "none"
 
     league.teams.forEach(team => {
         const leagueTeamCard = document.createElement("div")

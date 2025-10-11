@@ -9,6 +9,9 @@ export function createPersonFilter(categoryId, leagueSummaries) {
     personFilter.classList.add("person-filter")
 
 
+    personFilter.dataset.categoryId = categoryId
+
+
     const leagueSet = document.createElement("div")
     leagueSet.classList.add("league-set")
 

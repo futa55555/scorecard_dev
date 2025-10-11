@@ -4,6 +4,7 @@
 
 import { getLeagueList } from "../../../clients/league/getLeagueList.js"
 import { createLeagueCard } from "../../../components/view/league/createLeagueCard.js"
+import { bindListToggle } from "../../../events/view/common/bindListToggle.js"
 
 export async function renderLeagueList(categoryId) {
     const leagueList = document.querySelector(".league-list")
@@ -19,6 +20,7 @@ export async function renderLeagueList(categoryId) {
 
     leagueData.forEach(league => {
         const leagueCard = createLeagueCard(league)
+        bindListToggle(leagueCard)
         leagueList.append(leagueCard)
     })
 }

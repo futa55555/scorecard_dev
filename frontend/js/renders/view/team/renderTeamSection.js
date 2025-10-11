@@ -4,6 +4,7 @@
 
 import { getLeagueSummaries } from "../../../clients/league/getLeagueSummaries.js"
 import { createTeamFilter } from "../../../components/view/team/createTeamFilter.js"
+import { bindTeamFilter } from "../../../events/view/team/bindTeamFilter.js"
 import { renderTeamList } from "./renderTeamList.js"
 
 export async function renderTeamSection(categoryId) {
@@ -26,10 +27,12 @@ export async function renderTeamSection(categoryId) {
     const teamFilter = createTeamFilter(categoryId, leagueSummaries)
     teamSection.append(teamFilter)
 
+    bindTeamFilter(teamFilter)
+
 
     const teamList = document.createElement("div")
     teamList.classList.add("team-list")
     teamSection.append(teamList)
 
-    renderTeamList(categoryId)
+    renderTeamList(categoryId, 0)
 }

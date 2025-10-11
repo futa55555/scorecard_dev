@@ -10,6 +10,9 @@ export function createTeamFilter(categoryId, leagueSummaries) {
     teamFilter.classList.add("team-filter")
 
 
+    teamFilter.dataset.categoryId = categoryId
+
+
     const leagueSet = document.createElement("div")
     leagueSet.classList.add("league-set")
 

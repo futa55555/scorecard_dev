@@ -12,6 +12,7 @@ export async function getTeamList(categoryId, leagueId) {
         }
         const endpoint = buildQuery("/api/teams/", filters)
         const data = await apiFetch(endpoint)
+
         return data
     } catch (err) {
         console.error(`getTeamList() failed: ${err.message}`)

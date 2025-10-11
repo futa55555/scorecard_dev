@@ -4,6 +4,7 @@
 
 import { getLeagueSummaries } from "../../../clients/league/getLeagueSummaries.js"
 import { createPersonFilter } from "../../../components/view/person/createPersonFilter.js"
+import { bindPersonFilter } from "../../../events/view/person/bindPersonFilter.js"
 import { renderPersonList } from "./renderPersonList.js"
 
 export async function renderPersonSection(categoryId) {
@@ -26,10 +27,12 @@ export async function renderPersonSection(categoryId) {
     const personFilter = createPersonFilter(categoryId, leagueSummaries)
     personSection.append(personFilter)
 
+    bindPersonFilter(personFilter)
+
 
     const personList = document.createElement("div")
     personList.classList.add("person-list")
     personSection.append(personList)
 
-    renderPersonList(categoryId)
+    renderPersonList(categoryId, 0)
 }

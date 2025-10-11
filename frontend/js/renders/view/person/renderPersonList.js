@@ -15,6 +15,9 @@ export async function renderPersonList(categoryId, leagueId) {
     personList.innerHTML = ""
 
 
+    console.log(categoryId, leagueId)
+
+
     const personListData = await getPersonList(categoryId, leagueId)
 
     personListData.forEach(personData => {

@@ -1,5 +1,5 @@
 /**
- * File: frontend/js/components/common/createCategoryBar.js
+ * File: frontend/js/components/category/createCategoryBar.js
  */
 
 export async function createCategoryBar(categoryList) {

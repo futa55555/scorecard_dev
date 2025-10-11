@@ -24,5 +24,5 @@ export async function renderLeagueSection(categoryId) {
     leagueList.classList.add("league-list")
     leagueSection.append(leagueList)
 
-    renderLeagueList(categoryId)
+    await renderLeagueList(categoryId)
 }

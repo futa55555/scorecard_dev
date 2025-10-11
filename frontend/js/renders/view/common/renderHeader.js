@@ -3,7 +3,7 @@
  */
 
 import { getCategorySummaries } from "../../../clients/category/getCategorySummaries.js"
-import { createCategoryBar } from "../../../components/view/common/createCategoryBar.js"
+import { createCategoryBar } from "../../../components/view/category/createCategoryBar.js"
 
 export async function renderHeader(categoryId) {
     const header = document.querySelector(".header")
