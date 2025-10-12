@@ -1,11 +1,8 @@
 # backend/models/game.py
 
-from sqlalchemy import Column, ForeignKey, Integer, String, Enum, or_
-from sqlalchemy.orm import relationship, object_session
+from sqlalchemy import Column, ForeignKey, Integer, String, Enum
+from sqlalchemy.orm import relationship
 from backend.database import Base
-from .person import Person
-from .person_profile import PersonProfile
-from .game import Game
 from .associations import (
     favorite_teams_table,
     teams_admin_users_table,

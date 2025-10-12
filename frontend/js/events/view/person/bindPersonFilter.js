@@ -2,7 +2,7 @@
  * File: frontend/js/events/view/person/bindPersonFilter.js
  */
 
-import { renderPersonList } from "../../../renders/view/person/renderPersonList.js"
+import { filterPage } from "../common/filterPage.js"
 
 export async function bindPersonFilter(personFilter) {
     const leagueSelector = personFilter.querySelector(".league-selector")
@@ -12,6 +12,12 @@ export async function bindPersonFilter(personFilter) {
         const categoryId = Number(personFilter.dataset.categoryId)
         const leagueId = Number(leagueSelector.value)
 
-        renderPersonList(categoryId, leagueId)
+        const queryParams = [
+            { type: "category", value: categoryId },
+            { type: "league", value: leagueId },
+            { type: "page", value: 1 }
+        ]
+
+        filterPage(queryParams)
     })
 }

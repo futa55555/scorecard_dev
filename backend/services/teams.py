@@ -2,7 +2,7 @@
 
 from sqlalchemy.orm import Session
 from pydantic import TypeAdapter
-from backend import models, schemas, cruds
+from backend import schemas, cruds
 
 def get_team_list(
     db: Session,
@@ -16,6 +16,28 @@ def get_team_list(
 
     adapter = TypeAdapter(list[schemas.TeamListItem])
     return adapter.validate_python(team_list)
+
+
+def get_team_list_with_page(
+    db: Session,
+    current_page: int,
+    limit: int,
+    category_id: int | None = None,
+    league_id: int | None = None
+) -> schemas.TeamListWithPage:
+    """
+    ページ付きのチーム一覧を取得
+    """
+    team_list, team_total_count = cruds.get_team_list_with_page(db, current_page, limit, category_id, league_id)
+
+    adapter = TypeAdapter(list[schemas.TeamListItem])
+    teams = adapter.validate_python(team_list)
+
+    return schemas.TeamListWithPage(
+        teams=teams,
+        current_page=current_page,
+        total_page=(team_total_count // limit + 1)
+    )
 
 
 def get_team_detail(

@@ -21,19 +21,27 @@ export function renderNavbar(categoryId) {
     const currentPage = afterCategory.split(/[/.]/)[0]
 
     navList.forEach(nav => {
-        const link = document.createElement("a")
-        link.textContent = nav.text
+        const a = document.createElement("a")
+        a.textContent = nav.text
 
-        if (categoryId !== 0) {
-            link.href = `./${nav.link}.html?category=${categoryId}`
-        } else {
-            link.href = `./${nav.link}.html`
-        }
+        // ===== 共通URL構築 =====
+        const params = new URLSearchParams()
 
-        if (currentPage === nav.link) {
-            link.classList.add("active")
-        }
+        // category があれば
+        if (categoryId) params.set("category", categoryId)
 
-        navbar.append(link)
+        // index 以外なら page=1 を付与
+        if (nav.link !== "index") params.set("page", 1)
+
+        // クエリが存在すれば ? を付けて結合
+        const queryString = params.toString() ? `?${params.toString()}` : ""
+
+        // 絶対パス構築
+        a.href = `./${nav.link}.html${queryString}`
+
+        // 現在ページをハイライト
+        if (currentPage === nav.link) a.classList.add("active")
+
+        navbar.append(a)
     })
 }

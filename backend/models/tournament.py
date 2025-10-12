@@ -24,7 +24,7 @@ class Tournament(Base):
     is_official = Column(Boolean, nullable=False)
 
     # 3. Foreign Keys
-    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
+    created_by_user_id = Column(Integer, ForeignKey("users.user_id"), nullable=True)
 
     # 4. Parent Relationship
     created_by_user = relationship("User", foreign_keys=[created_by_user_id], back_populates="created_tournaments")

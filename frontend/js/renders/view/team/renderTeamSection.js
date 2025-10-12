@@ -24,7 +24,7 @@ export async function renderTeamSection(categoryId) {
 
 
     const leagueSummaries = await getLeagueSummaries(categoryId)
-    const teamFilter = createTeamFilter(categoryId, leagueSummaries)
+    const teamFilter = createTeamFilter(leagueSummaries)
     teamSection.append(teamFilter)
 
     bindTeamFilter(teamFilter)
@@ -34,5 +34,5 @@ export async function renderTeamSection(categoryId) {
     teamList.classList.add("team-list")
     teamSection.append(teamList)
 
-    renderTeamList(categoryId, 0)
+    renderTeamList()
 }

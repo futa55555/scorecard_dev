@@ -3,9 +3,13 @@
  */
 
 import { createFilterButton } from "../../../components/view/common/createFilterButton.js"
-// import { bintTeamFilter } from "../../../events/team/bindTeamFilter.js"
 
-export function createTeamFilter(categoryId, leagueSummaries) {
+export function createTeamFilter(leagueSummaries) {
+    const params = new URLSearchParams(window.location.search)
+    const categoryId = Number(params.get("category"))
+    const leagueId = Number(params.get("league"))
+
+
     const teamFilter = document.createElement("div")
     teamFilter.classList.add("team-filter")
 
@@ -30,6 +34,9 @@ export function createTeamFilter(categoryId, leagueSummaries) {
     leagueOptionAll.classList.add("option")
     leagueOptionAll.value = 0
     leagueOptionAll.textContent = "すべてのリーグ"
+    if (leagueId === 0) {
+        leagueOptionAll.selected = true
+    }
 
     leagueSelector.append(leagueOptionAll)
 
@@ -38,6 +45,9 @@ export function createTeamFilter(categoryId, leagueSummaries) {
         leagueOption.classList.add("league-option")
         leagueOption.value = leagueSummary.league_id
         leagueOption.textContent = leagueSummary.name
+        if (leagueId === leagueSummary.league_id) {
+            leagueOption.selected = true
+        }
         leagueSelector.append(leagueOption)
     })
 

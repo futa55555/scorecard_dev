@@ -9,19 +9,21 @@ router = APIRouter(prefix="/api/people", tags=["people"])
 
 @router.get(
     "/",
-    response_model=schemas.PersonListResponse,
+    response_model=schemas.PersonListWithPageResponse,
     summary="メンバー一覧を取得"
 )
 def get_person_list(
     db: Session = Depends(get_db),
+    current_page: int = Query(1, description="Current page number."),
+    limit: int = Query(30, description="Max number of team per page."),
     category_id: int | None = Query(None, description="Filter people by category ID."),
     league_id: int | None = Query(None, description="Filter people by league ID.")
-) -> schemas.PersonListResponse:
-    person_list = services.get_person_list(db, category_id, league_id)
+) -> schemas.PersonListWithPageResponse:
+    person_list_with_page = services.get_person_list_with_page(db, current_page, limit, category_id, league_id)
 
     return utils.get_response(
-        data=person_list,
-        target="person list"
+        data=person_list_with_page,
+        target="person list with page"
     )
 
 

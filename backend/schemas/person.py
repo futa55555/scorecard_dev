@@ -25,6 +25,16 @@ class PersonListResponse(common.CommonResponse[list[PersonListItem]]):
     pass
 
 
+class PersonListWithPage(BaseModel):
+    people: list[PersonListItem]
+    current_page: int
+    total_page: int
+
+
+class PersonListWithPageResponse(common.CommonResponse[PersonListWithPage]):
+    pass
+
+
 class PersonDetail(PersonBase):
     created_by_user: user.UserBase
     person_profiles: list[person_profile.PersonProfileListItem]

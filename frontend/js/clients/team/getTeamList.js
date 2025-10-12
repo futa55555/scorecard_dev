@@ -4,9 +4,11 @@
 
 import { apiFetch, buildQuery } from "../base.js"
 
-export async function getTeamList(categoryId, leagueId) {
+export async function getTeamList(currentPage, limit, categoryId, leagueId) {
     try {
         const filters = {
+            current_page: currentPage,
+            limit: limit,
             category_id: categoryId,
             league_id: leagueId
         }

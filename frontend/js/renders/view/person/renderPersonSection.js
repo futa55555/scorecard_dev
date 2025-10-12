@@ -24,7 +24,7 @@ export async function renderPersonSection(categoryId) {
 
 
     const leagueSummaries = await getLeagueSummaries(categoryId)
-    const personFilter = createPersonFilter(categoryId, leagueSummaries)
+    const personFilter = createPersonFilter(leagueSummaries)
     personSection.append(personFilter)
 
     bindPersonFilter(personFilter)
@@ -34,5 +34,5 @@ export async function renderPersonSection(categoryId) {
     personList.classList.add("person-list")
     personSection.append(personList)
 
-    renderPersonList(categoryId, 0)
+    renderPersonList()
 }

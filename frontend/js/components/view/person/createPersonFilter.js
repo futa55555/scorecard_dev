@@ -4,7 +4,12 @@
 
 import { createFilterButton } from "../common/createFilterButton.js"
 
-export function createPersonFilter(categoryId, leagueSummaries) {
+export function createPersonFilter(leagueSummaries) {
+    const params = new URLSearchParams(window.location.search)
+    const categoryId = Number(params.get("category"))
+    const leagueId = Number(params.get("league"))
+
+
     const personFilter = document.createElement("div")
     personFilter.classList.add("person-filter")
 
@@ -29,6 +34,9 @@ export function createPersonFilter(categoryId, leagueSummaries) {
     leagueOptionAll.classList.add("option")
     leagueOptionAll.value = 0
     leagueOptionAll.textContent = "すべてのリーグ"
+    if (leagueId === 0) {
+        leagueOptionAll.selected = true
+    }
 
     leagueSelector.append(leagueOptionAll)
 
@@ -37,6 +45,9 @@ export function createPersonFilter(categoryId, leagueSummaries) {
         leagueOption.classList.add("league-option")
         leagueOption.value = leagueSummary.league_id
         leagueOption.textContent = leagueSummary.name
+        if (leagueId === leagueSummary.league_id) {
+            leagueOption.selected = true
+        }
         leagueSelector.append(leagueOption)
     })
 

@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "league_id": 1,
+        "tournament_id": 1
+    },
+    {
+        "league_id": 1,
+        "tournament_id": 2
+    },
+    {
+        "league_id": 2,
+        "tournament_id": 3
+    },
+    {
+        "league_id": 2,
+        "tournament_id": 4
+    }
+]

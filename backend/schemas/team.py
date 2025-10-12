@@ -28,6 +28,16 @@ class TeamListResponse(common.CommonResponse[list[TeamListItem]]):
     pass
 
 
+class TeamListWithPage(BaseModel):
+    teams: list[TeamListItem]
+    current_page: int
+    total_page: int
+
+
+class TeamListWithPageResponse(common.CommonResponse[TeamListWithPage]):
+    pass
+
+
 class TeamDetail(TeamBase):
     chief_admin_user: user.UserBase
     league: league.LeagueBase
