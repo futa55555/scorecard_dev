@@ -1,4 +1,4 @@
-<!-- frontend/pages/category/game_detail.html -->
+<!-- frontend/pages/view/game_detail.html -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -8,18 +8,20 @@
     <title>ソフナビ</title>
     <link rel="icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../css/style.css">
-    <script type="module" src="../../js/main/category/gameDetail.js" defer></script>
+    <script type="module" src="../../js/main/view/gameDetail.js" defer></script>
 </head>
 
 <body>
-    <header id="header"></header>
+    <header class="header"></header>
+    <nav class="navbar"></nav>
 
-    <nav id="navbar"></nav>
+    <main>
+        <section class="game-detail">
+            <div class="game-detail__game-info game-info"></div>
 
-    <section id="game-detail">
-        <div id="game-overview"></div>
-        <div id="game-record-list"></div>
-    </section>
+            <div class="game-detail__game-record game-record"></div>
+        </section>
+    </main>
 </body>
 
 </html>

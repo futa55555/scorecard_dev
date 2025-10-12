@@ -1,4 +1,4 @@
-<!-- frontend/pages/category/team_detail.html -->
+<!-- frontend/pages/view/team_detail.html -->
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -8,27 +8,30 @@
     <title>ソフナビ</title>
     <link rel="icon" href="../../favicon.ico">
     <link rel="stylesheet" href="../../css/style.css">
-    <script type="module" src="../../js/main/category/teamDetail.js" defer></script>
+    <script type="module" src="../../js/main/view/teamDetail.js" defer></script>
 </head>
 
 <body>
-    <header id="header"></header>
+    <header class="header"></header>
+    <nav class="navbar"></nav>
 
-    <nav id="navbar"></nav>
+    <main>
+        <div class="team-title"></div>
 
-    <section id="team-detail">
-        <div id="team-base"></div>
+        <section class="team-detail">
+            <div class="team-detail__tab">
+                <div class="team-detail__tab-top active">トップ</div>
+                <div class="team-detail__tab-person">メンバー</div>
+                <div class="team-detail__tab-game">試合</div>
+            </div>
 
-        <div id="team-tab">
-            <div class="team-tab active" data-target="team-tab-overview">トップ</div>
-            <div class="team-tab" data-target="team-tab-people">メンバー</div>
-            <div class="team-tab" data-target="team-tab-games">試合</div>
-        </div>
-
-        <div class="tab-content active" id="team-tab-overview"></div>
-        <div class="tab-content" id="team-tab-people"></div>
-        <div class="tab-content" id="team-tab-games"></div>
-    </section>
+            <div class="team-detail__container">
+                <div class="team-detail__container-top"></div>
+                <div class="team-detail__container-person"></div>
+                <div class="team-detail__container-game"></div>
+            </div>
+        </section>
+    </main>
 </body>
 
 </html>

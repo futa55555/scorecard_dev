@@ -5,6 +5,10 @@
 import { createToggleButton } from "../common/createToggleButton.js"
 
 export function createLeagueCard(league) {
+    const currentPath = window.location.pathname
+    const baseUrl = currentPath.split("/index")[0]
+
+
     const leagueCard = document.createElement("div")
     leagueCard.classList.add("league-card")
 
@@ -14,11 +18,19 @@ export function createLeagueCard(league) {
 
     const leagueName = document.createElement("div")
     leagueName.classList.add("league-card__name")
-    leagueName.textContent = league.name
+
+    const leagueLink = document.createElement("a")
+    leagueLink.classList.add("league-link")
+    leagueLink.href = `${baseUrl}/league_detail.html?league=${league.league_id}`
+    leagueLink.textContent = league.name
+    leagueName.append(leagueLink)
+
     leagueHeader.append(leagueName)
+
 
     const leagueToggleButton = createToggleButton("league")
     leagueHeader.append(leagueToggleButton)
+
 
     leagueCard.append(leagueHeader)
 
